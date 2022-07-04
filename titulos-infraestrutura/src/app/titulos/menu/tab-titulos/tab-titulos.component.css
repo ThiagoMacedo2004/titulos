@@ -1,0 +1,11 @@
+.example-tab-icon {
+  margin-right: 8px;
+  /* color: red; */
+}
+
+div {
+  display: flex;
+  align-items: center;
+}
+
+

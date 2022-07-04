@@ -1,0 +1,64 @@
+<!-- <mat-tab-group animationDuration="0ms" color="warn">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">warning</mat-icon>
+      <span>Cadastrado</span>
+    </ng-template>
+    <app-lista-titulos></app-lista-titulos>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">warning</mat-icon>
+      Lançado
+    </ng-template>
+    <app-lista-titulos></app-lista-titulos>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">warning</mat-icon>
+      Aprovado
+    </ng-template>
+    <app-lista-titulos></app-lista-titulos>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">warning</mat-icon>
+      Todos
+    </ng-template>
+    <app-lista-titulos></app-lista-titulos>
+  </mat-tab>
+</mat-tab-group> -->
+<mat-tab-group animationDuration="0ms" [color]="background">
+  <mat-tab
+    *ngFor="let link of links"
+    (click)="changeBackgroud(link.icon)"
+
+  >
+
+    <ng-template mat-tab-label >
+      <div (click)="changeBackgroud(link.icon)">
+        <mat-icon class="example-tab-icon" [color]="background">{{link.icon}}</mat-icon>
+        <span [style.color]="text">{{link.link}}</span>
+      </div>
+    </ng-template>
+    <app-lista-titulos></app-lista-titulos>
+  </mat-tab>
+</mat-tab-group>
+
+<!-- <mat-tab-group animationDuration="0ms">
+  <mat-tab>
+    <nav mat-tab-nav-bar #tab>
+      <a mat-tab-link *ngFor="let link of links"
+         (click)="activeLink = link.link"
+         (click)="changeBackgroud(link.icon)"
+         [active]="activeLink == link.link">
+         <mat-icon class="example-tab-icon"[color]="background">{{link.icon}}</mat-icon>{{link.link}}
+      </a>
+    </nav>
+    <app-lista-titulos></app-lista-titulos>
+  </mat-tab>
+</mat-tab-group> -->
+

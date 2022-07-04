@@ -16,10 +16,9 @@
 
 .container-table {
   overflow-y: auto;
-  max-height: 83%;
+  max-height: 79%;
 }
 
 mat-card {
-  max-height: 85vh;
-
+  max-height: 77vh;
 }

@@ -15,6 +15,7 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatTabsModule} from '@angular/material/tabs';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -22,8 +23,9 @@ import { AppComponent } from './app.component';
 import { TitulosComponent } from './titulos/titulos.component';
 import { HeaderComponent } from './titulos/header/header.component';
 import { MenuComponent } from './titulos/menu/menu.component';
-import { ListaTitulosComponent } from './titulos/menu/lista-titulos/lista-titulos.component';
+import { ListaTitulosComponent } from './titulos/menu/tab-titulos/lista-titulos/lista-titulos.component';
 import { CadastroTiuloComponent } from './titulos/menu/cadastro-tiulo/cadastro-tiulo.component';
+import { TabTitulosComponent } from './titulos/menu/tab-titulos/tab-titulos.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { CadastroTiuloComponent } from './titulos/menu/cadastro-tiulo/cadastro-t
     HeaderComponent,
     MenuComponent,
     ListaTitulosComponent,
-    CadastroTiuloComponent
+    CadastroTiuloComponent,
+    TabTitulosComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +55,8 @@ import { CadastroTiuloComponent } from './titulos/menu/cadastro-tiulo/cadastro-t
     MatSortModule,
     MatFormFieldModule,
     MatInputModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

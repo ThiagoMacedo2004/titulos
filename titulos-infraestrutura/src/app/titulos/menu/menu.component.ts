@@ -8,15 +8,15 @@ import { Component, OnInit } from '@angular/core';
 export class MenuComponent implements OnInit {
 
   menus: object[] = [
-    {icon: 'format_list_bulleted'    , name: 'Títulos',          link: '/titulos'},
+    {icon: 'format_list_bulleted'    , name: 'Títulos',          link: '/tabTitulos'},
     {icon: 'add'                     , name: 'Cadastrar Título', link: '/cadastro-titulo'},
-    {icon: 'settings'                , name: 'Opções',           link: '/titulos'}
+    {icon: 'settings'                , name: 'Opções',           link: '/tabTitulos'}
   ]
 
   constructor() { }
 
   ngOnInit(): void {
-    
+
   }
 
 }
