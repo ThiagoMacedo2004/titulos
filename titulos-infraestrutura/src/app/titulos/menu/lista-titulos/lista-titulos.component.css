@@ -1,0 +1,25 @@
+.cont {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 99%;
+}
+
+.tabela {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.container-table {
+  overflow-y: auto;
+  max-height: 83%;
+}
+
+mat-card {
+  max-height: 85vh;
+
+}

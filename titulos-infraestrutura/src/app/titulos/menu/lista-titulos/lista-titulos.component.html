@@ -1,3 +1,86 @@
-<mat-card>Simple card</mat-card>
-<mat-card>Simple card</mat-card>
-<mat-card>Simple card</mat-card>
+<div class="cont">
+  <mat-card>
+    <mat-form-field appearance="standard">
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+    </mat-form-field>
+    <div class="container-table">
+      <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
+        class="mat-elevation-z8 tabela">
+
+
+        <ng-container matColumnDef="fornecedor">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by fornecedor">
+            FORNECEDOR
+          </th>
+          <td mat-cell *matCellDef="let titulo"> {{titulo.fornecedor}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="item">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by item">
+            ITEM
+          </th>
+          <td mat-cell *matCellDef="let titulo"> {{titulo.item}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cod_fornecedor">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by cod_fornecedor">
+            COD_FORNECEDOR
+          </th>
+          <td mat-cell *matCellDef="let titulo"> {{titulo.cod_fornecedor}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="num_nf">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by num_nf">
+            NUM_NF
+          </th>
+          <td mat-cell *matCellDef="let titulo"> {{titulo.num_nf}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="datasul">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by datasul">
+            DATASUL
+          </th>
+          <td mat-cell *matCellDef="let titulo"> {{titulo.datasul}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="dt_emissao">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by emissão">
+            EMISSÃO
+          </th>
+          <td mat-cell *matCellDef="let titulo"> {{titulo.dt_emissao}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="dt_venc">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by vencimento">
+            VENCIMENTO
+          </th>
+          <td mat-cell *matCellDef="let titulo"> {{titulo.dt_venc}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="valor">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by valor">
+            VALOR
+          </th>
+          <td mat-cell *matCellDef="let titulo"> {{titulo.valor}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by status">
+            STATUS
+          </th>
+          <td mat-cell *matCellDef="let titulo"> {{titulo.status}} </td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    <mat-paginator [pageSizeOptions]="[10, 15, 20]"
+                  showFirstLastButtons
+                  aria-label="Select page of periodic titulos">
+    </mat-paginator>
+  </mat-card>
+</div>
