@@ -35,16 +35,15 @@
   <mat-tab
     *ngFor="let link of links"
     (click)="changeBackgroud(link.icon)"
-
   >
 
     <ng-template mat-tab-label >
       <div (click)="changeBackgroud(link.icon)">
-        <mat-icon class="example-tab-icon" [color]="background">{{link.icon}}</mat-icon>
+        <mat-icon [color]="background" class="example-tab-icon">{{link.icon}}</mat-icon>
         <span [style.color]="text">{{link.link}}</span>
       </div>
     </ng-template>
-    <app-lista-titulos></app-lista-titulos>
+    <app-lista-titulos [statusTab]="link.status"></app-lista-titulos>
   </mat-tab>
 </mat-tab-group>
 

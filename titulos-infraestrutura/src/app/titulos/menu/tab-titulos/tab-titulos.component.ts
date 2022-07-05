@@ -9,16 +9,16 @@ import { ThemePalette } from '@angular/material/core';
 export class TabTitulosComponent implements OnInit {
 
   links : any[] = [
-    {link:'Cadastrados', icon:'warning'},
-    {link:'Lançados'   , icon:'add'},
-    {link:'Aprovados'  , icon:'person'},
-    {link:'Entregues'  , icon:'warning'},
-    {link:'Todos'      , icon:'warning'},
+    {link:'Cadastrados', status: 'CADASTRADO', icon:'warning'},
+    {link:'Lançados'   , status: 'LANÇADO'   , icon:'add'},
+    {link:'Aprovados'  , status: 'APROVADO'  , icon:'person'},
+    {link:'Entregues'  , status: 'ENTREGUE'  , icon:'warning'},
+    {link:'Todos'      , status: 'TODOS'     , icon:'warning'},
   ]
-  background: ThemePalette = 'warn'
-  text = 'red'
+  background: ThemePalette = undefined
+  text: ThemePalette = undefined
   activeLink = this.links[0].link
-
+  status: string = ''
 
   constructor() { }
 
@@ -26,14 +26,8 @@ export class TabTitulosComponent implements OnInit {
   }
 
   changeBackgroud(icon) {
-    console.log('teste')
-    if(icon == 'warning') {
-      this.background = 'warn'
-      this.text = 'red'
-    } else {
-      this.background = 'primary'
-      this.text = 'blue'
-    }
+
+
   }
 
 }
