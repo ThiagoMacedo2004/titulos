@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
+import { MatTabGroup } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-tab-titulos',
@@ -15,19 +16,20 @@ export class TabTitulosComponent implements OnInit {
     {link:'Entregues'  , status: 'ENTREGUE'  , icon:'warning'},
     {link:'Todos'      , status: 'TODOS'     , icon:'warning'},
   ]
-  background: ThemePalette = undefined
-  text: ThemePalette = undefined
-  activeLink = this.links[0].link
-  status: string = ''
+
+  teste = ''
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  changeBackgroud(icon) {
-
-
+  changeColor(index:MatTabGroup ) {
+    if(index.selectedIndex == 0) {
+      index.color='warn'
+    } else {
+      index.color = 'primary'
+    }
   }
 
 }

@@ -1,12 +1,38 @@
 <div class="cont">
   <mat-card>
-    <mat-form-field appearance="standard">
-      <mat-label>Filter</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
-    </mat-form-field>
+    <div class="filtros">
+      <mat-form-field appearance="standard">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex: Num_NF" #input>
+      </mat-form-field>
+      <button mat-flat-button color="primary">Cadastrar</button>
+    </div>
     <div class="container-table">
       <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
-        class="mat-elevation-z8 tabela">
+        class="mat-elevation-z8 tabela" [formGroup]="titulos"
+      >
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox
+
+            >
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox
+              formControlName="selected"
+
+            >
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by fornecedor" formControlName="id" >
+            #ID
+          </th>
+          <td mat-cell *matCellDef="let titulo"> {{titulo.id}} </td>
+        </ng-container>
 
 
         <ng-container matColumnDef="fornecedor">
@@ -83,4 +109,8 @@
                   aria-label="Select page of periodic titulos">
     </mat-paginator>
   </mat-card>
+  <section class="example-section" [formGroup]="titulos">
+    <h4>You chose:</h4>
+    {{titulos.value | json}}
+  </section>
 </div>
