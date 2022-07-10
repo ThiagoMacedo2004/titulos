@@ -34,3 +34,21 @@
 mat-card {
   max-height: 77vh;
 }
+
+.btn-lancar {
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeeba;
+}
+
+.btn-aprovar {
+  color: #004085;
+  background-color: #cce5ff;
+  border-color: #b8daff;
+}
+
+.btn-entregar {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}

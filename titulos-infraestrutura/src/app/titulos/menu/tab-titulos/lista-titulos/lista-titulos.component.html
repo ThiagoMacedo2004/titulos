@@ -6,9 +6,9 @@
         <input matInput (keyup)="applyFilter($event)" placeholder="Ex: Num_NF" #input>
       </mat-form-field>
       <div class="btns">
-        <button mat-flat-button color="primary">Cadastrar</button>
-        <button mat-flat-button color="primary">Cadastrar</button>
-        <button mat-flat-button color="primary">Cadastrar</button>
+        <button mat-raised-button class="btn-lancar" (click)="alterarStatus()"[disabled]="statusTab != 'CADASTRADO'">Lançar</button>
+        <button mat-raised-button class="btn-aprovar">Aprovar</button>
+        <button mat-raised-button class="btn-entregar">Entregar</button>
         {{valorStr}}
       </div>
     </div>
@@ -119,9 +119,9 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
     </div>
-    <mat-paginator [pageSizeOptions]="[10, 15, 20]"
+    <!-- <mat-paginator [pageSizeOptions]="[10, 15, 20]"
                   showFirstLastButtons
                   aria-label="Select page of periodic titulos">
-    </mat-paginator>
+    </mat-paginator> -->
   </mat-card>
 </div>

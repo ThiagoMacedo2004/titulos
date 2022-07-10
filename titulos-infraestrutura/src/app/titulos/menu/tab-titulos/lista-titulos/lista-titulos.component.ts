@@ -8,6 +8,7 @@ import { MatPaginator } from '@angular/material/paginator';
 
 import { MatCheckboxChange } from '@angular/material/checkbox';
 
+
 @Component({
   selector: 'app-lista-titulos',
   templateUrl: './lista-titulos.component.html',
@@ -40,7 +41,7 @@ export class ListaTitulosComponent implements OnInit {
   dataCheck    : PeriodicElement[] = []
   dataSource                       = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   valor        : any               = 0
-  valorStr     : string            = 'R$0,00'
+  valorStr     : string            = 'R$ 0,00'
 
   constructor(
     private _liveAnnouncer : LiveAnnouncer,
@@ -57,7 +58,13 @@ export class ListaTitulosComponent implements OnInit {
     this.filterStatus()
     this._tabTitulos.emitirPosition.subscribe(
       (result) => {
-
+        this.valor = 0
+        this.valorStr = 'R$ 0,00'
+        this.parentSelect = false
+        this.dataCheck = this.dataCheck.map((data) => {
+          data.select = false
+          return data
+        })
         this.statusTab = result
         this.filterStatus()
         this.ngAfterViewInit()
@@ -77,8 +84,10 @@ export class ListaTitulosComponent implements OnInit {
     const select = event.checked
     var x
     this.dataCheck = this.dataCheck.map((data:PeriodicElement) => {
+
       if(data.id == id) {
         data.select = select
+
         this.parentSelect = false
         if(data.select){
           x = data.valor.toFixed(2)
@@ -101,6 +110,7 @@ export class ListaTitulosComponent implements OnInit {
       if(id == '-1') {
         data.select = this.parentSelect
         if(select){
+
           x = data.valor.toFixed(2)
           data.valor = parseFloat(x)
           this.valor += data.valor
@@ -122,6 +132,25 @@ export class ListaTitulosComponent implements OnInit {
     })
   }
 
+  alterarStatus() {
+    this.dataCheck = this.dataCheck.map((item) => {
+      if(item.select || this.parentSelect) {
+        item.status = 'LANÇADO'
+        item.select = false
+        this.parentSelect = false
+        this.valor -= item.valor
+          if(this.valor <= 0) {
+            this.valor = 0
+          }
+        }
+      this.valorStr = this.valor
+      this.valorStr = parseFloat(this.valorStr).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+      this.filterStatus()
+      this.ngAfterViewInit()
+      return item
+    })
+  }
+
 
 
   filterStatus() {
@@ -139,7 +168,6 @@ export class ListaTitulosComponent implements OnInit {
   }
   /** Announce the change in sort state for assistive technology. */
   announceSortChange(sortState: Sort) {
-    console.log('sortttttt')
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
     } else {
