@@ -1,27 +1,43 @@
 <mat-tab-group
   animationDuration="0ms"
-  color="warn"
+  [selectedIndex]="0"
+  color="undefined"
   (click)="changeColor(index)"
   #index
 >
-  <mat-tab
-    *ngFor="let link of links"
-  >
-
+  <mat-tab>
     <ng-template mat-tab-label >
       <div>
-        <mat-icon  class="example-tab-icon">{{link.icon}}</mat-icon>
-        <span >{{link.link}}</span>
+        <mat-icon class="example-tab-icon" [ngClass]="{'cadastrado': position == 'CADASTRADO'}">warning</mat-icon>
+        <span [ngClass]="{'cadastrado': position == 'CADASTRADO'}">CADASTRADOS</span>
       </div>
     </ng-template>
-    <app-lista-titulos [statusTab]="link.status"></app-lista-titulos>
+    <app-lista-titulos [statusTab]="position"></app-lista-titulos>
   </mat-tab>
-  <mat-tab>
 
+  <mat-tab>
     <ng-template mat-tab-label >
-      <mat-icon  class="example-tab-icon">add_circle</mat-icon>
-      <span >Cadastrar Título</span>
+      <mat-icon  class="example-tab-icon" [ngClass]="{'lancado': position == 'LANÇADO'}">warning</mat-icon>
+      <span [ngClass]="{'lancado': position == 'LANÇADO'}" >LANÇADO</span>
     </ng-template>
-    teste
+    <app-lista-titulos [statusTab]="position"></app-lista-titulos>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label >
+      <mat-icon  class="example-tab-icon" [ngClass]="{'aprovado': position == 'APROVADO'}">warning</mat-icon>
+      <span [ngClass]="{'aprovado': position == 'APROVADO'}" >APROVADO</span>
+    </ng-template>
+    <app-lista-titulos [statusTab]="position"></app-lista-titulos>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label >
+      <mat-icon  class="example-tab-icon" [ngClass]="{'entregue': position == 'ENTREGUE'}">warning</mat-icon>
+      <span [ngClass]="{'entregue': position == 'ENTREGUE'}" >ENTREGUE</span>
+    </ng-template>
+    <app-lista-titulos [statusTab]="position"></app-lista-titulos>
   </mat-tab>
 </mat-tab-group>
+
+

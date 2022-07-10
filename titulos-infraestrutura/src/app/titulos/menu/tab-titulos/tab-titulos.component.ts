@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { MatTabGroup } from '@angular/material/tabs';
 
@@ -9,27 +9,17 @@ import { MatTabGroup } from '@angular/material/tabs';
 })
 export class TabTitulosComponent implements OnInit {
 
-  links : any[] = [
-    {link:'Cadastrados', status: 'CADASTRADO', icon:'warning'},
-    {link:'Lançados'   , status: 'LANÇADO'   , icon:'add'},
-    {link:'Aprovados'  , status: 'APROVADO'  , icon:'person'},
-    {link:'Entregues'  , status: 'ENTREGUE'  , icon:'warning'},
-    {link:'Todos'      , status: 'TODOS'     , icon:'warning'},
-  ]
-
-  teste = ''
-
+  status : any[] = ['CADASTRADO', 'LANÇADO', 'APROVADO', 'ENTREGUE']
+  position = 'CADASTRADO'
+  emitirPosition = new EventEmitter<string>()
   constructor() { }
 
   ngOnInit(): void {
   }
 
   changeColor(index:MatTabGroup ) {
-    if(index.selectedIndex == 0) {
-      index.color='warn'
-    } else {
-      index.color = 'primary'
-    }
+    this.position = this.status[index.selectedIndex]
+    this.emitirPosition.emit(this.position)
   }
 
 }

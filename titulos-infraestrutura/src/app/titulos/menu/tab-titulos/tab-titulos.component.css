@@ -3,17 +3,30 @@
   /* color: red; */
 }
 
+
+
 div {
   display: flex;
   align-items: center;
 }
 
-.vermelho {
-  background-color: brown;
+.cadastrado {
+  color: #721c24;
+
 }
 
-.amarelo {
-  background-color: yellow;
+.lancado {
+  color: #856404;
+
 }
+
+.aprovado {
+  color: #004085;
+}
+
+.entregue {
+  color:#155724;
+}
+
 
 

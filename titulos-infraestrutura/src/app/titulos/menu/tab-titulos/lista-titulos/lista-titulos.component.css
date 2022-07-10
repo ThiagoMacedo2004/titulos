@@ -14,9 +14,16 @@
   align-items: center;
 }
 
+.btns {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
 .mat-form-field {
   font-size: 14px;
-  width: 100%;
+  width: 70%;
 }
 
 .container-table {
