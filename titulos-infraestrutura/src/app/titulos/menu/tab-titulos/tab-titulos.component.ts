@@ -10,7 +10,7 @@ import { MatTabGroup } from '@angular/material/tabs';
 export class TabTitulosComponent implements OnInit {
 
   status : any[] = ['CADASTRADO', 'LANÇADO', 'APROVADO', 'ENTREGUE']
-  position = 'CADASTRADO'
+  position       = 'CADASTRADO'
   emitirPosition = new EventEmitter<string>()
   constructor() { }
 

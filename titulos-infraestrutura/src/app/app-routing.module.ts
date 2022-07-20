@@ -1,7 +1,7 @@
+import { FornecedoresComponent } from './titulos/fornecedores/fornecedores.component';
 import { TabTitulosComponent } from './titulos/menu/tab-titulos/tab-titulos.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CadastroTiuloComponent } from './titulos/menu/cadastro-tiulo/cadastro-tiulo.component';
 import { ListaTitulosComponent } from './titulos/menu/tab-titulos/lista-titulos/lista-titulos.component';
 
 
@@ -15,8 +15,8 @@ const routes: Routes = [
   },
 
   {
-    path: 'cadastro-titulo', component: CadastroTiuloComponent
-  }
+    path: 'fornecedores', component: FornecedoresComponent
+  },
 ];
 
 @NgModule({

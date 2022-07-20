@@ -9,7 +9,7 @@ export class MenuComponent implements OnInit {
 
   menus: object[] = [
     {icon: 'format_list_bulleted'    , name: 'Títulos',          link: '/tabTitulos'},
-    {icon: 'add'                     , name: 'Cadastrar Título', link: '/cadastro-titulo'},
+    {icon: 'account_balance'         , name: 'Fornecedores',     link: '/fornecedores'},
     {icon: 'settings'                , name: 'Opções',           link: '/tabTitulos'}
   ]
 

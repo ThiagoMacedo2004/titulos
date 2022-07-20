@@ -25,8 +25,8 @@ import { TitulosComponent } from './titulos/titulos.component';
 import { HeaderComponent } from './titulos/header/header.component';
 import { MenuComponent } from './titulos/menu/menu.component';
 import { ListaTitulosComponent } from './titulos/menu/tab-titulos/lista-titulos/lista-titulos.component';
-import { CadastroTiuloComponent } from './titulos/menu/cadastro-tiulo/cadastro-tiulo.component';
 import { TabTitulosComponent } from './titulos/menu/tab-titulos/tab-titulos.component';
+import { FornecedoresComponent } from './titulos/fornecedores/fornecedores.component';
 
 @NgModule({
   declarations: [
@@ -35,8 +35,8 @@ import { TabTitulosComponent } from './titulos/menu/tab-titulos/tab-titulos.comp
     HeaderComponent,
     MenuComponent,
     ListaTitulosComponent,
-    CadastroTiuloComponent,
-    TabTitulosComponent
+    TabTitulosComponent,
+    FornecedoresComponent
   ],
   imports: [
     BrowserModule,
