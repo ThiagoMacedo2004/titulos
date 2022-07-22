@@ -1,4 +1,3 @@
-import { TabTitulosComponent } from './../tab-titulos.component';
 import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
 import {AfterViewInit, ViewChild} from '@angular/core';
@@ -45,7 +44,7 @@ export class ListaTitulosComponent implements OnInit {
 
   constructor(
     private _liveAnnouncer : LiveAnnouncer,
-    private _tabTitulos    : TabTitulosComponent
+    
   ) {}
 
 
@@ -56,20 +55,7 @@ export class ListaTitulosComponent implements OnInit {
   ngOnInit() {
 
     this.filterStatus()
-    this._tabTitulos.emitirPosition.subscribe(
-      (result) => {
-        this.valor = 0
-        this.valorStr = 'R$ 0,00'
-        this.parentSelect = false
-        this.dataCheck = this.dataCheck.map((data) => {
-          data.select = false
-          return data
-        })
-        this.statusTab = result
-        this.filterStatus()
-        this.ngAfterViewInit()
-      }
-    )
+    
   }
 
   ngAfterViewInit() {
@@ -156,8 +142,8 @@ export class ListaTitulosComponent implements OnInit {
   filterStatus() {
     let filterTab:any = this.filter
 
-    let result = this.filter.filter(status => status.status == this.statusTab)
-    this.dataSource = new MatTableDataSource(result)
+    let result = this.filter.filter(status => status.status == 'CADASTRADO')
+    this.dataSource = new MatTableDataSource(this.filter)
     this.dataCheck  = result
   }
 

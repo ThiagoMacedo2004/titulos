@@ -17,16 +17,19 @@ import {MatInputModule} from '@angular/material/input';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-
+import {MatSelectModule} from '@angular/material/select';
+import { TextMaskModule } from 'angular2-text-mask';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TitulosComponent } from './titulos/titulos.component';
 import { HeaderComponent } from './titulos/header/header.component';
 import { MenuComponent } from './titulos/menu/menu.component';
-import { ListaTitulosComponent } from './titulos/menu/tab-titulos/lista-titulos/lista-titulos.component';
-import { TabTitulosComponent } from './titulos/menu/tab-titulos/tab-titulos.component';
+import { ListaTitulosComponent } from './titulos/lista-titulos/lista-titulos.component';
 import { FornecedoresComponent } from './titulos/fornecedores/fornecedores.component';
+import { CadastrarFornecedorComponent } from './titulos/fornecedores/cadastrar-fornecedor/cadastrar-fornecedor.component';
+import { ContasFluxoComponent } from './titulos/contas-fluxo/contas-fluxo.component';
+
 
 @NgModule({
   declarations: [
@@ -35,8 +38,9 @@ import { FornecedoresComponent } from './titulos/fornecedores/fornecedores.compo
     HeaderComponent,
     MenuComponent,
     ListaTitulosComponent,
-    TabTitulosComponent,
-    FornecedoresComponent
+    FornecedoresComponent,
+    CadastrarFornecedorComponent,
+    ContasFluxoComponent
   ],
   imports: [
     BrowserModule,
@@ -58,9 +62,14 @@ import { FornecedoresComponent } from './titulos/fornecedores/fornecedores.compo
     MatInputModule,
     MatPaginatorModule,
     MatTabsModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSelectModule,
+    TextMaskModule
   ],
   providers: [],
   bootstrap: [AppComponent]
+  
 })
+
+
 export class AppModule { }

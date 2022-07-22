@@ -1,0 +1,9 @@
+{
+    "name": "00217314/titulos",
+    "autoload": {
+        "psr-4": {
+            "00217314\\Titulos\\": "src/"
+        }
+    },
+    "require": {}
+}

@@ -11,7 +11,39 @@ export class TitulosServicesService {
   constructor(private http: HttpClient) { }
 
   public getFornecedores() {
-    return this.http.get(this.URL)
+    return this.http.get(this.URL,
+      {
+        params: {
+          acao: 'getFornecedores'
+        }
+      }
+    )
   }
+
+  public getDatasul() {
+    return this.http.get(this.URL,{
+        params: {
+          acao: 'getDatasul'
+        }
+      })
+  }
+
+  public getContasFluxo() {
+    return this.http.get(this.URL,{
+      params: {
+        acao: 'getContasFluxo'
+      }
+    })
+  }
+
+  public setFornecedor(obj) {
+    return this.http.post(this.URL, obj, {
+      params: {
+        acao: 'setFornecedor'
+      }
+    })
+  }
+
+  
   
 }

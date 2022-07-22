@@ -1,0 +1,69 @@
+<mat-card>
+    <div class="header-card">
+      <div class="header-titulo">
+        <mat-card-title>
+          <span class="material-symbols-outlined">
+            format_list_bulleted
+          </span>
+          Contas Fluxo
+        </mat-card-title>
+      </div>
+      <button mat-icon-button color="primary" class="btn-add" routerLink="">
+        <mat-icon class="icon-business">add_business</mat-icon>
+      </button>
+    </div>
+    <mat-card-content>
+      <div class="tabela">
+        <mat-form-field appearance="standard">
+          <mat-label>Filtro</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Ex. TELEFONICA" #input>
+        </mat-form-field>
+        
+        <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
+            class="mat-elevation-z8">
+        
+          <ng-container matColumnDef="id_cf">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by id_cf">
+                #
+            </th>
+            <td mat-cell *matCellDef="let item">{{ item.id_cf }}</td>
+          </ng-container>
+        
+          <ng-container matColumnDef="nome_cf">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by nome_cf">
+                FORNECEDOR
+            </th>
+            <td mat-cell *matCellDef="let item">{{ item.nome_cf }}</td>
+          </ng-container>
+        
+          <ng-container matColumnDef="num_cf">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by num_cf">
+              CODIGO FORNECEDOR
+            </th>
+            <td mat-cell *matCellDef="let item"> {{item.num_cf}} </td>
+          </ng-container>
+        
+          <ng-container matColumnDef="nome_interface">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by nome_interface">
+              CNPJ
+            </th>
+            <td mat-cell *matCellDef="let item"> {{item.nome_interface}} </td>
+          </ng-container>
+        
+          <ng-container matColumnDef="acao">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by interface">
+              AÇÃO
+            </th>
+            <td mat-cell *matCellDef="let item">
+              <button mat-icon-button>
+                <mat-icon>more_vert</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+        
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>

@@ -12,7 +12,7 @@ import { MatSort, Sort } from '@angular/material/sort';
 })
 export class FornecedoresComponent implements AfterViewInit {
 
-  displayedColumns: string[] = ['id', 'nome_forn', 'cod_forn', 'cnpj_forn', 'id_inter']; // precisa ser o mesmo nome que chega da api
+  displayedColumns: string[] = ['id_fornecedor', 'nome_fornecedor', 'cod_fornecedor', 'cnpj_fornecedor', 'nome_interface', 'acao']; // precisa ser o mesmo nome que chega da api
   dataSource                 = new MatTableDataSource()
   result: any[]              = []
   
@@ -29,15 +29,30 @@ export class FornecedoresComponent implements AfterViewInit {
     
   }
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
  
 
   fornecedores() {
     this._services.getFornecedores().subscribe(
       (data) => {
         this.resultData(data)
-        
+        console.log(data)
       }
     )
+  }
+
+  resultData(data) {
+    this.result     = data
+    this.dataSource = new MatTableDataSource<Fornecedores>(this.result)
+    this.dataSource.sort = this.sort;
   }
 
  
@@ -49,11 +64,7 @@ export class FornecedoresComponent implements AfterViewInit {
     }
   }
 
-  resultData(data) {
-    this.result     = data
-    this.dataSource = new MatTableDataSource<Fornecedores>(this.result)
-    this.dataSource.sort = this.sort;
-  }
+  
 
 }
 
@@ -62,6 +73,6 @@ export interface Fornecedores {
   nome_forn : number,
   cod_forn  : string,
   cnpj_forn : string,
-  id_inter  : number
+  id_inter  : string
 
 }
