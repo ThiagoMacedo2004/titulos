@@ -29,6 +29,7 @@ import { ListaTitulosComponent } from './titulos/lista-titulos/lista-titulos.com
 import { FornecedoresComponent } from './titulos/fornecedores/fornecedores.component';
 import { CadastrarFornecedorComponent } from './titulos/fornecedores/cadastrar-fornecedor/cadastrar-fornecedor.component';
 import { ContasFluxoComponent } from './titulos/contas-fluxo/contas-fluxo.component';
+import { CadastrarContaFluxoComponent } from './titulos/contas-fluxo/cadastrar-conta-fluxo/cadastrar-conta-fluxo.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { ContasFluxoComponent } from './titulos/contas-fluxo/contas-fluxo.compon
     ListaTitulosComponent,
     FornecedoresComponent,
     CadastrarFornecedorComponent,
-    ContasFluxoComponent
+    ContasFluxoComponent,
+    CadastrarContaFluxoComponent
   ],
   imports: [
     BrowserModule,

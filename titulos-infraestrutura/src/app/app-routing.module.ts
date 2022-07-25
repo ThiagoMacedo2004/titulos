@@ -1,3 +1,4 @@
+import { CadastrarContaFluxoComponent } from './titulos/contas-fluxo/cadastrar-conta-fluxo/cadastrar-conta-fluxo.component';
 import { ContasFluxoComponent } from './titulos/contas-fluxo/contas-fluxo.component';
 import { FornecedoresComponent } from './titulos/fornecedores/fornecedores.component';
 import { NgModule } from '@angular/core';
@@ -22,11 +23,15 @@ const routes: Routes = [
   {
     path: 'fornecedores', component: FornecedoresComponent
   },
-  
+
   {
     path: 'contas-fluxo', component: ContasFluxoComponent
   },
-  
+
+  {
+    path: 'cadastrar-contaFluxo', component: CadastrarContaFluxoComponent
+  }
+
 ];
 
 @NgModule({

@@ -31,20 +31,19 @@ export class ListaTitulosComponent implements OnInit {
   ];
 
 
-  @Input() statusTab : string
-
   statusChange = new EventEmitter()
 
   filter       : PeriodicElement[] = ELEMENT_DATA
   parentSelect : boolean           = false
-  dataCheck    : PeriodicElement[] = []
+  dataCheck    : any               = []
+  dataCheckD   : PeriodicElement[] = []
   dataSource                       = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   valor        : any               = 0
   valorStr     : string            = 'R$ 0,00'
 
   constructor(
     private _liveAnnouncer : LiveAnnouncer,
-    
+
   ) {}
 
 
@@ -55,7 +54,7 @@ export class ListaTitulosComponent implements OnInit {
   ngOnInit() {
 
     this.filterStatus()
-    
+
   }
 
   ngAfterViewInit() {
@@ -69,7 +68,8 @@ export class ListaTitulosComponent implements OnInit {
     const id:any = event.source.value
     const select = event.checked
     var x
-    this.dataCheck = this.dataCheck.map((data:PeriodicElement) => {
+    console.log(id, select)
+    this.dataCheckD = this.dataCheckD.map((data:PeriodicElement) => {
 
       if(data.id == id) {
         data.select = select
@@ -140,17 +140,16 @@ export class ListaTitulosComponent implements OnInit {
 
 
   filterStatus() {
-    let filterTab:any = this.filter
-
-    let result = this.filter.filter(status => status.status == 'CADASTRADO')
     this.dataSource = new MatTableDataSource(this.filter)
-    this.dataCheck  = result
+    this.dataCheck  = this.filter
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     console.log(filterValue)
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataCheck = this.dataSource.filteredData
+    this.dataCheckD = this.dataCheck
   }
   /** Announce the change in sort state for assistive technology. */
   announceSortChange(sortState: Sort) {

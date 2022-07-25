@@ -11,11 +11,11 @@ import { MatSort, Sort } from '@angular/material/sort';
 })
 export class ContasFluxoComponent implements OnInit {
 
-  displayedColumns: string[] = ['id_cf', 'nome_cf', 'num_cf', 'nome_interface', 'acao']; // precisa ser o mesmo nome que chega da api
+  displayedColumns: string[] = ['id_cf', 'num_cf', 'nome_cf', 'nome_interface', 'acao']; // precisa ser o mesmo nome que chega da api
   result: any = []
   dataSource  = new MatTableDataSource()
 
-   
+
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
     private _services     : TitulosServicesService

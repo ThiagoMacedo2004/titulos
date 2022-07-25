@@ -6,7 +6,8 @@ import { Injectable } from '@angular/core';
 })
 export class TitulosServicesService {
 
-  URL =  'http://localhost/projetos/titulos/index.php'
+  URL =  'http://localhost/projetos/titulos/index.php';
+
 
   constructor(private http: HttpClient) { }
 
@@ -44,6 +45,6 @@ export class TitulosServicesService {
     })
   }
 
-  
-  
+
+
 }
