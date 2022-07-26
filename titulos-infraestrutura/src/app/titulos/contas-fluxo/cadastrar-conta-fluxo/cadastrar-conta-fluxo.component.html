@@ -1,1 +1,30 @@
-<p>cadastrar-conta-fluxo works!</p>
+<mat-card>
+    <mat-card-title>Cadastro de Fornecedor</mat-card-title>
+    <mat-card-subtitle>informe os dados do novo Fornecedor</mat-card-subtitle>
+    <mat-card-content style="margin-top: 30px">
+        <form [formGroup]="formGroup">
+            <mat-form-field appearance="fill">
+                <mat-label>Conta Fluxo</mat-label>
+                <input matInput formControlName="num_cf" [textMask]="{mask: mask}" [(ngModel)]="myModel" (keyup)="mascara($event)">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Nome Conta Fluxo</mat-label>
+                <input matInput formControlName="nome_cf">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Datasul</mat-label>
+                <mat-select formControlName="id_datasul">
+                    <mat-option value="">--Selecione uma Interface</mat-option>
+                    <mat-option *ngFor="let item of result" [value]="item.id">{{ item.nome_interface }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </form>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-button color="primary" (click)="setContaFluxo()" [disabled]="!formGroup.valid">Salvar</button>
+      <button mat-button color="warn" (click)="formGroup.reset()">Limpar</button>
+    </mat-card-actions>
+</mat-card>
+

@@ -68,9 +68,63 @@ export class ListaTitulosComponent implements OnInit {
     const id:any = event.source.value
     const select = event.checked
     var x
-    console.log(id, select)
-    this.dataCheckD = this.dataCheckD.map((data:PeriodicElement) => {
 
+    console.log(this.dataCheckD.length)
+    if(this.dataCheckD.length != 0) {
+      this.filterChange(id, select)
+    } else {
+      this.dataCheck = this.dataCheck.map((data:PeriodicElement) => {
+        if(data.id == id) {
+          data.select = select
+  
+          this.parentSelect = false
+          if(data.select){
+            x = data.valor.toFixed(2)
+            data.valor = parseFloat(x)
+            this.valor += data.valor
+  
+          } else {
+            x = data.valor.toFixed(2)
+            data.valor = parseFloat(x)
+            this.valor -= data.valor
+            if(this.valor <= 0) {
+              this.valor = 0
+            }
+          }
+          this.valorStr = this.valor
+          this.valorStr = parseFloat(this.valorStr).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+          return data
+        }
+  
+        if(id == '-1') {
+          data.select = this.parentSelect
+          if(select){
+  
+            x = data.valor.toFixed(2)
+            data.valor = parseFloat(x)
+            this.valor += data.valor
+  
+          } else {
+            x = data.valor.toFixed(2)
+            data.valor = parseFloat(x)
+            this.valor -= data.valor
+            if(this.valor <= 0) {
+              this.valor = 0
+            }
+  
+          }
+          this.valorStr = this.valor
+          this.valorStr = parseFloat(this.valorStr).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+          return data
+        }
+        return data
+      })
+    }
+  }
+
+  filterChange(id, select) {
+    var x
+    this.dataCheckD = this.dataCheckD.map((data:PeriodicElement) => {
       if(data.id == id) {
         data.select = select
 

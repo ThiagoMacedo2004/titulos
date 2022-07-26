@@ -37,10 +37,26 @@ export class TitulosServicesService {
     })
   }
 
+  public getItens(obj) {
+    return this.http.post(this.URL, obj, {
+      params: {
+        acao: 'getItens'
+      }
+    })
+  }
+
   public setFornecedor(obj) {
     return this.http.post(this.URL, obj, {
       params: {
         acao: 'setFornecedor'
+      }
+    })
+  }
+
+  public setContaFluxo(obj) {
+    return this.http.post(this.URL, obj, {
+      params: {
+        acao: 'setContaFluxo'
       }
     })
   }

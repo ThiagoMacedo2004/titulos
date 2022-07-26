@@ -30,6 +30,8 @@ import { FornecedoresComponent } from './titulos/fornecedores/fornecedores.compo
 import { CadastrarFornecedorComponent } from './titulos/fornecedores/cadastrar-fornecedor/cadastrar-fornecedor.component';
 import { ContasFluxoComponent } from './titulos/contas-fluxo/contas-fluxo.component';
 import { CadastrarContaFluxoComponent } from './titulos/contas-fluxo/cadastrar-conta-fluxo/cadastrar-conta-fluxo.component';
+import { ItensComponent } from './titulos/itens/itens.component';
+import { CadastroItemComponent } from './titulos/itens/cadastro-item/cadastro-item.component';
 
 
 @NgModule({
@@ -42,7 +44,9 @@ import { CadastrarContaFluxoComponent } from './titulos/contas-fluxo/cadastrar-c
     FornecedoresComponent,
     CadastrarFornecedorComponent,
     ContasFluxoComponent,
-    CadastrarContaFluxoComponent
+    CadastrarContaFluxoComponent,
+    ItensComponent,
+    CadastroItemComponent
   ],
   imports: [
     BrowserModule,

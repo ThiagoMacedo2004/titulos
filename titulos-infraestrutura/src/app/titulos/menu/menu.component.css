@@ -31,14 +31,14 @@ mat-nav-list {
 }
 
 a span {
-    color: rgba(0,0,0,.87);
-    font-weight: 500;
+    color: rgba(0,0,0,.54);
+    font-weight: 400;
     font-size: 0.9rem;
 }
 
 i {
-    margin-right: 18px;
-    color: rgba(0,0,0,.87);
-    font-weight: 500;
+    margin-right: 15px;
+    color: rgba(0,0,0,.54);
+    font-weight: 400;
 }
 
