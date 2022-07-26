@@ -11,11 +11,13 @@ export class TitulosServicesService {
 
   constructor(private http: HttpClient) { }
 
-  public getFornecedores() {
+  public getFornecedores(id_datasul = '') {
     return this.http.get(this.URL,
       {
         params: {
-          acao: 'getFornecedores'
+          acao      : 'getFornecedores',
+          id_datasul: id_datasul
+
         }
       }
     )
@@ -37,7 +39,7 @@ export class TitulosServicesService {
     })
   }
 
-  public getItens(obj) {
+  public getItens(obj = '') {
     return this.http.post(this.URL, obj, {
       params: {
         acao: 'getItens'
@@ -57,6 +59,14 @@ export class TitulosServicesService {
     return this.http.post(this.URL, obj, {
       params: {
         acao: 'setContaFluxo'
+      }
+    })
+  }
+
+  public setItem(obj) {
+    return this.http.post(this.URL, obj, {
+      params: {
+        acao: 'setItem'
       }
     })
   }

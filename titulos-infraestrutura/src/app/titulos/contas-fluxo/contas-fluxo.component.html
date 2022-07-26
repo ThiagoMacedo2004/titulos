@@ -3,22 +3,21 @@
       <div class="header-titulo">
         <mat-card-title>
           <span class="material-symbols-outlined">
-            format_list_bulleted
+            wallet
           </span>
           Contas Fluxo
         </mat-card-title>
       </div>
       <button mat-icon-button color="primary" class="btn-add" routerLink="/cadastrar-contaFluxo">
-        <mat-icon class="icon-business">add_business</mat-icon>
+        <mat-icon class="icon-business">add_card</mat-icon>
       </button>
     </div>
     <mat-card-content>
+      <mat-form-field appearance="standard">
+        <mat-label>Filtro</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. 3.02.201.16" #input>
+      </mat-form-field>
       <div class="tabela">
-        <mat-form-field appearance="standard">
-          <mat-label>Filtro</mat-label>
-          <input matInput (keyup)="applyFilter($event)" placeholder="Ex. 3.02.201.16" #input>
-        </mat-form-field>
-
         <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
             class="mat-elevation-z8">
 

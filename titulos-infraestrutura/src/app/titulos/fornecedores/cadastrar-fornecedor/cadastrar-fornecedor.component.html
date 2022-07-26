@@ -3,22 +3,22 @@
     <mat-card-subtitle>informe os dados do novo Fornecedor</mat-card-subtitle>
     <mat-card-content style="margin-top: 30px">
         <form [formGroup]="formGroup">
-            <mat-form-field appearance="fill">
+            <mat-form-field appearance="outline">
                 <mat-label>Código Fornecedor</mat-label>
                 <input matInput formControlName="cod_fornecedor">
             </mat-form-field>
 
-            <mat-form-field appearance="fill">
+            <mat-form-field appearance="outline">
                 <mat-label>Nome Fornecedor</mat-label>
                 <input matInput formControlName="nome_fornecedor">
             </mat-form-field>
 
-            <mat-form-field appearance="fill">
+            <mat-form-field appearance="outline">
                 <mat-label>CNPJ Fornecedor</mat-label>
                 <input matInput formControlName="cnpj_fornecedor" type="text" [textMask]="{mask: mask}" [(ngModel)]="myModel" (keyup)="mascara($event)" >
             </mat-form-field>
 
-            <mat-form-field appearance="fill">
+            <mat-form-field appearance="outline">
                 <mat-label>Datasul</mat-label>
                 <mat-select formControlName="id_datasul">
                     <mat-option value="">--Selecione uma Interface</mat-option>

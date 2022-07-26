@@ -3,9 +3,15 @@ table {
     
 }
 
+.tabela {
+    overflow-y: auto;
+    max-height: 65vh;
+}
+  
 mat-card {
+    max-height: 100vh;
     border-top: 3px solid #3f51b5;
-    max-height: 80vh;
+    
 }
 
 mat-card-title {
@@ -40,7 +46,3 @@ mat-form-field {
     width: 100%;
 }
 
-.tabela {
-    max-height: 68vh;
-    overflow-y: auto;
-}

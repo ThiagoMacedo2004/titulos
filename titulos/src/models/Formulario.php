@@ -10,15 +10,28 @@ class Formulario extends Sql {
         
     }
 
-    public function getFornecedores() {
+    public function getFornecedores($id_datasul)
+    {
+        if(!$id_datasul || $id_datasul == '') {
+            $result = $this->sql->select(
+                "SELECT f.*, dt.*, dt.id as id_ds, id_fornecedor FROM fornecedores f
+                inner join datasul dt on (f.id_datasul = dt.id)
+                order by nome_fornecedor ASC"
+            );
+    
+           return $result;
+        }
 
         $result = $this->sql->select(
             "SELECT f.*, dt.*, dt.id as id_ds, id_fornecedor FROM fornecedores f
             inner join datasul dt on (f.id_datasul = dt.id)
+            WHERE dt.id =" . intval($id_datasul) . "
             order by nome_fornecedor ASC"
         );
 
        return $result;
+
+        
     }
 
     public function getDatasul()
@@ -39,6 +52,32 @@ class Formulario extends Sql {
 
     }
 
+    public function getItens($data)
+    {
+        if(!$data->id_datasul) {
+            $result = $this->sql->select("SELECT i.*, dt.nome_interface, f.cod_fornecedor, f.nome_fornecedor FROM itens i
+                INNER JOIN datasul dt     on (dt.id = i.id_ds)
+                INNER JOIN fornecedores f on (f.id_fornecedor = i.id_fn)
+                WHERE i.id_ds = dt.id AND i.id_fn = f.id_fornecedor",
+            );
+
+            return $result;
+
+        }
+
+        $result = $this->sql->select("SELECT i.*, dt.nome_interface, f.cod_fornecedor, f.nome_fornecedor FROM itens i
+                INNER JOIN datasul dt     on (dt.id = :id_datasul)
+                INNER JOIN fornecedores f on (f.id_fornecedor = :id_fornecedor)
+                WHERE i.id_ds = :id_datasul AND i.id_fn = :id_fornecedor",[
+                    ':id_datasul'    => intval($data->id_datasul),
+                    ':id_fornecedor' => intval($data->id_fornecedor)
+                ]
+            );
+
+        return $result;
+        
+    }
+
     public function setFornecedor($data)
     {
         $result = $this->sql->query("INSERT INTO fornecedores (cod_fornecedor, nome_fornecedor, cnpj_fornecedor, id_datasul)
@@ -51,6 +90,32 @@ class Formulario extends Sql {
         );
 
       
+        return $result;
+    }
+
+    public function setContaFluxo($data)
+    {
+        $result = $this->sql->query("INSERT INTO contas_fluxo (nome_cf, num_cf, id_ds)
+            VALUES(:nome_cf, :num_cf, :id_ds)", [
+                ':nome_cf' =>  trim($data->nome_cf),
+                ':num_cf'  =>  $data->num_cf,
+                ':id_ds'   =>  $data->id_datasul
+            ]
+        );
+
+        return $result;
+    }
+
+    public function setItem($data)
+    {
+        $result = $this->sql->query("INSERT INTO itens (nome_item, id_fn, id_ds)
+            VALUES(:nome_item, :id_fn, :id_ds)", [
+                'nome_item' => $data->nome_item,
+                ':id_fn'    => intval($data->id_fn),
+                ':id_ds'    => intval($data->id_ds)
+            ]
+        );
+
         return $result;
     }
 }

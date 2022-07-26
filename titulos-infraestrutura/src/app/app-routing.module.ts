@@ -1,3 +1,4 @@
+import { CadastroItemComponent } from './titulos/itens/cadastro-item/cadastro-item.component';
 import { ItensComponent } from './titulos/itens/itens.component';
 import { CadastrarContaFluxoComponent } from './titulos/contas-fluxo/cadastrar-conta-fluxo/cadastrar-conta-fluxo.component';
 import { ContasFluxoComponent } from './titulos/contas-fluxo/contas-fluxo.component';
@@ -38,7 +39,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'cadastro-item', component: CadastrarFornecedorComponent
+    path: 'cadastrar-item', component: CadastroItemComponent
   }
 
 ];

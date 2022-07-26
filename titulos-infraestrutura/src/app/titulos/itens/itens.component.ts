@@ -1,6 +1,6 @@
 import { MatTableDataSource } from '@angular/material/table';
-import { FormGroup, FormBuilder, RequiredValidator, Validators } from '@angular/forms';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder, RequiredValidator, Validators, FormControl } from '@angular/forms';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { TitulosServicesService } from '../services/titulos-services.service';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort, Sort } from '@angular/material/sort';
@@ -10,14 +10,16 @@ import { MatSort, Sort } from '@angular/material/sort';
   templateUrl: './itens.component.html',
   styleUrls: ['./itens.component.css']
 })
-export class ItensComponent implements OnInit {
+export class ItensComponent implements OnInit, AfterViewInit{
 
-  displayedColumns: string[] = ['id_item', 'nome_item', 'nome_fornecedor', 'nome_interface']
+  displayedColumns: string[] = ['id_item', 'nome_item', 'nome_fornecedor', 'nome_interface', 'acao']
   formGroup       : FormGroup
-  dataSource      = new MatTableDataSource()
-  datasul         : any[] = []
-  fornecedores    : any[] = []
-  result          : any[] = []
+  id_fornecedor   = new FormControl({value: ''}, Validators.required) 
+  dataSource      = new MatTableDataSource<Itens>()
+  datasul         : any = []
+  fornecedores    : any = []
+  result          : any = []
+  mostrarCard     : boolean = false
 
   constructor(
     private _services: TitulosServicesService,
@@ -25,36 +27,55 @@ export class ItensComponent implements OnInit {
     private _liveAnnouncer: LiveAnnouncer,
   ) { }
 
-  @ViewChild(MatSort) sort: MatSort;
+  private sort: MatSort;
+
+
+  @ViewChild(MatSort) set matSort(ms: MatSort) {
+    this.sort = ms;
+    this.setDataSourceAttributes();
+  }
+
+  setDataSourceAttributes() {
+    this.dataSource.sort = this.sort;
+  }
 
   ngOnInit(): void {
     this.formulario()
     this.getInterface()
-    this.getFornecedores()
+    this.getItens()
+    
+    this.id_fornecedor.reset({value: '', disabled: true})
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource = new MatTableDataSource<Itens>(this.result)
+    console.log(this.dataSource)
+    this.dataSource.sort = this.sort;
   }
 
 
   formulario() {
     this.formGroup = this._fb.group({
       id_datasul    : ['', Validators.required],
-      id_fornecedor : ['', Validators.required]
+      id_fornecedor : this.id_fornecedor
     })
   }
 
   getItens() {
     const obj = this.formGroup.value
     this._services.getItens(JSON.stringify(obj)).subscribe(
-      (data:object[]) => {
+      (data:Itens) => {
         this.resultData(data)
+        this.dataSource.sort = this.sort;
       }
     )
 
   }
 
   resultData(data) {
-    this.result     = data
-    this.dataSource = new MatTableDataSource(this.result)
-    this.dataSource.sort = this.sort;
+    this.result     = data    
+    this.ngAfterViewInit()
+    this.mostrarCard = true
   }
 
   getInterface() {
@@ -65,18 +86,39 @@ export class ItensComponent implements OnInit {
     )
   }
 
-  getFornecedores() {
-    this._services.getFornecedores().subscribe(
+  changeInterface(evento: any){
+    // 
+    if(evento.value){
+      this.getFornecedores(evento.value)
+    }
+
+    if(!evento.value){
+      this.id_fornecedor.reset({value: '', disabled: true})
+    } else {
+      this.id_fornecedor.reset({value: '', disabled: false})
+    }
+  }
+
+  getFornecedores(id_datasul) {
+    this._services.getFornecedores(id_datasul).subscribe(
       (data:any) => {
         this.fornecedores = data
-        console.log(this.fornecedores)
       }
     )
+  }
+
+  
+  limparFiltro() {
+    this.formGroup.reset()
+    this.result = ''
+    // this.mostrarCard = false
+    this.getItens()
   }
 
  
 
   announceSortChange(sortState: Sort) {
+    console.log('teste')
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
     } else {
@@ -93,6 +135,11 @@ export class ItensComponent implements OnInit {
     }
   }
 
+}
 
-
+export interface Itens {
+  id_item         : number,
+  nome_item       : string,
+  nome_fornecedor : string,
+  nome_interface  : string,
 }

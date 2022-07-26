@@ -1,1 +1,30 @@
-<p>cadastro-item works!</p>
+<mat-card>
+    <mat-card-title>Cadastro de Item</mat-card-title>
+    <mat-card-subtitle>informe os dados do novo Item</mat-card-subtitle>
+    <mat-card-content style="margin-top: 30px">
+        <form [formGroup]="formGroup">
+            <mat-form-field appearance="outline">
+                <mat-label>Datasul</mat-label>
+                <mat-select formControlName="id_ds" (selectionChange)="changeInterface($event)">
+                    <mat-option *ngFor="let item of datasul" [value]="item.id">{{ item.nome_interface }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Fornecedor</mat-label>
+                <mat-select formControlName="id_fn">
+                    <mat-option *ngFor="let item of fornecedores" [value]="item.id_fornecedor">{{ item.nome_fornecedor }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Item</mat-label>
+                <input matInput formControlName="nome_item" type="text">
+            </mat-form-field>
+        </form>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-button color="primary"(click)="cadastrarItem()" [disabled]="!formGroup.valid">Salvar</button>
+      <button mat-button color="warn" (click)="limparFormulario()">Limpar</button>
+    </mat-card-actions>
+</mat-card>
