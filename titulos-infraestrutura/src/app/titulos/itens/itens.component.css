@@ -44,12 +44,16 @@ mat-card-title span {
     margin-right: 10px;
 }
 
+mat-card-subtitle {
+    margin-bottom: 0;
+}
+
 table {
     width: 100%;
     
 }
 
 .tabela {
-    max-height: 48vh;
+    max-height: 47vh;
     overflow-y: auto;
 }

@@ -19,6 +19,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
 import { TextMaskModule } from 'angular2-text-mask';
+import {MatDialogModule} from '@angular/material/dialog';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -32,6 +33,8 @@ import { ContasFluxoComponent } from './titulos/contas-fluxo/contas-fluxo.compon
 import { CadastrarContaFluxoComponent } from './titulos/contas-fluxo/cadastrar-conta-fluxo/cadastrar-conta-fluxo.component';
 import { ItensComponent } from './titulos/itens/itens.component';
 import { CadastroItemComponent } from './titulos/itens/cadastro-item/cadastro-item.component';
+import { CadastrarTituloComponent } from './titulos/lista-titulos/cadastrar-titulo/cadastrar-titulo.component';
+import { DialogFornecedorComponent } from './titulos/dialogs/dialog-fornecedor/dialog-fornecedor.component';
 
 
 @NgModule({
@@ -46,7 +49,9 @@ import { CadastroItemComponent } from './titulos/itens/cadastro-item/cadastro-it
     ContasFluxoComponent,
     CadastrarContaFluxoComponent,
     ItensComponent,
-    CadastroItemComponent
+    CadastroItemComponent,
+    CadastrarTituloComponent,
+    DialogFornecedorComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +75,8 @@ import { CadastroItemComponent } from './titulos/itens/cadastro-item/cadastro-it
     MatTabsModule,
     MatCheckboxModule,
     MatSelectModule,
-    TextMaskModule
+    TextMaskModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,54 @@
+<mat-card>
+    <mat-card-title>Cadastrar novo Título</mat-card-title>
+    <mat-card-subtitle>informe os dados do Título</mat-card-subtitle>
+    <mat-card-content style="margin-top: 30px">
+        <form [formGroup]="formGroup">
+            <div class="row">
+                <mat-form-field class="datasul" appearance="outline">
+                    <mat-label>Datasul</mat-label>
+                    <mat-select formControlName="id_ds" (selectionChange)="changeInterface($event)" [(ngModel)]="dados.id_datasul">
+                        <mat-option *ngFor="let item of datasul" value="{{item.id}}">{{ item.nome_interface }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+    
+                
+                <mat-form-field class="fornecedor" appearance="outline">
+                    <mat-label>Fornecedor</mat-label>
+                    <input matInput formControlName="id_fn" type="text" (click)="selecionarFornecedor()" [(ngModel)]="dados.value">
+                    <button *ngIf="dados.value != 'Selecione um Fornecedor'" matSuffix mat-icon-button >
+                        <mat-icon (click)="dados.value = 'Selecione um Fornecedor'" >close</mat-icon>
+                    </button>
+
+                    <button *ngIf="dados.value == 'Selecione um Fornecedor'" matSuffix mat-icon-button >
+                        <mat-icon (click)="selecionarFornecedor()" color="primary">search</mat-icon>
+                    </button>
+                </mat-form-field>
+    
+            </div>
+
+            <div class="row">
+                <mat-form-field class="row-2" appearance="outline">
+                    <mat-label>Item</mat-label>
+                    <input matInput formControlName="id_item" type="text">
+                    <mat-icon mat-icon-button matSuffix>search</mat-icon>
+                </mat-form-field>
+    
+                <mat-form-field class="row-2" appearance="outline">
+                    <mat-label>Conta Fluxo</mat-label>
+                    <input matInput formControlName="id_cf" type="text">
+                    <mat-icon matSuffix>search</mat-icon>
+                </mat-form-field>
+    
+                <mat-form-field class="row-2" appearance="outline">
+                    <mat-label>Valor</mat-label>
+                    <input matInput formControlName="valor" type="text">
+                </mat-form-field>
+            </div>
+
+        </form>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-button color="primary" [disabled]="!formGroup.valid">Salvar</button>
+      <button mat-button color="warn" >Limpar</button>
+    </mat-card-actions>
+</mat-card>

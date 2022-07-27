@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>Selecione o Fornecedor</h1>
+<h3>Interface: {{ datasul }}</h3>
+<div mat-dialog-content>
+    <table>
+        <thead>
+            <th>COD FORNECEDOR</th>
+            <th>FORNECEDOR</th>
+            <th>CNPJ</th>
+            <th></th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of fornecedores" >
+                <td>{{ item.cod_fornecedor }}</td>
+                <td>{{ item.nome_fornecedor }}</td>
+                <td>{{ item.cnpj_fornecedor }}</td>
+                <td >
+                    <button [mat-dialog-close]="item" mat-button color="primary" cdkFocusInitial>
+                        <mat-icon>check</mat-icon>
+                    </button>
+                </td>
+                
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="fechar()">Fechar</button>
+</div>
+

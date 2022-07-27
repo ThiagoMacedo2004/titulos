@@ -109,6 +109,7 @@ export class ItensComponent implements OnInit, AfterViewInit{
 
   
   limparFiltro() {
+    this.changeInterface(this.formGroup.value.id_fornecedor = '')
     this.formGroup.reset()
     this.result = ''
     // this.mostrarCard = false
