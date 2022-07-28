@@ -2,6 +2,10 @@ table {
     width: 100%;
 }
 
+table thead {
+  text-align: left;
+}
+
 h1 {
     margin-bottom: 0;
 }

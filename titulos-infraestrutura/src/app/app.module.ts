@@ -35,6 +35,7 @@ import { ItensComponent } from './titulos/itens/itens.component';
 import { CadastroItemComponent } from './titulos/itens/cadastro-item/cadastro-item.component';
 import { CadastrarTituloComponent } from './titulos/lista-titulos/cadastrar-titulo/cadastrar-titulo.component';
 import { DialogFornecedorComponent } from './titulos/dialogs/dialog-fornecedor/dialog-fornecedor.component';
+import { DialogItemComponent } from './titulos/dialogs/dialog-item/dialog-item.component';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import { DialogFornecedorComponent } from './titulos/dialogs/dialog-fornecedor/d
     ItensComponent,
     CadastroItemComponent,
     CadastrarTituloComponent,
-    DialogFornecedorComponent
+    DialogFornecedorComponent,
+    DialogItemComponent
   ],
   imports: [
     BrowserModule,

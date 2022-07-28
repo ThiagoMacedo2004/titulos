@@ -13,12 +13,17 @@ form {
 }
 
 .row .datasul {
-    width: 38%;
+    width: 32%;
 }
 
 .row .fornecedor {
-    width: 60%;
+    width: 45%;
 }
+
+.cod_fornecedor {
+  width: 19%;
+}
+
 
 .row-2 {
     width: 32%;

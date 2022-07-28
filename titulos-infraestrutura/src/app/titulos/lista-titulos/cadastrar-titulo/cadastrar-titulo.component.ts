@@ -1,3 +1,4 @@
+import { DialogItemComponent } from './../../dialogs/dialog-item/dialog-item.component';
 import { DialogFornecedorComponent } from './../../dialogs/dialog-fornecedor/dialog-fornecedor.component';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -14,9 +15,12 @@ import { TitulosServicesService } from '../../services/titulos-services.service'
 export class CadastrarTituloComponent implements OnInit {
 
   formGroup       : FormGroup
-  id_fn           = new FormControl({value: ''}, Validators.required) 
+  id_fn           = new FormControl({value: ''}, Validators.required)
+  cod_forn        = new FormControl({value: ''}, Validators.required)
+  id_item         = new FormControl({value: ''}, Validators.required)
   datasul         : any = []
   fornecedores    : any = []
+  itens           : any = []
   result          : any = []
   dados           : any = {}
 
@@ -32,13 +36,16 @@ export class CadastrarTituloComponent implements OnInit {
     this.getInterface()
     this.dadosObj()
     this.id_fn.reset({value: '', disabled: true})
+    this.cod_forn.reset({value: '', disabled: true})
+    this.id_item.reset({value: '', disabled: true})
   }
 
   formulario() {
     this.formGroup = this._fb.group({
       id_ds   : ['', Validators.required],
       id_fn   : this.id_fn,
-      id_item : ['', Validators.required],
+      cod_forn: this.cod_forn,
+      id_item : this.id_item,
       id_cf   : ['', Validators.required],
       valor   : ['', Validators.required]
     })
@@ -48,8 +55,9 @@ export class CadastrarTituloComponent implements OnInit {
 
     if(evento.value){
       this.getFornecedores(evento.value)
-      this.dados.id_ds = evento.value
-      
+      this.dados.id_ds          = evento.value
+      this.dados.cod_fornecedor = ''
+      this.dados.nome_item      = ''
     }
 
     // if(!evento.value){
@@ -78,13 +86,16 @@ export class CadastrarTituloComponent implements OnInit {
     this._dialog.open(DialogFornecedorComponent, {
       data: {
         obj    : this.fornecedores,
-        datasul: datasul 
-      }
+        datasul: datasul
+      },
+      width:'50%'
     }).afterClosed().subscribe(
       (response) => {
         console.log(response)
         if(response) {
-          this.dados.value = response.nome_fornecedor
+          this.dados.value          = response.nome_fornecedor
+          this.dados.cod_fornecedor = response.cod_fornecedor
+          this.dados.id_fornecedor  = response.id_fornecedor
         } else {
           this.dados.value = 'Selecione um Fornecedor'
         }
@@ -96,14 +107,47 @@ export class CadastrarTituloComponent implements OnInit {
     this._services.getDatasul().subscribe(
       (data:any) => {
         this.datasul = data
-        
+
       }
     )
   }
 
+  getItens() {
+    const obj = {
+      id_datasul    : this.dados.id_datasul,
+      id_fornecedor : this.dados.id_fornecedor
+    }
+
+    this._services.getItens(JSON.stringify(obj)).subscribe(
+      (response) => {
+        console.log(response)
+        this.selectItem(response)
+      }
+    )
+  }
+
+
+  selectItem(data) {
+    this.itens = data
+    this._dialog.open(DialogItemComponent, {
+      data: {
+        obj: this.itens
+      },
+      width: '50%'
+    }).afterClosed().subscribe(
+      (result) => {
+        this.dados.nome_item = result.nome_item
+      }
+    )
+  }
+
+
   dadosObj() {
-    this.dados.id_datasul = ''
-    this.dados.value      = 'Selecione um Fornecedor'
+    this.dados.id_datasul     = ''
+    this.dados.id_fornecedor  = ''
+    this.dados.cod_fornecedor = 'Selecione um Fornecedor'
+    this.dados.nome_item      = ''
+    this.dados.value          = 'Selecione um Fornecedor'
   }
 
 }
