@@ -1,3 +1,4 @@
+import { DialogContaFluxoComponent } from './../../dialogs/dialog-conta-fluxo/dialog-conta-fluxo.component';
 import { DialogItemComponent } from './../../dialogs/dialog-item/dialog-item.component';
 import { DialogFornecedorComponent } from './../../dialogs/dialog-fornecedor/dialog-fornecedor.component';
 import { Component, OnInit } from '@angular/core';
@@ -15,12 +16,16 @@ import { TitulosServicesService } from '../../services/titulos-services.service'
 export class CadastrarTituloComponent implements OnInit {
 
   formGroup       : FormGroup
+  mask            =  [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.',/\d/, /\d/, ',' ,/\d/, /\d/]
+  myModel         : number
   id_fn           = new FormControl({value: ''}, Validators.required)
   cod_forn        = new FormControl({value: ''}, Validators.required)
   id_item         = new FormControl({value: ''}, Validators.required)
+  id_cf           = new FormControl({value: ''}, Validators.required)
   datasul         : any = []
   fornecedores    : any = []
   itens           : any = []
+  contas          : any = []
   result          : any = []
   dados           : any = {}
 
@@ -35,9 +40,10 @@ export class CadastrarTituloComponent implements OnInit {
     this.formulario()
     this.getInterface()
     this.dadosObj()
-    this.id_fn.reset({value: '', disabled: true})
+    // this.id_fn.reset({value: '', disabled: true})
     this.cod_forn.reset({value: '', disabled: true})
     this.id_item.reset({value: '', disabled: true})
+    this.id_cf.reset({value: '', disabled: true})
   }
 
   formulario() {
@@ -46,7 +52,7 @@ export class CadastrarTituloComponent implements OnInit {
       id_fn   : this.id_fn,
       cod_forn: this.cod_forn,
       id_item : this.id_item,
-      id_cf   : ['', Validators.required],
+      id_cf   : this.id_cf,
       valor   : ['', Validators.required]
     })
   }
@@ -58,6 +64,7 @@ export class CadastrarTituloComponent implements OnInit {
       this.dados.id_ds          = evento.value
       this.dados.cod_fornecedor = ''
       this.dados.nome_item      = ''
+      this.dados.contaFluxo     = ''
     }
 
     // if(!evento.value){
@@ -88,7 +95,7 @@ export class CadastrarTituloComponent implements OnInit {
         obj    : this.fornecedores,
         datasul: datasul
       },
-      width:'50%'
+      width:'65%'
     }).afterClosed().subscribe(
       (response) => {
         console.log(response)
@@ -133,13 +140,38 @@ export class CadastrarTituloComponent implements OnInit {
       data: {
         obj: this.itens
       },
-      width: '50%'
+      width: '65%'
     }).afterClosed().subscribe(
       (result) => {
         this.dados.nome_item = result.nome_item
       }
     )
   }
+
+  getContasFluxo() {
+    this._services.getContasFluxo(this.dados.id_datasul).subscribe(
+      (data) => {
+        console.log(data)
+        this.selectConta(data)
+      }
+    )
+  }
+
+  selectConta(data) {
+    this.contas = data
+    this._dialog.open(DialogContaFluxoComponent, {
+      data: {
+        obj: this.contas
+      },
+      width: '55%'
+    }).afterClosed().subscribe(
+      (result) => {
+        this.dados.contaFluxo = `${result.num_cf} - ${result.nome_cf}`
+      }
+    )
+  }
+
+ 
 
 
   dadosObj() {
@@ -148,6 +180,7 @@ export class CadastrarTituloComponent implements OnInit {
     this.dados.cod_fornecedor = 'Selecione um Fornecedor'
     this.dados.nome_item      = ''
     this.dados.value          = 'Selecione um Fornecedor'
+    this.dados.contaFluxo     = ''
   }
 
 }

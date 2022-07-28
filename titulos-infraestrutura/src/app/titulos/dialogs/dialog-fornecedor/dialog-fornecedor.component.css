@@ -9,3 +9,16 @@ table thead {
 h1 {
     margin-bottom: 0;
 }
+
+tbody tr {
+    vertical-align: middle;
+}
+
+tr td:last-child {
+    text-align: end;
+    
+}
+
+thead th:last-child {
+    text-align: end;
+}

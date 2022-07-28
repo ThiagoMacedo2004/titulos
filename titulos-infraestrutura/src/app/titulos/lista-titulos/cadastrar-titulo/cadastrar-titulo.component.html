@@ -14,20 +14,14 @@
 
                 <mat-form-field class="fornecedor" appearance="outline">
                     <mat-label>Fornecedor</mat-label>
-
-                    <button *ngIf="dados.value != 'Selecione um Fornecedor'" matSuffix mat-icon-button color="warn" cdkFocusInitial>
-                        <mat-icon cdkFocusInitial
-                          (click)="[dados.value = 'Selecione um Fornecedor',
-                                    dados.cod_fornecedor = '',
-                                    dados.nome_item = '']" >close
-                        </mat-icon>
+                    <button *ngIf="dados.value != 'Selecione um Fornecedor'"
+                        (click)="[dados.value = 'Selecione um Fornecedor', dados.cod_fornecedor = '',dados.nome_item = '']" matSuffix mat-icon-button color="warn" cdkFocusInitial>
+                        <mat-icon cdkFocusInitial>close</mat-icon>
                     </button>
-
-                    <button *ngIf="dados.value == 'Selecione um Fornecedor'" matSuffix mat-icon-button color="primary" cdkFocusInitial >
-                        <mat-icon cdkFocusInitial *ngIf="dados.id_datasul" (click)="selecionarFornecedor()" color="primary" class="icon-search"  >search</mat-icon>
+                    <button *ngIf="dados.value == 'Selecione um Fornecedor'" (click)="selecionarFornecedor()" matSuffix mat-icon-button color="primary" cdkFocusInitial >
+                        <mat-icon cdkFocusInitial *ngIf="dados.id_datasul"  color="primary" class="icon-search"  >search</mat-icon>
                     </button>
-
-                    <input matInput formControlName="id_fn" type="text" (click)="selecionarFornecedor()" [(ngModel)]="dados.value">
+                    <input matInput formControlName="id_fn" type="text" (click)="selecionarFornecedor()" [(ngModel)]="dados.value" readonly>
                 </mat-form-field>
 
                 <mat-form-field class="cod_fornecedor" appearance="outline">
@@ -41,20 +35,22 @@
                 <mat-form-field class="row-2" appearance="outline">
                     <mat-label>Item</mat-label>
                     <input matInput formControlName="id_item" type="text" [(ngModel)]="dados.nome_item">
-                    <button *ngIf="dados.value != 'Selecione um Fornecedor'" mat-icon-button matSuffix color="primary">
-                      <mat-icon mat-icon-button matSuffix (click)="getItens()">search</mat-icon>
+                    <button *ngIf="dados.value != 'Selecione um Fornecedor'" (click)="getItens()" mat-icon-button matSuffix color="primary">
+                      <mat-icon mat-icon-button matSuffix>search</mat-icon>
                     </button>
                 </mat-form-field>
 
                 <mat-form-field class="row-2" appearance="outline">
                     <mat-label>Conta Fluxo</mat-label>
-                    <input matInput formControlName="id_cf" type="text">
-                    <mat-icon matSuffix>search</mat-icon>
+                    <input matInput formControlName="id_cf" type="text" [(ngModel)]="dados.contaFluxo">
+                    <button *ngIf="dados.value != 'Selecione um Fornecedor'" (click)="getContasFluxo()" mat-icon-button matSuffix color="primary">
+                        <mat-icon mat-icon-button matSuffix>search</mat-icon>
+                    </button>
                 </mat-form-field>
 
                 <mat-form-field class="row-2" appearance="outline">
                     <mat-label>Valor</mat-label>
-                    <input matInput formControlName="valor" type="text">
+                    <input matInput formControlName="valor" [(ngModel)]="myModel">
                 </mat-form-field>
             </div>
 

@@ -1,0 +1,48 @@
+<h1 mat-dialog-title>Selecione a Conta Fluxo</h1>
+<div mat-dialog-content>
+    <mat-form-field appearance="standard">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+    </mat-form-field>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z1">
+      
+        
+        <ng-container matColumnDef="num_cf">
+          <th mat-header-cell *matHeaderCellDef> CONTA FLUXO </th>
+          <td mat-cell *matCellDef="let conta"> {{conta.num_cf}} </td>
+        </ng-container>
+      
+        
+        <ng-container matColumnDef="nome_cf">
+          <th mat-header-cell *matHeaderCellDef> NOME CONTA </th>
+          <td mat-cell *matCellDef="let conta"> {{conta.nome_cf}} </td>
+        </ng-container>
+      
+        
+        <ng-container matColumnDef="nome_interface">
+          <th mat-header-cell *matHeaderCellDef> DATASUL </th>
+          <td mat-cell *matCellDef="let conta"> {{conta.nome_interface}} </td>
+        </ng-container>
+      
+        
+        <ng-container matColumnDef="acao">
+          <th mat-header-cell *matHeaderCellDef> SELECIONE </th>
+          <td mat-cell *matCellDef="let conta">
+                <button [mat-dialog-close]="conta" mat-button color="primary">
+                    <mat-icon>check</mat-icon>
+                </button>
+          </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+        </tr>
+    </table>
+</div>
+<div mat-dialog-actions align="end">
+    <button mat-button (click)="fechar()" cdkFocusInitial>Fechar</button>
+</div>

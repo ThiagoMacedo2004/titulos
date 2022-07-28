@@ -31,10 +31,11 @@ export class TitulosServicesService {
       })
   }
 
-  public getContasFluxo() {
+  public getContasFluxo(id_datasul = '0') {
     return this.http.get(this.URL,{
       params: {
-        acao: 'getContasFluxo'
+        acao       : 'getContasFluxo',
+        id_ds      : id_datasul
       }
     })
   }

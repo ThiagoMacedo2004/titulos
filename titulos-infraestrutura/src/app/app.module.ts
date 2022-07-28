@@ -36,6 +36,7 @@ import { CadastroItemComponent } from './titulos/itens/cadastro-item/cadastro-it
 import { CadastrarTituloComponent } from './titulos/lista-titulos/cadastrar-titulo/cadastrar-titulo.component';
 import { DialogFornecedorComponent } from './titulos/dialogs/dialog-fornecedor/dialog-fornecedor.component';
 import { DialogItemComponent } from './titulos/dialogs/dialog-item/dialog-item.component';
+import { DialogContaFluxoComponent } from './titulos/dialogs/dialog-conta-fluxo/dialog-conta-fluxo.component';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { DialogItemComponent } from './titulos/dialogs/dialog-item/dialog-item.c
     CadastroItemComponent,
     CadastrarTituloComponent,
     DialogFornecedorComponent,
-    DialogItemComponent
+    DialogItemComponent,
+    DialogContaFluxoComponent
   ],
   imports: [
     BrowserModule,
@@ -78,7 +80,7 @@ import { DialogItemComponent } from './titulos/dialogs/dialog-item/dialog-item.c
     MatCheckboxModule,
     MatSelectModule,
     TextMaskModule,
-    MatDialogModule
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

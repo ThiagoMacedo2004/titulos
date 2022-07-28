@@ -5,3 +5,16 @@ table {
 table thead {
 text-align: left;
 }
+
+tbody tr {
+  vertical-align: middle;
+}
+
+tr td:last-child {
+  text-align: end;
+  
+}
+
+thead th:last-child {
+  text-align: end;
+}

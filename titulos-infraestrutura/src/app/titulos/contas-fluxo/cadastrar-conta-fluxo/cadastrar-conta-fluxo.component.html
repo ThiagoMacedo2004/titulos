@@ -16,7 +16,7 @@
             <mat-form-field appearance="fill">
                 <mat-label>Datasul</mat-label>
                 <mat-select formControlName="id_datasul">
-                    <mat-option value="">--Selecione uma Interface</mat-option>
+                    <mat-option value="">--Selecione uma Interface--</mat-option>
                     <mat-option *ngFor="let item of result" [value]="item.id">{{ item.nome_interface }}</mat-option>
                 </mat-select>
             </mat-form-field>

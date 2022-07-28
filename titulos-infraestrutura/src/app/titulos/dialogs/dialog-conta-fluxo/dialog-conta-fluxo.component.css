@@ -1,0 +1,16 @@
+table {
+    width: 100%;
+}
+
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+
+tr td:last-child {
+    text-align: end;
+}
+
+th:last-child {
+    text-align: end;
+}

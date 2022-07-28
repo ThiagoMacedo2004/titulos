@@ -1,24 +1,24 @@
 <h1 mat-dialog-title>Selecione o Item</h1>
 
 <div mat-dialog-content>
-    <table>
-        <thead>
+    <table class="table table-sm table-striped">
+        <thead class="thead-light">
             <th>ITEM</th>
             <th>FORNECEDOR</th>
             <th>DATASUL</th>
             <th>SELECIONE</th>
         </thead>
         <tbody>
-          <tr *ngFor="let item of itens" >
-            <td>{{ item.nome_item }}</td>
-            <td>{{ item.nome_fornecedor }} ({{ item.cod_fornecedor }})</td>
-            <td>{{ item.nome_interface }}</td>
-            <td >
-                <button [mat-dialog-close]="item" mat-button color="primary">
-                    <mat-icon>check</mat-icon>
-                </button>
-            </td>
-          </tr>
+            <tr *ngFor="let item of itens" >
+                <th>{{ item.nome_item }}</th>
+                <td>{{ item.nome_fornecedor }} ({{ item.cod_fornecedor }})</td>
+                <td>{{ item.nome_interface }}</td>
+                <td >
+                    <button [mat-dialog-close]="item" mat-button color="primary">
+                        <mat-icon>check</mat-icon>
+                    </button>
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>

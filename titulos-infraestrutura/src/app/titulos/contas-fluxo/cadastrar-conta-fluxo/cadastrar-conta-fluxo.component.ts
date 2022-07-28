@@ -36,7 +36,7 @@ export class CadastrarContaFluxoComponent implements OnInit {
     })
   }
 
-  mascara(input: KeyboardEvent ) {
+  mascara(input: KeyboardEvent ) {
     // console.log(input.key)
     // this.myModel = input.value
     return this.mask
