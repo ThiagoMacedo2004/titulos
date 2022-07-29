@@ -24,7 +24,7 @@ switch($_GET['acao'])
         break;
 
     case 'getContasFluxo':
-        $result = $formulario->getContasFluxo();
+        $result = $formulario->getContasFluxo($_GET['id_ds']);
         echo json_encode($result);
         break;
 

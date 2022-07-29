@@ -17,7 +17,7 @@ export class CadastrarTituloComponent implements OnInit {
 
   formGroup       : FormGroup
   mask            =  [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.',/\d/, /\d/, ',' ,/\d/, /\d/]
-  myModel         : number
+  myModel         : string
   id_fn           = new FormControl({value: ''}, Validators.required)
   cod_forn        = new FormControl({value: ''}, Validators.required)
   id_item         = new FormControl({value: ''}, Validators.required)
@@ -28,6 +28,10 @@ export class CadastrarTituloComponent implements OnInit {
   contas          : any = []
   result          : any = []
   dados           : any = {}
+  formularioSend  : any = {}
+  listaItensPg    : any[] = []
+  listaItensPgView: any[] = []
+  valoresitens    : any
 
 
   constructor(
@@ -44,6 +48,7 @@ export class CadastrarTituloComponent implements OnInit {
     this.cod_forn.reset({value: '', disabled: true})
     this.id_item.reset({value: '', disabled: true})
     this.id_cf.reset({value: '', disabled: true})
+    
   }
 
   formulario() {
@@ -58,13 +63,13 @@ export class CadastrarTituloComponent implements OnInit {
   }
 
   changeInterface(evento: any){
-
     if(evento.value){
       this.getFornecedores(evento.value)
       this.dados.id_ds          = evento.value
       this.dados.cod_fornecedor = ''
       this.dados.nome_item      = ''
       this.dados.contaFluxo     = ''
+      this.formularioSend.id_datasul = evento.value
     }
 
     // if(!evento.value){
@@ -100,9 +105,10 @@ export class CadastrarTituloComponent implements OnInit {
       (response) => {
         console.log(response)
         if(response) {
-          this.dados.value          = response.nome_fornecedor
-          this.dados.cod_fornecedor = response.cod_fornecedor
-          this.dados.id_fornecedor  = response.id_fornecedor
+          this.dados.value                   = response.nome_fornecedor
+          this.dados.cod_fornecedor          = response.cod_fornecedor
+          this.dados.id_fornecedor           = response.id_fornecedor
+          this.formularioSend.id_fornecedor  = response.id_fornecedor
         } else {
           this.dados.value = 'Selecione um Fornecedor'
         }
@@ -143,7 +149,9 @@ export class CadastrarTituloComponent implements OnInit {
       width: '65%'
     }).afterClosed().subscribe(
       (result) => {
-        this.dados.nome_item = result.nome_item
+        console.log(result)
+        this.dados.nome_item        = result.nome_item
+        this.formularioSend.id_item = result.id_item 
       }
     )
   }
@@ -167,20 +175,92 @@ export class CadastrarTituloComponent implements OnInit {
     }).afterClosed().subscribe(
       (result) => {
         this.dados.contaFluxo = `${result.num_cf} - ${result.nome_cf}`
+        this.formularioSend.id_cf   = result.id_cf
       }
     )
   }
 
+  mascaraMoeda() {
+    if(this.myModel == '0' || this.myModel == '') {
+      return 
+    }
+   
+    var x = this.myModel.replace('.', '')
+    var y = parseFloat(x) / 100
+    x = y.toFixed(2).toString()
+    this.myModel = x
+    this.formularioSend.valor_item = this.myModel
+  }
+
  
 
-
   dadosObj() {
-    this.dados.id_datasul     = ''
-    this.dados.id_fornecedor  = ''
-    this.dados.cod_fornecedor = 'Selecione um Fornecedor'
-    this.dados.nome_item      = ''
-    this.dados.value          = 'Selecione um Fornecedor'
-    this.dados.contaFluxo     = ''
+    this.dados.id_datasul          = ''
+    this.dados.id_fornecedor       = ''
+    this.dados.cod_fornecedor      = 'Selecione um Fornecedor'
+    this.dados.nome_item           = ''
+    this.dados.value               = 'Selecione um Fornecedor'
+    this.dados.contaFluxo          = ''
+    this.formularioSend.valor_item = ''
+    this.formularioSend.id_datasul = ''
+    this.formularioSend.id_fornecedor = ''
+    this.formularioSend.id_cf         = '' 
+    this.formularioSend.id_item = ''
+  }
+
+  salvarItemPagamento() {
+    const objBanco = {
+      id_datsul     : this.formularioSend.id_datasul,
+      id_fornecedor : this.formularioSend.id_fornecedor,
+      id_item       : this.formularioSend.id_item,
+      id_contaFluxo : this.formularioSend.id_cf,
+      valor_item    : this.formularioSend.valor_item
+    }
+
+    const objView = {
+      item_contaFluxo    : this.dados.contaFluxo,
+      item_valor         : this.formularioSend.valor_item
+    }
+
+    this.listaItensPagamento(objBanco, objView)
+  }
+
+  listaItensPagamento(objBanco:object, objView:object) {
+    this.listaItensPg.push(objBanco)
+    this.listaItensPgView.push(objView)
+    
+    var text = this.listaItensPgView.map(
+      (valor) =>{
+        var t = parseFloat(valor.item_valor).toFixed(2)
+        var n = parseFloat(t)
+        return n
+      } 
+    ).reduce((ant, atu) => ant + atu, 0).toFixed(2)
+    var num = parseFloat(text)
+    
+    this.valoresitens = num.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL'})
+
+    this.dados.contaFluxo = ''
+    this.formGroup.get('valor').reset()
+    this.formGroup.get('id_cf').reset()
+    console.log(this.listaItensPg)
+  }
+
+  removerValorPg(index) {
+    console.log(index)
+    var i = this.listaItensPgView.indexOf(index)
+    this.listaItensPgView.splice(i, 1)
+
+    var text = this.listaItensPgView.map(
+      (valor) =>{
+        var t = parseFloat(valor.item_valor).toFixed(2)
+        var n = parseFloat(t)
+        return n
+      } 
+    ).reduce((ant, atu) => ant + atu, 0).toFixed(2)
+    var num = parseFloat(text)
+    
+    this.valoresitens = num.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL'})
   }
 
 }

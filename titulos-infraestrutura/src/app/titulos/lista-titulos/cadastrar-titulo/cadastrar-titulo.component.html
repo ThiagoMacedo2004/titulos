@@ -6,8 +6,10 @@
             <div class="row">
                 <mat-form-field class="datasul" appearance="outline">
                     <mat-label>Datasul</mat-label>
-                    <mat-select formControlName="id_ds" (selectionChange)="changeInterface($event)" [(ngModel)]="dados.id_datasul">
-                        <mat-option *ngFor="let item of datasul" value="{{item.id}}">{{ item.nome_interface }}</mat-option>
+                    <mat-select formControlName="id_ds" (selectionChange)="changeInterface($event)"
+                        [(ngModel)]="dados.id_datasul">
+                        <mat-option *ngFor="let item of datasul" value="{{item.id}}">{{ item.nome_interface }}
+                        </mat-option>
                     </mat-select>
                 </mat-form-field>
 
@@ -15,18 +17,21 @@
                 <mat-form-field class="fornecedor" appearance="outline">
                     <mat-label>Fornecedor</mat-label>
                     <button *ngIf="dados.value != 'Selecione um Fornecedor'"
-                        (click)="[dados.value = 'Selecione um Fornecedor', dados.cod_fornecedor = '',dados.nome_item = '']" matSuffix mat-icon-button color="warn" cdkFocusInitial>
+                        (click)="[dados.value = 'Selecione um Fornecedor', dados.cod_fornecedor = '',dados.nome_item = '']"
+                        matSuffix mat-icon-button color="warn" cdkFocusInitial>
                         <mat-icon cdkFocusInitial>close</mat-icon>
                     </button>
-                    <button *ngIf="dados.value == 'Selecione um Fornecedor'" (click)="selecionarFornecedor()" matSuffix mat-icon-button color="primary" cdkFocusInitial >
-                        <mat-icon cdkFocusInitial *ngIf="dados.id_datasul"  color="primary" class="icon-search"  >search</mat-icon>
+                    <button *ngIf="dados.value == 'Selecione um Fornecedor'" (click)="selecionarFornecedor()" matSuffix
+                        mat-icon-button color="primary" cdkFocusInitial>
+                        <mat-icon cdkFocusInitial *ngIf="dados.id_datasul" color="primary" class="icon-search">search
+                        </mat-icon>
                     </button>
-                    <input matInput formControlName="id_fn" type="text" (click)="selecionarFornecedor()" [(ngModel)]="dados.value" readonly>
+                    <input matInput formControlName="id_fn" type="text" [(ngModel)]="dados.value" readonly>
                 </mat-form-field>
 
                 <mat-form-field class="cod_fornecedor" appearance="outline">
-                  <mat-label>Código do Fornecedor</mat-label>
-                  <input matInput type="text" formControlName="cod_forn" [(ngModel)]="dados.cod_fornecedor">
+                    <mat-label>Código do Fornecedor</mat-label>
+                    <input matInput type="text" formControlName="cod_forn" [(ngModel)]="dados.cod_fornecedor">
                 </mat-form-field>
 
             </div>
@@ -35,29 +40,61 @@
                 <mat-form-field class="row-2" appearance="outline">
                     <mat-label>Item</mat-label>
                     <input matInput formControlName="id_item" type="text" [(ngModel)]="dados.nome_item">
-                    <button *ngIf="dados.value != 'Selecione um Fornecedor'" (click)="getItens()" mat-icon-button matSuffix color="primary">
-                      <mat-icon mat-icon-button matSuffix>search</mat-icon>
+                    <button *ngIf="dados.value != 'Selecione um Fornecedor'" (click)="getItens()" mat-icon-button
+                        matSuffix color="primary">
+                        <mat-icon mat-icon-button matSuffix>search</mat-icon>
                     </button>
                 </mat-form-field>
 
                 <mat-form-field class="row-2" appearance="outline">
                     <mat-label>Conta Fluxo</mat-label>
                     <input matInput formControlName="id_cf" type="text" [(ngModel)]="dados.contaFluxo">
-                    <button *ngIf="dados.value != 'Selecione um Fornecedor'" (click)="getContasFluxo()" mat-icon-button matSuffix color="primary">
+                    <button *ngIf="dados.value != 'Selecione um Fornecedor'" (click)="getContasFluxo()" mat-icon-button
+                        matSuffix color="primary">
                         <mat-icon mat-icon-button matSuffix>search</mat-icon>
                     </button>
                 </mat-form-field>
 
                 <mat-form-field class="row-2" appearance="outline">
                     <mat-label>Valor</mat-label>
-                    <input matInput formControlName="valor" [(ngModel)]="myModel">
+                    <!-- <input matInput formControlName="valor" [(ngModel)]="myModel"> -->
+                    <input matInput formControlName="valor" [(ngModel)]="myModel" (keyup)="mascaraMoeda()"
+                        placeholder="Ex. ium" #input>
                 </mat-form-field>
             </div>
 
         </form>
     </mat-card-content>
-    <mat-card-actions align="end">
-      <button mat-button color="primary" [disabled]="!formGroup.valid">Salvar</button>
-      <button mat-button color="warn" >Limpar</button>
+    <mat-card-actions align="end" style="padding:0 ;">
+        <button mat-button color="primary" [disabled]="!formGroup.valid" (click)="salvarItemPagamento()">Salvar</button>
+        <button mat-button color="warn">Limpar</button>
     </mat-card-actions>
+</mat-card>
+
+<mat-card>
+    <mat-card-title>Valores</mat-card-title>
+    <mat-card-subtitle *ngIf="listaItensPgView.length == 0">Não há valores registrados para o título</mat-card-subtitle>
+    <mat-card-subtitle *ngIf="listaItensPgView.length != 0">Lista de valores do Título</mat-card-subtitle>
+
+    <mat-card-content class="content-table">
+        <table class="table table-sm table-striped" *ngIf="listaItensPgView.length != 0">
+            <thead class="thead-light">
+                <th>CONTA FLUXO</th>
+                <th>VALOR</th>
+                <th>AÇÃO</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let row of listaItensPgView">
+                    <td>{{ row.item_contaFluxo }}</td>
+                    <td>{{ row.item_valor }}</td>
+                    <td>
+                        <button mat-button color="warn" (click)="removerValorPg(row)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </mat-card-content>
+    <h2>{{ valoresitens }}</h2>
 </mat-card>
