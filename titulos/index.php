@@ -47,6 +47,18 @@ switch($_GET['acao'])
         $result = $formulario->setItem($data);
         echo json_encode($result);
         break;
+
+    case 'setTitulo':
+        $result = $titulos->setTitulo($data);
+        echo json_encode($result);
+        break;
+
+    case 'setItensTitulo':
+        print_r($data);
+        exit();
+        $result = $titulos->setItensTitulo($data);
+        echo json_encode($result);
+        break;
 }   
 
 

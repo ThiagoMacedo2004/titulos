@@ -11,20 +11,35 @@ form {
 }
 
 .row .datasul {
-    width: 32%;
+    width: 20%;
 }
 
 .row .fornecedor {
-    width: 45%;
+    width: 38%;
 }
 
 .cod_fornecedor {
-    width: 19%;
+    width: 11%;
 }
 
+.item {
+    width: 26%;
+}
 
-.row-2 {
-    width: 32%;
+.conta-fluxo {
+    width: 30%;
+}
+
+.nf {
+    width: 15%;
+}
+
+.valor {
+    width: 15%;
+}
+
+.data {
+    width: 15%;
 }
 
 mat-card {
@@ -51,4 +66,10 @@ tr td:last-child {
 
 thead th:last-child {
     text-align: center;
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }

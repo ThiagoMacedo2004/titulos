@@ -3,7 +3,7 @@ table {
 }
 
 table thead {
-text-align: left;
+  text-align: left;
 }
 
 tbody tr {
@@ -12,9 +12,16 @@ tbody tr {
 
 tr td:last-child {
   text-align: end;
-  
+
 }
 
 thead th:last-child {
   text-align: end;
+}
+
+.cadastro-item {
+  width: 33%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between
 }

@@ -1,6 +1,17 @@
-<h1 mat-dialog-title>Selecione o Item</h1>
+<h1 mat-dialog-title *ngIf="itens.length == 0">Nenhum Item cadastrado para este Fornecedor</h1>
+<h1 mat-dialog-title *ngIf="itens.length > 0">Selecione o Item</h1>
 
-<div mat-dialog-content>
+<div mat-matDialogContent  *ngIf="itens.length == 0">
+    <div class="cadastro-item">
+        <span>Deseja cadastrar um item ?</span>
+        <div>
+            <button mat-button routerLink="/cadastrar-item" (click)="fechar()" color="primary" cdkFocusInitial>Sim</button>
+            <button mat-button (click)="fechar()" color="warn">Não</button>
+        </div>
+    </div>
+</div>
+
+<div mat-dialog-content *ngIf="itens.length > 0">
     <table class="table table-sm table-striped">
         <thead class="thead-light">
             <th>ITEM</th>
@@ -23,5 +34,5 @@
     </table>
 </div>
 <div mat-dialog-actions align="end">
-    <button mat-button (click)="fechar()" cdkFocusInitial>Fechar</button>
+    <button mat-button (click)="fechar()">Fechar</button>
 </div>

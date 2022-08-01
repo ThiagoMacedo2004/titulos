@@ -6,7 +6,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatNativeDateModule} from '@angular/material/core';
+import {MatNativeDateModule, MAT_DATE_FORMATS} from '@angular/material/core';
 import {HttpClientModule} from '@angular/common/http';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatCardModule} from '@angular/material/card';
@@ -20,6 +20,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
 import { TextMaskModule } from 'angular2-text-mask';
 import {MatDialogModule} from '@angular/material/dialog';
+import { LOCALE_ID } from '@angular/core';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -37,6 +40,12 @@ import { CadastrarTituloComponent } from './titulos/lista-titulos/cadastrar-titu
 import { DialogFornecedorComponent } from './titulos/dialogs/dialog-fornecedor/dialog-fornecedor.component';
 import { DialogItemComponent } from './titulos/dialogs/dialog-item/dialog-item.component';
 import { DialogContaFluxoComponent } from './titulos/dialogs/dialog-conta-fluxo/dialog-conta-fluxo.component';
+
+
+import { registerLocaleData } from '@angular/common';
+import localePT from '@angular/common/locales/pt';
+
+registerLocaleData(localePT);
 
 
 @NgModule({
@@ -81,8 +90,27 @@ import { DialogContaFluxoComponent } from './titulos/dialogs/dialog-conta-fluxo/
     MatSelectModule,
     TextMaskModule,
     MatDialogModule,
+    MatDatepickerModule,
+    
   ],
-  providers: [],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'pt-br'},
+    {
+      provide: MAT_DATE_FORMATS,
+      useValue: {
+        parse: {
+          dateInput: ['l', 'LL'],
+        },
+        display: {
+          dateInput: 'L',
+          monthYearLabel: 'MMM YYYY',
+          dateA11yLabel: 'LL',
+          monthYearA11yLabel: 'MMMM YYYY',
+        },
+      },
+    }
+
+  ],
   bootstrap: [AppComponent]
   
 })

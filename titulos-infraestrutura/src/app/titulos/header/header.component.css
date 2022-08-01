@@ -3,3 +3,9 @@ mat-toolbar {
   top: 0;
   z-index: 9999;
 }
+
+span {
+  font-weight: 400;
+  font-family: Roboto, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
+  text-transform: uppercase;
+}

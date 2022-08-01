@@ -72,6 +72,22 @@ export class TitulosServicesService {
     })
   }
 
+  public setTitulo(obj) {
+    return this.http.post(this.URL, obj, {
+      params: {
+        acao: 'setTitulo'
+      }
+    })
+  }
+
+  public setItensTitulo(obj) {
+    return this.http.post(this.URL, obj, {
+      params: {
+        acao: 'setItensTitulo'
+      }
+    })
+  }
+
 
 
 }

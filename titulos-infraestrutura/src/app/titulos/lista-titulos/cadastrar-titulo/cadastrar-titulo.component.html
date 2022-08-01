@@ -16,50 +16,72 @@
 
                 <mat-form-field class="fornecedor" appearance="outline">
                     <mat-label>Fornecedor</mat-label>
-                    <button *ngIf="dados.value != 'Selecione um Fornecedor'"
-                        (click)="[dados.value = 'Selecione um Fornecedor', dados.cod_fornecedor = '',dados.nome_item = '']"
+                    <button *ngIf="dados.cod_fornecedor"
+                        (click)="[dados.nome_fornecedor = '', dados.cod_fornecedor = '',dados.nome_item = '']"
                         matSuffix mat-icon-button color="warn" cdkFocusInitial>
                         <mat-icon cdkFocusInitial>close</mat-icon>
                     </button>
-                    <button *ngIf="dados.value == 'Selecione um Fornecedor'" (click)="selecionarFornecedor()" matSuffix
+                    <button *ngIf="dados.id_datasul && !dados.cod_fornecedor " (click)="selecionarFornecedor()" matSuffix
                         mat-icon-button color="primary" cdkFocusInitial>
-                        <mat-icon cdkFocusInitial *ngIf="dados.id_datasul" color="primary" class="icon-search">search
+                        <mat-icon cdkFocusInitial *ngIf="dados.id_datasul && !dados.cod_fornecedor" color="primary" class="icon-search">search
                         </mat-icon>
                     </button>
-                    <input matInput formControlName="id_fn" type="text" [(ngModel)]="dados.value" readonly>
+                    <input matInput formControlName="id_fn" type="text" [(ngModel)]="dados.nome_fornecedor"  readonly>
                 </mat-form-field>
 
                 <mat-form-field class="cod_fornecedor" appearance="outline">
                     <mat-label>Código do Fornecedor</mat-label>
-                    <input matInput type="text" formControlName="cod_forn" [(ngModel)]="dados.cod_fornecedor">
+                    <input matInput type="text" formControlName="cod_forn" [(ngModel)]="dados.cod_fornecedor" readonly>
+                </mat-form-field>
+
+                <mat-form-field class="item" appearance="outline">
+                    <mat-label>Item</mat-label>
+                    <input matInput formControlName="id_item" type="text" [(ngModel)]="dados.nome_item" readonly>
+                    <button *ngIf="dados.nome_fornecedor" (click)="getItens()" mat-icon-button
+                        matSuffix color="primary">
+                        <mat-icon mat-icon-button matSuffix>search</mat-icon>
+                    </button>
                 </mat-form-field>
 
             </div>
 
             <div class="row">
-                <mat-form-field class="row-2" appearance="outline">
-                    <mat-label>Item</mat-label>
-                    <input matInput formControlName="id_item" type="text" [(ngModel)]="dados.nome_item">
-                    <button *ngIf="dados.value != 'Selecione um Fornecedor'" (click)="getItens()" mat-icon-button
-                        matSuffix color="primary">
-                        <mat-icon mat-icon-button matSuffix>search</mat-icon>
-                    </button>
+                
+
+                <mat-form-field appearance="outline" class="data">
+                    <mat-label>Emissão</mat-label>
+                    <input matInput [matDatepicker]="dp3" formControlName="dt_emissao" [(ngModel)]="formularioSend.data_emissao" disabled>
+                    
+                    <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                    <mat-datepicker #dp3 disabled="false"></mat-datepicker>
                 </mat-form-field>
 
-                <mat-form-field class="row-2" appearance="outline">
+                <mat-form-field appearance="outline" class="data">
+                    <mat-label>Vencimento</mat-label>
+                    <input matInput [matDatepicker]="dp2" formControlName="dt_venc" [(ngModel)]="formularioSend.data_venc" disabled>
+                    <mat-hint>{{ formGroup.value.dt_venc | date: 'EEEE' : 'pt-BR' }}</mat-hint>
+                    <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
+                    <mat-datepicker #dp2 disabled="false"></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field class="nf" appearance="outline">
+                    <mat-label>NF</mat-label>
+                    <input matInput formControlName="nf" [(ngModel)]="formularioSend.nf">
+                </mat-form-field>
+
+                <mat-form-field class="conta-fluxo" appearance="outline">
                     <mat-label>Conta Fluxo</mat-label>
-                    <input matInput formControlName="id_cf" type="text" [(ngModel)]="dados.contaFluxo">
-                    <button *ngIf="dados.value != 'Selecione um Fornecedor'" (click)="getContasFluxo()" mat-icon-button
+                    <input matInput formControlName="id_cf" type="text" [(ngModel)]="dados.contaFluxo" readonly>
+                    <button *ngIf="dados.id_datasul" (click)="getContasFluxo()" mat-icon-button
                         matSuffix color="primary">
                         <mat-icon mat-icon-button matSuffix>search</mat-icon>
                     </button>
                 </mat-form-field>
 
-                <mat-form-field class="row-2" appearance="outline">
+                <mat-form-field class="valor" appearance="outline">
                     <mat-label>Valor</mat-label>
-                    <!-- <input matInput formControlName="valor" [(ngModel)]="myModel"> -->
                     <input matInput formControlName="valor" [(ngModel)]="myModel" (keyup)="mascaraMoeda()"
-                        placeholder="Ex. ium" #input>
+                        #input>
                 </mat-form-field>
             </div>
 
@@ -67,7 +89,7 @@
     </mat-card-content>
     <mat-card-actions align="end" style="padding:0 ;">
         <button mat-button color="primary" [disabled]="!formGroup.valid" (click)="salvarItemPagamento()">Salvar</button>
-        <button mat-button color="warn">Limpar</button>
+        <button mat-button color="warn" (click)="dadosObj()">Limpar</button>
     </mat-card-actions>
 </mat-card>
 
@@ -96,5 +118,8 @@
             </tbody>
         </table>
     </mat-card-content>
-    <h2>{{ valoresitens }}</h2>
+    <div class="footer">
+        <h2>{{ valoresitens }}</h2>
+        <button mat-button (click)="salvarPagamento()" color="primary"[disabled]='listaItensPgView.length == 0 ' cdkFocusInitial>Salvar</button>
+    </div>
 </mat-card>
