@@ -227,23 +227,21 @@ export class CadastrarTituloComponent implements OnInit {
 
     const objView = {
       item_contaFluxo    : this.dados.contaFluxo,
-      item_valor         : this.formularioSend.valor_item
+      item_valor         : this.formularioSend.valor_item,
+      id_cf_item_pg      : this.formularioSend.id_cf,
+      valor_item_pg      : this.formularioSend.valor_item
     }
 
     let objS ={
-        id_cf_item_pg: this.formularioSend.id_cf,
-        valor_item_pg: this.formularioSend.valor_item
+      item_contaFluxo    : this.dados.contaFluxo,
+      item_valor         : this.formularioSend.valor_item,
+      id_cf_item_pg      : this.formularioSend.id_cf,
+      valor_item_pg      : this.formularioSend.valor_item
     }
 
     this.objEnviado.push(objS)
 
     console.log(this.objEnviado)
-
-    this._services.setItensTitulo(JSON.stringify(this.objEnviado)).subscribe(
-      (result) => {
-        console.log(result)
-      }
-    )
 
     this.listaItensPagamento(objView)
   }
@@ -285,8 +283,26 @@ export class CadastrarTituloComponent implements OnInit {
     this._services.setTitulo(JSON.stringify(objBanco)).subscribe(
       (result) => {
         console.log(result)
+        this.result = result
+        if(this.result.error) {
+          this._services.exibirMsgErro(this.result.error)
+        } else {
+          this._services.setItensTitulo(JSON.stringify(this.objEnviado)).subscribe(
+            (result) => {
+              this.result = result
+              if(this.result.error) {
+                this._services.exibirMsgErro(this.result.error)
+              } else {
+                this._services.exibirMsgSucesso('Titulo cadastrado com Sucesso!!')
+                this.dadosObj()                
+              }
+            }
+          )
+        }
       }
     )
+
+    
 
     console.log(objBanco)
   }
@@ -331,6 +347,7 @@ export class CadastrarTituloComponent implements OnInit {
     console.log(index)
     var i = this.listaItensPgView.indexOf(index)
     this.listaItensPgView.splice(i, 1)
+    this.objEnviado.splice(i, 1)
 
     var text = this.listaItensPgView.map(
       (valor) =>{

@@ -18,47 +18,76 @@ switch($_GET['acao'])
         echo json_encode($result);
         break;
 
+        
+
     case 'getDatasul':
         $result = $formulario->getDatasul();
         echo json_encode($result);
         break;
+
+        
 
     case 'getContasFluxo':
         $result = $formulario->getContasFluxo($_GET['id_ds']);
         echo json_encode($result);
         break;
 
+        
+
     case 'getItens':
         $result = $formulario->getItens($data);
         echo json_encode($result);
         break;
+
+        
+
+    case 'getTitulos':
+        $result = $titulos->getTitulos();
+        echo json_encode($result);
+        break;
+
+        
 
     case 'setFornecedor':
         $result = $formulario->setFornecedor($data);
         echo json_encode($result);
         break;
 
+        
+
     case 'setContaFluxo':
         $result = $formulario->setContaFluxo($data);
         echo json_encode($result);
         break;
+
+        
 
     case 'setItem' :
         $result = $formulario->setItem($data);
         echo json_encode($result);
         break;
 
+        
+
     case 'setTitulo':
-        $result = $titulos->setTitulo($data);
-        echo json_encode($result);
+        $verificarTitulo = $titulos->verificarTitulo($data);
+
+        if($verificarTitulo['error']) {
+            echo json_encode($verificarTitulo);
+        } else {
+            $result = $titulos->setTitulo($data);
+            echo json_encode($result);
+        }
         break;
 
+        
+
     case 'setItensTitulo':
-        print_r($data);
-        exit();
         $result = $titulos->setItensTitulo($data);
         echo json_encode($result);
         break;
+
+        
 }   
 
 

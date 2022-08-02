@@ -33,7 +33,7 @@
         <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
           class="mat-elevation-z8 tabela"
         >
-          <ng-container matColumnDef="select">
+          <ng-container matColumnDef="sel">
             <th mat-header-cell *matHeaderCellDef>
               <mat-checkbox
                 [(ngModel)]="parentSelect"
@@ -44,34 +44,26 @@
             </th>
             <td mat-cell *matCellDef="let row">
               <mat-checkbox
-              [checked]="row.select"
-              [value]="row.id"
+              [checked]="row.sel"
+              [value]="row.id_titulo"
               (change)="onChangeTitulo($event)"
               >
               </mat-checkbox>
             </td>
           </ng-container>
 
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by id" >
-              #ID
-            </th>
-            <td mat-cell *matCellDef="let titulo"> {{titulo.id}} </td>
-          </ng-container>
-
-
-          <ng-container matColumnDef="fornecedor">
+          <ng-container matColumnDef="nome_fornecedor">
             <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by fornecedor">
               FORNECEDOR
             </th>
-            <td mat-cell *matCellDef="let titulo"> {{titulo.fornecedor}} </td>
+            <td mat-cell *matCellDef="let titulo"> {{titulo.nome_fornecedor}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="item">
+          <ng-container matColumnDef="nome_item">
             <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by item">
               ITEM
             </th>
-            <td mat-cell *matCellDef="let titulo"> {{titulo.item}} </td>
+            <td mat-cell *matCellDef="let titulo"> {{titulo.nome_item}} </td>
           </ng-container>
 
           <ng-container matColumnDef="cod_fornecedor">
@@ -82,46 +74,46 @@
           </ng-container>
 
 
-          <ng-container matColumnDef="num_nf">
+          <ng-container matColumnDef="nf_tit">
             <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by num_nf">
               NUM_NF
             </th>
-            <td mat-cell *matCellDef="let titulo"> {{titulo.num_nf}} </td>
+            <td mat-cell *matCellDef="let titulo"> {{titulo.nf_tit}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="datasul">
+          <ng-container matColumnDef="nome_interface">
             <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by datasul">
               DATASUL
             </th>
-            <td mat-cell *matCellDef="let titulo"> {{titulo.datasul}} </td>
+            <td mat-cell *matCellDef="let titulo"> {{titulo.nome_interface}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="dt_emissao">
+          <ng-container matColumnDef="data_emissao_tit">
             <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by emissão">
               EMISSÃO
-            </th>
-            <td mat-cell *matCellDef="let titulo"> {{titulo.dt_emissao}} </td>
+            </th >
+            <td class="data-center" mat-cell *matCellDef="let titulo"> {{titulo.data_emissao_tit | date: 'dd/MM/yyyy'}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="dt_venc">
+          <ng-container matColumnDef="data_venc_tit">
             <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by vencimento">
               VENCIMENTO
             </th>
-            <td mat-cell *matCellDef="let titulo"> {{titulo.dt_venc}} </td>
+            <td class="data-center" mat-cell *matCellDef="let titulo"> {{titulo.data_venc_tit | date: 'dd/MM/yyyy'}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="dt_entregue">
+          <ng-container matColumnDef="data_entregue">
             <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by entregue">
-              ENTREGUE CONTAS
+              ENTREGUE
             </th>
-            <td mat-cell *matCellDef="let titulo"> {{titulo.dt_venc}} </td>
+            <td class="data-center" class="data-center" mat-cell *matCellDef="let titulo"> {{titulo.data_entregue ? titulo.data_entregue : '-' }} </td>
           </ng-container>
 
-          <ng-container matColumnDef="valor">
+          <ng-container matColumnDef="valor_tit">
             <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by valor">
               VALOR
             </th>
-            <td mat-cell *matCellDef="let titulo"> {{titulo.valor}} </td>
+            <td mat-cell *matCellDef="let titulo"> {{titulo.valor_tit | currency : 'BRL'}} </td>
           </ng-container>
 
           <ng-container matColumnDef="status">

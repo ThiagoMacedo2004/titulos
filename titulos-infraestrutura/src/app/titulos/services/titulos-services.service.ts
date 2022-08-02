@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
@@ -8,8 +9,34 @@ export class TitulosServicesService {
 
   URL =  'http://localhost/projetos/titulos/index.php';
 
+  confgMsgError: MatSnackBarConfig = {
+    panelClass         : ['error'],
+    horizontalPosition : 'start',
+    verticalPosition   : 'bottom',
+    duration          : 5000
+  }
 
-  constructor(private http: HttpClient) { }
+  confgMsgsuccess: MatSnackBarConfig = {
+    panelClass         : ['success'],
+    horizontalPosition : 'start',
+    verticalPosition   : 'bottom',
+    duration           : 5000
+  }
+
+
+  constructor(
+    private http: HttpClient,
+    private msg : MatSnackBar
+  ) { }
+
+  public exibirMsgSucesso(msg: any){
+    this.msg.open(msg, 'X', this.confgMsgsuccess)
+  }
+
+
+  public exibirMsgErro(msg: any){
+    this.msg.open(msg, 'X', this.confgMsgError)
+  }
 
   public getFornecedores(id_datasul = '') {
     return this.http.get(this.URL,
@@ -44,6 +71,14 @@ export class TitulosServicesService {
     return this.http.post(this.URL, obj, {
       params: {
         acao: 'getItens'
+      }
+    })
+  }
+
+  public getTitulos() {
+    return this.http.get(this.URL, {
+      params: {
+        acao: 'getTitulos'
       }
     })
   }

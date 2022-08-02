@@ -22,7 +22,7 @@ import { TextMaskModule } from 'angular2-text-mask';
 import {MatDialogModule} from '@angular/material/dialog';
 import { LOCALE_ID } from '@angular/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -91,7 +91,7 @@ registerLocaleData(localePT);
     TextMaskModule,
     MatDialogModule,
     MatDatepickerModule,
-    
+    MatSnackBarModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-br'},
