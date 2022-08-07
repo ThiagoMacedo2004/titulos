@@ -18,12 +18,12 @@
                     <mat-label>Fornecedor</mat-label>
                     <button *ngIf="dados.cod_fornecedor"
                         (click)="[dados.nome_fornecedor = '', dados.cod_fornecedor = '',dados.nome_item = '']"
-                        matSuffix mat-icon-button color="warn" cdkFocusInitial>
-                        <mat-icon cdkFocusInitial>close</mat-icon>
+                        matSuffix mat-icon-button color="warn" >
+                        <mat-icon >close</mat-icon>
                     </button>
                     <button *ngIf="dados.id_datasul && !dados.cod_fornecedor " (click)="selecionarFornecedor()" matSuffix
-                        mat-icon-button color="primary" cdkFocusInitial>
-                        <mat-icon cdkFocusInitial *ngIf="dados.id_datasul && !dados.cod_fornecedor" color="primary" class="icon-search">search
+                        mat-icon-button color="primary" >
+                        <mat-icon  *ngIf="dados.id_datasul && !dados.cod_fornecedor" color="primary" class="icon-search">search
                         </mat-icon>
                     </button>
                     <input matInput formControlName="id_fn" type="text" [(ngModel)]="dados.nome_fornecedor"  readonly>

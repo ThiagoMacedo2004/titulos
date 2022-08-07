@@ -1,0 +1,38 @@
+h2 {
+    margin: 0;
+}
+
+h4, h3 {
+    margin-top: -4px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,.54);
+}
+
+.sub-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.linha-2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+.linha-2 div {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.content {
+    margin-top: 10px;
+}
+
+tr td:last-child,
+th:last-child{
+    text-align: end;
+}

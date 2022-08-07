@@ -64,6 +64,26 @@ class Formulario extends Sql {
 
     }
 
+    public function getDetalheContas($id_pg)
+    {
+        $result = $this->sql->select("SELECT
+                                        ipg.valor_item_pg,
+                                        cf.nome_cf,
+                                        cf.num_cf
+                                    FROM itens_pg ipg
+                                        INNER JOIN titulos t       ON (t.id_titulo = :id_pg)
+                                        INNER JOIN contas_fluxo cf ON (cf.id_cf = ipg.id_cf_item_pg)
+                                    WHERE
+                                        ipg.id_titulo_item_pg = :id_pg 
+                                    AND
+                                        ipg.id_cf_item_pg = cf.id_cf ", [
+                                            ':id_pg' => intval($id_pg)                                        
+                                        ]
+        );
+
+        return $result;
+    }
+
     public function getItens($data)
     {
         if(!$data->id_datasul) {

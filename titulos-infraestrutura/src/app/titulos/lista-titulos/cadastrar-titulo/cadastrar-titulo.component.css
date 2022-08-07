@@ -4,6 +4,10 @@ form {
     justify-content: space-between;
 }
 
+.mat-icon-button {
+    display: initial;
+}
+
 .row {
     display: flex;
     width: 100%;

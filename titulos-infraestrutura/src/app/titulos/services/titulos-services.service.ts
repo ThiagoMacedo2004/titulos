@@ -67,6 +67,15 @@ export class TitulosServicesService {
     })
   }
 
+  public getDetalheContas(id_titulo) {
+    return this.http.get(this.URL, {
+      params: {
+        acao      :  'getDetalheContas',
+        id_titulo : id_titulo
+      }
+    })
+  }
+
   public getItens(obj = '') {
     return this.http.post(this.URL, obj, {
       params: {

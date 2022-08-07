@@ -1,0 +1,51 @@
+<h2 mat-dialog-title>{{titulo.nome_fornecedor}} - ({{ titulo.cod_fornecedor }})</h2>
+<div class="sub-title">
+    <h4>{{ titulo.nome_item }}</h4>
+</div>
+
+<mat-divider></mat-divider>
+
+<div class="linha-2">
+    <div>
+        <h4>NF:</h4>
+        <span>{{ titulo.nf_tit }}</span>
+    </div>
+
+    <div>
+        <h4>Emissão:</h4>
+        <span>{{titulo.data_emissao_tit | date: 'dd/MM/yyyy'}}</span>
+    </div>
+
+    <div>
+        <h4>Vencimento:</h4>
+        <span>{{titulo.data_venc_tit | date: 'dd/MM/yyyy'}}</span>
+    </div>
+
+    <div>
+        <h4>Total:</h4>
+        <h3>{{ titulo.valor_tit | currency : 'BRL' }}</h3>
+    </div>
+
+</div>
+
+<mat-divider></mat-divider>
+
+<div mat-dialog-content class="content">
+    <table class="table table-sm table-striped">
+        <thead class="thead-dark">
+            <th>CONTA FLUXO</th>
+            <th>NOME CONTA</th>
+            <th>VALOR</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of contasFluxo">
+                <td>{{ row.num_cf }}</td>
+                <td>{{ row.nome_cf }}</td>
+                <td>{{ row.valor_item_pg | currency: 'BRL' }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div mat-dialog-actions align="end">
+    <button mat-button (click)="fechar()" cdkFocusInitial>Fechar</button>
+</div>

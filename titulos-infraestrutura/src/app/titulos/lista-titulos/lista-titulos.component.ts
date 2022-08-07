@@ -1,3 +1,4 @@
+import { DialogDetalheTituloComponent } from './../dialogs/dialog-detalhe-titulo/dialog-detalhe-titulo.component';
 import { TitulosServicesService } from './../services/titulos-services.service';
 import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
@@ -7,7 +8,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 
 import { MatCheckboxChange } from '@angular/material/checkbox';
-import { throwMatDialogContentAlreadyAttachedError } from '@angular/material/dialog';
+import { MatDialog, throwMatDialogContentAlreadyAttachedError } from '@angular/material/dialog';
 
 
 @Component({
@@ -28,7 +29,8 @@ export class ListaTitulosComponent implements OnInit {
     'data_venc_tit',
     'data_entregue',
     'valor_tit',
-    'status'
+    'status',
+    'acao'
   ];
 
 
@@ -40,12 +42,15 @@ export class ListaTitulosComponent implements OnInit {
   dataCheck: PeriodicElement[] = []
   dataCheckD: PeriodicElement[] = []
   dataSource = new MatTableDataSource<PeriodicElement>();
-  valor: any = 0
+  valor: number
   valorStr: string = 'R$ 0,00'
+  
+  rowDetalhe: any = []
 
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
-    private _services: TitulosServicesService
+    private _services: TitulosServicesService,
+    private _dialog  : MatDialog
   ) { }
 
 
@@ -54,9 +59,7 @@ export class ListaTitulosComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngOnInit() {
-
     this.getTitulos()
-      
   }
 
   getTitulos() {
@@ -68,11 +71,21 @@ export class ListaTitulosComponent implements OnInit {
     )
   }
 
+  detalheTitulo(row) {
+    console.log(row)
+    this.rowDetalhe = row
+    this._dialog.open(DialogDetalheTituloComponent, {
+      data: {
+        row: this.rowDetalhe
+      },
+      width: '50%'
+    })
+  }
+
   setData(data:PeriodicElement[]) {
     this.result = data
     this.dataSource = new MatTableDataSource(this.result)
     this.dataCheck = this.result
-    console.log(this.dataCheck)
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
@@ -87,10 +100,7 @@ export class ListaTitulosComponent implements OnInit {
   onChangeTitulo(event: MatCheckboxChange) {
     const id: any = event.source.value
     const select = event.checked
-    var x
 
-    console.log(id, select)
-    console.log(this.dataCheckD.length)
     if (this.dataCheckD.length != 0) {
       this.filterChange(id, select)
     } else {
@@ -98,57 +108,35 @@ export class ListaTitulosComponent implements OnInit {
         if (data.id_titulo == id) {
           data.sel = select
 
-          this.parentSelect = false
-          if (data.sel) {
-            // x = data.valor_tit.toString()
-            // data.valor_tit = parseFloat(x)
-            // this.valor += data.valor_tit
-            var val
-
-            val = this.dataCheck.reduce((a, p) =>{
-              if(p.sel){
-                return a + p.valor_tit
-              }
-              
-            } , 0)
-            console.log(val)
+          var fullSelected = this.dataCheck.filter((item) => item.sel  == true)
+          if(fullSelected.length == this.dataCheck.length && fullSelected.length > 0) {
+            console.log(fullSelected)
+            this.parentSelect = true
           } else {
-            x = data.valor_tit.toFixed(2)
-            data.valor_tit = parseFloat(x)
-            this.valor -= data.valor_tit
-            if (this.valor <= 0) {
-              this.valor = 0
-            }
+            this.parentSelect = false
           }
-          this.valorStr = this.valor
-          this.valorStr = val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+          
+          var v = this.dataCheck.filter((item) => {
+            if(item.sel == true) {
+              return item
+            }
+          })
+
+          var result =  v.reduce((a, value:any) => a + parseFloat(value.valor_tit), 0)
+          this.valorStr = result.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
           return data
         }
 
         if (id == '-1') {
-          var val
-
-          val = this.dataCheck.reduce((a, p) => a + p.valor_tit, 0)
-
-          console.log(val)
           data.sel = this.parentSelect
           if (select) {
-
-            x = data.valor_tit.toString()
-            data.valor_tit = parseFloat(x)
-            this.valor += data.valor_tit
-
+            var val
+            val = this.dataCheck.reduce((a, p:any) => a + parseFloat(p.valor_tit), 0)
+            console.log(val)
           } else {
-            x = data.valor_tit.toFixed(2)
-            data.valor_tit = parseFloat(x)
-            this.valor -= data.valor_tit
-            if (this.valor <= 0) {
-              this.valor = 0
-            }
             val = 0
             console.log(val)
           }
-          this.valorStr = this.valor
           this.valorStr = val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
           return data
         }
@@ -162,45 +150,28 @@ export class ListaTitulosComponent implements OnInit {
     this.dataCheckD = this.dataCheckD.map((data) => {
       if (data.id_titulo == id) {
         data.sel = select
-
         this.parentSelect = false
-        if (data.sel) {
-          x = data.valor_tit.toFixed(2)
-          data.valor_tit = parseFloat(x)
-          this.valor += data.valor_tit
-
-        } else {
-          x = data.valor_tit.toFixed(2)
-          data.valor_tit = parseFloat(x)
-          this.valor -= data.valor_tit
-          if (this.valor <= 0) {
-            this.valor = 0
+        var v = this.dataCheck.filter((item) => {
+          if(item.sel == true) {
+            return item
           }
-        }
-        this.valorStr = this.valor
-        this.valorStr = parseFloat(this.valorStr).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+        })
+        var result =  v.reduce((a, value:any) => a + parseFloat(value.valor_tit), 0)
+        this.valorStr = result.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
         return data
       }
 
       if (id == '-1') {
         data.sel = this.parentSelect
         if (select) {
-
-          x = data.valor_tit.toFixed(2)
-          data.valor_tit = parseFloat(x)
-          this.valor += data.valor_tit
-
+          var val
+          val = this.dataCheck.reduce((a, p:any) => a + parseFloat(p.valor_tit), 0)
+          console.log(val)
         } else {
-          x = data.valor_tit.toFixed(2)
-          data.valor_tit = parseFloat(x)
-          this.valor -= data.valor_tit
-          if (this.valor <= 0) {
-            this.valor = 0
-          }
-
+          val = 0
+          console.log(val)
         }
-        this.valorStr = this.valor
-        this.valorStr = parseFloat(this.valorStr).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+        this.valorStr = val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
         return data
       }
       return data
@@ -218,7 +189,7 @@ export class ListaTitulosComponent implements OnInit {
           this.valor = 0
         }
       }
-      this.valorStr = this.valor
+      this.valorStr = this.valor.toString()
       this.valorStr = parseFloat(this.valorStr).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
       this.filterStatus()
       this.ngAfterViewInit()

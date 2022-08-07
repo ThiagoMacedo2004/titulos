@@ -40,10 +40,12 @@ import { CadastrarTituloComponent } from './titulos/lista-titulos/cadastrar-titu
 import { DialogFornecedorComponent } from './titulos/dialogs/dialog-fornecedor/dialog-fornecedor.component';
 import { DialogItemComponent } from './titulos/dialogs/dialog-item/dialog-item.component';
 import { DialogContaFluxoComponent } from './titulos/dialogs/dialog-conta-fluxo/dialog-conta-fluxo.component';
+import {MatDividerModule} from '@angular/material/divider';
 
 
 import { registerLocaleData } from '@angular/common';
 import localePT from '@angular/common/locales/pt';
+import { DialogDetalheTituloComponent } from './titulos/dialogs/dialog-detalhe-titulo/dialog-detalhe-titulo.component';
 
 registerLocaleData(localePT);
 
@@ -64,7 +66,8 @@ registerLocaleData(localePT);
     CadastrarTituloComponent,
     DialogFornecedorComponent,
     DialogItemComponent,
-    DialogContaFluxoComponent
+    DialogContaFluxoComponent,
+    DialogDetalheTituloComponent
   ],
   imports: [
     BrowserModule,
@@ -91,7 +94,8 @@ registerLocaleData(localePT);
     TextMaskModule,
     MatDialogModule,
     MatDatepickerModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDividerModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-br'},

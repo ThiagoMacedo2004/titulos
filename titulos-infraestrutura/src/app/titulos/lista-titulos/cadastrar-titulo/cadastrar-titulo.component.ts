@@ -293,6 +293,7 @@ export class CadastrarTituloComponent implements OnInit {
               if(this.result.error) {
                 this._services.exibirMsgErro(this.result.error)
               } else {
+                this._router.navigate(['/titulos'])
                 this._services.exibirMsgSucesso('Titulo cadastrado com Sucesso!!')
                 this.dadosObj()                
               }
@@ -301,10 +302,6 @@ export class CadastrarTituloComponent implements OnInit {
         }
       }
     )
-
-    
-
-    console.log(objBanco)
   }
 
   getDataEmissao() {

@@ -9,6 +9,15 @@
   width: 100%;
 }
 
+table tr {
+  height: 36px;
+}
+
+.selected-row {
+  background-color: #c2dbff;;
+  font-weight: bold;
+}
+
 table tr td {
   font-size: 12px;
   vertical-align: middle;
@@ -17,19 +26,27 @@ table tr td {
 tr td:last-child {
   text-align: end;
   padding: 0;
+  display: flex;
+  width: 125px;
+  align-items: center;
+  justify-content: space-around;
 }
 
 tr > th:last-child {
   text-align: end;
   padding: 0;
+  
 }
 
 tr td:first-child,
 tr th:first-child {
-  text-align: left;
-  padding: 0;
+  padding-left: 6px;
 }
 
+tr td:nth-child(2),
+tr th:nth-child(2) {
+  padding-left: 5px;
+}
 
 tr th:nth-child(8) {
   text-align: center;
@@ -61,7 +78,7 @@ tr th:nth-child(8) {
 }
 
 mat-card {
-  max-height: 100vh;
+  max-height: 87vh;
   border-top: 3px solid #3f51b5;
   
 }
@@ -88,6 +105,12 @@ mat-card-title {
   align-items: baseline;
 }
 
+.btn-cadastrado {
+  color: #842029;
+  background-color: #f8d7da;
+  border-color: #f5c2c7;
+}
+
 .btn-lancar {
   color: #856404;
   background-color: #fff3cd;
@@ -110,4 +133,9 @@ mat-card-title {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.mat-stroked-button {
+  line-height: 30px;
+  font-size: 12px;
 }

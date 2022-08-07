@@ -12,9 +12,17 @@ class Titulos extends Sql {
     public function getTitulos()
     {
         $result = $this->sql->select("
-            SELECT t.id_titulo, t.data_emissao_tit, t.data_venc_tit, t.data_entregue, t.nf_tit, t.valor_tit, t.status, t.sel,
+            SELECT t.id_titulo, 
+                    t.data_emissao_tit, 
+                    t.data_venc_tit, 
+                    t.data_entregue, 
+                    t.nf_tit, 
+                    t.valor_tit, 
+                    t.status, 
+                    t.sel,
                     ds.nome_interface,
-                    f.cod_fornecedor, f.nome_fornecedor,
+                    f.cod_fornecedor, 
+                    f.nome_fornecedor,
                     i.nome_item
             FROM titulos t
                 INNER JOIN datasul ds     ON (ds.id = t.id_ds_tit)

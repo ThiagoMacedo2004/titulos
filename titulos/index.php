@@ -32,7 +32,11 @@ switch($_GET['acao'])
         echo json_encode($result);
         break;
 
-        
+    
+    case 'getDetalheContas':
+        $result = $formulario->getDetalheContas($_GET['id_titulo']);
+        echo json_encode($result);
+        break;
 
     case 'getItens':
         $result = $formulario->getItens($data);
