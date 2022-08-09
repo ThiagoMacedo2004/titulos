@@ -84,14 +84,15 @@ switch($_GET['acao'])
         }
         break;
 
-        
-
     case 'setItensTitulo':
         $result = $titulos->setItensTitulo($data);
         echo json_encode($result);
         break;
 
-        
+    case 'alterarStatus':
+        $result = $titulos->alterarStatus($data);
+        echo json_encode($result);
+        break;
 }   
 
 

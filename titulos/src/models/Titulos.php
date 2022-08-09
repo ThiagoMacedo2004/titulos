@@ -86,7 +86,7 @@ class Titulos extends Sql {
                 ':nf_tit'           => $data->nf,
                 ':valor_tit'        => floatval($data->valorPgTotal),
                 ':status'           => $data->status,
-                ':sel'              => 'false'
+                ':sel'              => 0
             ]);
 
             return $result;
@@ -105,6 +105,19 @@ class Titulos extends Sql {
                 ':valor_item_pg'     => floatval($value->valor_item_pg) 
             ]);
             
+        }
+
+        return $result;
+    }
+
+    public function alterarStatus($data)
+    {
+        foreach($data as $key => $value)
+        {
+            $result = $this->sql->query("UPDATE titulos SET status = :status WHERE id_titulo = :id_titulo", [
+                ':status'    => $value->status,
+                ':id_titulo' => $value->id_titulo
+            ]);
         }
 
         return $result;
