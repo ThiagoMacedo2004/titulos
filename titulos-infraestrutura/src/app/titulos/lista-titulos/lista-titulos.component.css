@@ -27,7 +27,7 @@ tr td:last-child {
   text-align: end;
   padding: 0;
   display: flex;
-  width: 125px;
+  width: 100px;
   align-items: center;
   justify-content: space-around;
 }
@@ -35,7 +35,7 @@ tr td:last-child {
 tr > th:last-child {
   text-align: end;
   padding: 0;
-  
+
 }
 
 tr td:first-child,
@@ -80,7 +80,7 @@ tr th:nth-child(8) {
 mat-card {
   max-height: 87vh;
   border-top: 3px solid #3f51b5;
-  
+
 }
 
 mat-card-title {
@@ -101,8 +101,27 @@ mat-card-title {
 
 .header {
   display: flex;
+  flex-direction: column;
+
+}
+
+.header .linha-1 {
+  display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  border-bottom: 1px solid rgba(0,0,0,.15);
+  margin-bottom: 20px;
+}
+
+.header .linha-2 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.linha-1 .totais {
+  display: flex;
+  align-items: center;
+  justify-content: inherit;
+  min-width: 200px;
 }
 
 .btn-cadastrado {

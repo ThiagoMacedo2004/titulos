@@ -132,6 +132,14 @@ export class TitulosServicesService {
     })
   }
 
+  public alterarStatus(obj) {
+    return this.http.post(this.URL, obj, {
+      params: {
+        acao: 'alterarStatus'
+      }
+    })
+  }
+
 
 
 }

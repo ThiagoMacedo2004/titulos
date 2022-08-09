@@ -47,7 +47,7 @@ export class CadastrarTituloComponent implements OnInit {
     this.formulario()
     this.getInterface()
     this.dadosObj()
-    
+
     // this.id_fn.reset({value: '', disabled: true})
     // this.cod_forn.reset({value: '', disabled: true})
     // this.id_item.reset({value: '', disabled: true})
@@ -157,7 +157,7 @@ export class CadastrarTituloComponent implements OnInit {
       (result) => {
         console.log(result)
         this.dados.nome_item        = result.nome_item
-        this.formularioSend.id_item = result.id_item 
+        this.formularioSend.id_item = result.id_item
       }
     )
   }
@@ -188,9 +188,9 @@ export class CadastrarTituloComponent implements OnInit {
 
   mascaraMoeda() {
     if(this.myModel == '0' || this.myModel == '') {
-      return 
+      return
     }
-   
+
     var x = this.myModel.replace('.', '')
     var y = parseFloat(x) / 100
     x = y.toFixed(2).toString()
@@ -198,7 +198,7 @@ export class CadastrarTituloComponent implements OnInit {
     this.formularioSend.valor_item = this.myModel
   }
 
- 
+
 
   dadosObj() {
     this.dados.id_datasul             = ''
@@ -212,7 +212,7 @@ export class CadastrarTituloComponent implements OnInit {
     this.formularioSend.id_fornecedor = ''
     this.formularioSend.data_emissao  = ''
     this.formularioSend.data_venc     = ''
-    this.formularioSend.nf            = '' 
+    this.formularioSend.nf            = ''
     this.formularioSend.id_cf         = ''
     this.formularioSend.id_item       = ''
     this.listaItensPgView             = []
@@ -248,7 +248,7 @@ export class CadastrarTituloComponent implements OnInit {
 
   listaItensPagamento(objView:object) {
     this.listaItensPgView.push(objView)
-    
+
     console.log(this.listaItensPgView)
 
     var text = this.listaItensPgView.map(
@@ -256,11 +256,11 @@ export class CadastrarTituloComponent implements OnInit {
         var t = parseFloat(valor.item_valor).toFixed(2)
         var n = parseFloat(t)
         return n
-      } 
+      }
     ).reduce((ant, atu) => ant + atu, 0).toFixed(2)
     var num = parseFloat(text)
     this.valorPgFinal = num
-    
+
     this.valoresitens = num.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL'})
 
     this.dados.contaFluxo = ''
@@ -273,11 +273,11 @@ export class CadastrarTituloComponent implements OnInit {
       id_datasul     : this.formularioSend.id_datasul,
       id_fornecedor : this.formularioSend.id_fornecedor,
       id_item       : this.formularioSend.id_item,
-      data_emissao  : this.getDataEmissao(), 
-      data_venc     : this.getDataVenc(), 
+      data_emissao  : this.getDataEmissao(),
+      data_venc     : this.getDataVenc(),
       nf            : this.formularioSend.nf,
       valorPgTotal  : this.valorPgFinal,
-      status        : 'cadastrado'
+      status        : 'Cadastrado'
     }
 
     this._services.setTitulo(JSON.stringify(objBanco)).subscribe(
@@ -295,7 +295,7 @@ export class CadastrarTituloComponent implements OnInit {
               } else {
                 this._router.navigate(['/titulos'])
                 this._services.exibirMsgSucesso('Titulo cadastrado com Sucesso!!')
-                this.dadosObj()                
+                this.dadosObj()
               }
             }
           )
@@ -351,7 +351,7 @@ export class CadastrarTituloComponent implements OnInit {
         var t = parseFloat(valor.item_valor).toFixed(2)
         var n = parseFloat(t)
         return n
-      } 
+      }
     ).reduce((ant, atu) => ant + atu, 0).toFixed(2)
     var num = parseFloat(text)
     this.valorPgFinal = num

@@ -44,7 +44,9 @@ export class ListaTitulosComponent implements OnInit {
   dataSource = new MatTableDataSource<PeriodicElement>();
   valor: number
   valorStr: string = 'R$ 0,00'
-  
+  valorTotal: any
+  disabilitarBtnStatus: boolean = true
+
   rowDetalhe: any = []
 
   constructor(
@@ -88,6 +90,9 @@ export class ListaTitulosComponent implements OnInit {
     this.dataCheck = this.result
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+
+    this.valorTotal = this.result.reduce((inicial, valor:any) => inicial + parseFloat(valor.valor_tit), 0)
+    this.valorTotal = this.valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
   }
 
   ngAfterViewInit() {
@@ -95,6 +100,16 @@ export class ListaTitulosComponent implements OnInit {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
 
+  }
+
+  btnsActions(event:PointerEvent) {
+    var v = this.dataCheck.filter(item => item.sel == false)
+    console.log(v)
+    if(v.length > 0) {
+      this.disabilitarBtnStatus = false
+    } else {
+      this.disabilitarBtnStatus = true
+    }
   }
 
   onChangeTitulo(event: MatCheckboxChange) {
@@ -115,7 +130,7 @@ export class ListaTitulosComponent implements OnInit {
           } else {
             this.parentSelect = false
           }
-          
+
           var v = this.dataCheck.filter((item) => {
             if(item.sel == true) {
               return item
@@ -178,29 +193,37 @@ export class ListaTitulosComponent implements OnInit {
     })
   }
 
-  alterarStatus() {
-    this.dataCheck = this.dataCheck.map((item) => {
-      if (item.sel || this.parentSelect) {
-        item.status = 'LANÇADO'
-        item.sel = false
+  alterarStatus(st) {
+
+    this.disabilitarBtnStatus = true
+    var v = this.dataCheck.filter((titulo) => titulo.sel == true)
+
+    console.log(v)
+    v.map(
+      (row) => {
+        row.status = st
+        row.sel = false
+        this.valorStr = 'R$ 0,00'
         this.parentSelect = false
-        this.valor -= item.valor_tit
-        if (this.valor <= 0) {
-          this.valor = 0
+      }
+    )
+
+    this._services.alterarStatus(JSON.stringify(v)).subscribe(
+      (data:any) => {
+        if(data.sucesso) {
+          this._services.exibirMsgSucesso(`${v.length} Titulo(s) ${st} !!`)
+        } else {
+          this._services.exibirMsgErro(data.error)
         }
       }
-      this.valorStr = this.valor.toString()
-      this.valorStr = parseFloat(this.valorStr).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
-      this.filterStatus()
-      this.ngAfterViewInit()
-      return item
-    })
+    )
+
   }
 
 
 
   filterStatus() {
-    
+
   }
 
   applyFilter(event: Event) {
@@ -235,30 +258,5 @@ export interface PeriodicElement {
   valor_tit       : number,
   status          : string
 }
-
-  // const ELEMENT_DATA: PeriodicElement[] = [
-  //   { id: 1, select: false, fornecedor: 'TELEFONICA', cod_fornecedor: 10820, item: 'Telefonia Móvel', num_nf: 2210122, datasul: 'JORDANESIA', dt_emissao: '03/07/2022', dt_venc: '02/08/2022', dt_entregue: '01/08/2023', valor: 1000.21, status: 'CADASTRADO' },
-  //   { id: 2, select: false, fornecedor: 'TELEFONICA', cod_fornecedor: 10820, item: 'Link MPLS', num_nf: 2215477, datasul: 'JORDANESIA', dt_emissao: '03/07/2022', dt_venc: '02/08/2022', dt_entregue: '01/08/2023', valor: 1000.21, status: 'CADASTRADO' },
-  //   { id: 3, select: false, fornecedor: 'TELEFONICA', cod_fornecedor: 10820, item: 'Telefonia Fixa', num_nf: 2215633, datasul: 'JORDANESIA', dt_emissao: '03/07/2022', dt_venc: '02/08/2022', dt_entregue: '01/08/2023', valor: 1000.21, status: 'CADASTRADO' },
-  //   { id: 4, select: false, fornecedor: 'TELEFONICA', cod_fornecedor: 10820, item: '0800 - 0300', num_nf: 5441223, datasul: 'JORDANESIA', dt_emissao: '03/07/2022', dt_venc: '02/08/2022', dt_entregue: '01/08/2023', valor: 1000.21, status: 'CADASTRADO' },
-  //   { id: 5, select: false, fornecedor: 'TELEFONICA', cod_fornecedor: 10820, item: 'Fibra Loja 010', num_nf: 2236588, datasul: 'JORDANESIA', dt_emissao: '03/07/2022', dt_venc: '02/08/2022', dt_entregue: '01/08/2023', valor: 1000.21, status: 'LANÇADO' },
-  //   { id: 6, select: false, fornecedor: 'TELEFONICA', cod_fornecedor: 10820, item: 'Telefonia Móvel', num_nf: 2210122, datasul: 'JORDANESIA', dt_emissao: '03/07/2022', dt_venc: '02/08/2022', dt_entregue: '01/08/2023', valor: 1000.21, status: 'LANÇADO' },
-  //   { id: 7, select: false, fornecedor: 'TELEFONICA', cod_fornecedor: 10820, item: '0800 - 0300', num_nf: 5441223, datasul: 'JORDANESIA', dt_emissao: '03/07/2022', dt_venc: '02/08/2022', dt_entregue: '01/08/2023', valor: 1000.21, status: 'APROVADO' },
-  //   { id: 8, select: false, fornecedor: 'TELEFONICA', cod_fornecedor: 10820, item: 'Fibra Loja 010', num_nf: 2236588, datasul: 'JORDANESIA', dt_emissao: '03/07/2022', dt_venc: '02/08/2022', dt_entregue: '01/08/2023', valor: 1000.21, status: 'LANÇADO' },
-  //   { id: 9, select: false, fornecedor: 'TELEFONICA', cod_fornecedor: 10820, item: 'Telefonia Móvel', num_nf: 2210122, datasul: 'JORDANESIA', dt_emissao: '03/07/2022', dt_venc: '02/08/2022', dt_entregue: '01/08/2023', valor: 1000.21, status: 'LANÇADO' },
-  //   { id: 10, select: false, fornecedor: 'TELEFONICA', cod_fornecedor: 10820, item: '0800 - 0300', num_nf: 5441223, datasul: 'JORDANESIA', dt_emissao: '03/07/2022', dt_venc: '02/08/2022', dt_entregue: '01/08/2023', valor: 1000.21, status: 'APROVADO' },
-  //   { id: 11, select: false, fornecedor: 'TELEFONICA', cod_fornecedor: 10820, item: 'Fibra Loja 010', num_nf: 2236588, datasul: 'JORDANESIA', dt_emissao: '03/07/2022', dt_venc: '02/08/2022', dt_entregue: '01/08/2023', valor: 1000.21, status: 'APROVADO' },
-  //   { id: 12, select: false, fornecedor: 'TELEFONICA', cod_fornecedor: 10820, item: 'Telefonia Móvel', num_nf: 2210122, datasul: 'JORDANESIA', dt_emissao: '03/07/2022', dt_venc: '02/08/2022', dt_entregue: '01/08/2023', valor: 1000.21, status: 'APROVADO' },
-  //   { id: 13, select: false, fornecedor: 'TELEFONICA', cod_fornecedor: 10820, item: '0800 - 0300', num_nf: 5441223, datasul: 'JORDANESIA', dt_emissao: '03/07/2022', dt_venc: '02/08/2022', dt_entregue: '01/08/2023', valor: 1000.21, status: 'APROVADO' },
-  //   { id: 14, select: false, fornecedor: 'TELEFONICA', cod_fornecedor: 10820, item: 'Fibra Loja 010', num_nf: 2236588, datasul: 'JORDANESIA', dt_emissao: '03/07/2022', dt_venc: '02/08/2022', dt_entregue: '01/08/2023', valor: 1000.21, status: 'ENTREGUE' },
-  //   { id: 15, select: false, fornecedor: 'TELEFONICA', cod_fornecedor: 10820, item: 'Telefonia Móvel', num_nf: 2210122, datasul: 'JORDANESIA', dt_emissao: '03/07/2022', dt_venc: '02/08/2022', dt_entregue: '01/08/2023', valor: 1000.21, status: 'LANÇADO' },
-  //   { id: 16, select: false, fornecedor: 'TELEFONICA', cod_fornecedor: 10820, item: '0800 - 0300', num_nf: 5441223, datasul: 'JORDANESIA', dt_emissao: '03/07/2022', dt_venc: '02/08/2022', dt_entregue: '01/08/2023', valor: 1000.21, status: 'ENTREGUE' },
-  //   { id: 17, select: false, fornecedor: 'TELEFONICA', cod_fornecedor: 10820, item: 'Fibra Loja 010', num_nf: 2236588, datasul: 'JORDANESIA', dt_emissao: '03/07/2022', dt_venc: '02/08/2022', dt_entregue: '01/08/2023', valor: 1000.21, status: 'LANÇADO' },
-  //   { id: 18, select: false, fornecedor: 'TELEFONICA', cod_fornecedor: 10820, item: 'Telefonia Móvel', num_nf: 2210122, datasul: 'JORDANESIA', dt_emissao: '03/07/2022', dt_venc: '02/08/2022', dt_entregue: '01/08/2023', valor: 1000.21, status: 'LANÇADO' },
-  //   { id: 19, select: false, fornecedor: 'TELEFONICA', cod_fornecedor: 10820, item: '0800 - 0300', num_nf: 5441223, datasul: 'JORDANESIA', dt_emissao: '03/07/2022', dt_venc: '02/08/2022', dt_entregue: '01/08/2023', valor: 1000.21, status: 'ENTREGUE' },
-  //   { id: 20, select: false, fornecedor: 'TELEFONICA', cod_fornecedor: 10820, item: 'Fibra Loja 010', num_nf: 2236588, datasul: 'JORDANESIA', dt_emissao: '03/07/2022', dt_venc: '02/08/2022', dt_entregue: '01/08/2023', valor: 1000.21, status: 'LANÇADO' },
-  //   { id: 21, select: false, fornecedor: 'TELEFONICA', cod_fornecedor: 10820, item: 'Telefonia Móvel', num_nf: 2210122, datasul: 'JORDANESIA', dt_emissao: '03/07/2022', dt_venc: '02/08/2022', dt_entregue: '01/08/2023', valor: 1000.21, status: 'LANÇADO' },
-
-  // ];
 
 

@@ -1,24 +1,38 @@
 <div class="cont">
   <mat-card>
     <div class="header">
-      <div class="titulos-header">
-        <mat-card-title>
-          <span class="material-symbols-outlined">
-            payments
-          </span>
-          Títulos
-        </mat-card-title>
-        <mat-card-subtitle>Lista de Títulos</mat-card-subtitle>
+      <div class="linha-1">
+        <div class="titulos-header">
+          <mat-card-title>
+            <span class="material-symbols-outlined"> payments</span>
+            Títulos
+          </mat-card-title>
+          <mat-card-subtitle>Lista de Títulos</mat-card-subtitle>
+        </div>
+
+        <div class="totais">
+          <div>
+            Qtd:
+            <h2>{{result.length}}</h2>
+          </div>
+
+          <div>
+            Total:
+            <h2>{{valorTotal}}</h2>
+          </div>
+        </div>
       </div>
 
-
-      <div class="btns">
+      <div class="linha-2">
+        <div class="btns">
+          <button mat-raised-button  class="btn-cadastrado" (click)="alterarStatus('Cadastrado')">Cadastrado</button>
+          <button mat-raised-button  class="btn-lancar" (click)="alterarStatus('Lançado')">Lançado</button>
+          <button mat-raised-button  class="btn-aprovar" (click)="alterarStatus('Aprovado')">Aprovado</button>
+          <button mat-raised-button  class="btn-entregar" (click)="alterarStatus('Entregue')">Entregue</button>
+        </div>
         <button mat-raised-button color="primary" routerLink="/cadastrar-titulo"><mat-icon>add</mat-icon></button>
-        <button mat-raised-button class="btn-lancar" (click)="alterarStatus()">Lançar</button>
-        <button mat-raised-button class="btn-aprovar">Aprovar</button>
-        <button mat-raised-button class="btn-entregar">Entregar</button>
-        {{valorStr}}
       </div>
+
     </div>
 
     <mat-card-content>
@@ -121,9 +135,9 @@
               STATUS
             </th>
             <td mat-cell *matCellDef="let titulo">
-              <button
+              <button #btn
                 mat-stroked-button
-                [ngClass]="{'btn-cadastrado': titulo.status == 'cadastrado', 'btn-lancar': titulo.status == 'lançado', 'btn-aprovar': titulo.status == 'aprovado'}">
+                [ngClass]="{'btn-cadastrado': titulo.status == 'Cadastrado', 'btn-lancar': titulo.status == 'Lançado', 'btn-aprovar': titulo.status == 'Aprovado', 'btn-entregar': titulo.status == 'Entregue'}">
                 {{titulo.status}}
               </button>
             </td>
