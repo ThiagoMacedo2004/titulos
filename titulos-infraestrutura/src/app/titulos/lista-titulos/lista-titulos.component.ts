@@ -7,8 +7,9 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 
-import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MatCheckboxChange, MatCheckboxClickAction } from '@angular/material/checkbox';
 import { MatDialog, throwMatDialogContentAlreadyAttachedError } from '@angular/material/dialog';
+import { MatSelectChange } from '@angular/material/select';
 
 
 @Component({
@@ -42,11 +43,14 @@ export class ListaTitulosComponent implements OnInit {
   dataCheck: PeriodicElement[] = []
   dataCheckD: PeriodicElement[] = []
   dataSource = new MatTableDataSource<PeriodicElement>();
+  dataSourceAll = new MatTableDataSource<PeriodicElement>();
   valor: number
   valorStr: string = 'R$ 0,00'
   valorTotal: any
-  disabilitarBtnStatus: boolean = true
-
+  desabilitarBtnStatus: boolean = true
+  status:object
+  stt: string = 'Cadastrado'
+  btns:boolean = false
   rowDetalhe: any = []
 
   constructor(
@@ -61,14 +65,31 @@ export class ListaTitulosComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngOnInit() {
-    this.getTitulos()
+    this.getTitulos('Cadastrado')
+    this.status = [
+      {status : 'Cadastrado'}, 
+      {status : 'Lançado'},
+      {status : 'Aprovado'},
+      {status : 'Entregue'}   
+    ]
+
+    this.getToday()
   }
 
-  getTitulos() {
-    this._services.getTitulos().subscribe(
+  getTitulos(event = '') {
+    this._services.getTitulos(event).subscribe(
       (data:PeriodicElement[]) => {
         console.log(data)
         this.setData(data)
+      }
+    )
+  }
+
+  getTitulosAll() {
+    this._services.getTitulosAll().subscribe(
+      (data:any) => {
+        console.log(data)
+        this.setDataAll(data)
       }
     )
   }
@@ -85,14 +106,23 @@ export class ListaTitulosComponent implements OnInit {
   }
 
   setData(data:PeriodicElement[]) {
-    this.result = data
-    this.dataSource = new MatTableDataSource(this.result)
-    this.dataCheck = this.result
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+    this.result               = data
+    this.dataSource           = new MatTableDataSource(this.result)
 
+    this.dataCheck            = this.result
+    this.dataSource.sort      = this.sort;
+  
     this.valorTotal = this.result.reduce((inicial, valor:any) => inicial + parseFloat(valor.valor_tit), 0)
     this.valorTotal = this.valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+  }
+
+  setDataAll(data:PeriodicElement[]) {
+    this.result = data
+    this.getDataAll(this.result)
+  }
+
+  getDataAll(data) {
+    this.dataSourceAll =  new MatTableDataSource<PeriodicElement>(data)
   }
 
   ngAfterViewInit() {
@@ -102,19 +132,13 @@ export class ListaTitulosComponent implements OnInit {
 
   }
 
-  btnsActions(event:PointerEvent) {
-    var v = this.dataCheck.filter(item => item.sel == false)
-    console.log(v)
-    if(v.length > 0) {
-      this.disabilitarBtnStatus = false
-    } else {
-      this.disabilitarBtnStatus = true
-    }
-  }
-
+  
   onChangeTitulo(event: MatCheckboxChange) {
     const id: any = event.source.value
     const select = event.checked
+
+    // var btns = this.dataCheck.filter((item:PeriodicElement) => item.sel == true)
+    // console.log(btns.length)
 
     if (this.dataCheckD.length != 0) {
       this.filterChange(id, select)
@@ -122,24 +146,33 @@ export class ListaTitulosComponent implements OnInit {
       this.dataCheck = this.dataCheck.map((data:PeriodicElement) => {
         if (data.id_titulo == id) {
           data.sel = select
-
           var fullSelected = this.dataCheck.filter((item) => item.sel  == true)
+
+          if(fullSelected.length > 0) {
+            this.desabilitarBtnStatus = false
+          } else {
+            this.desabilitarBtnStatus = true
+          }
+
           if(fullSelected.length == this.dataCheck.length && fullSelected.length > 0) {
             console.log(fullSelected)
             this.parentSelect = true
+            
           } else {
             this.parentSelect = false
+            
           }
 
           var v = this.dataCheck.filter((item) => {
             if(item.sel == true) {
               return item
-            }
+            } 
           })
 
           var result =  v.reduce((a, value:any) => a + parseFloat(value.valor_tit), 0)
           this.valorStr = result.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
           return data
+
         }
 
         if (id == '-1') {
@@ -148,13 +181,16 @@ export class ListaTitulosComponent implements OnInit {
             var val
             val = this.dataCheck.reduce((a, p:any) => a + parseFloat(p.valor_tit), 0)
             console.log(val)
+            this.desabilitarBtnStatus = false
           } else {
             val = 0
             console.log(val)
+            this.desabilitarBtnStatus = true
           }
           this.valorStr = val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+          
           return data
-        }
+        } 
       return data
       })
     }
@@ -195,12 +231,15 @@ export class ListaTitulosComponent implements OnInit {
 
   alterarStatus(st) {
 
-    this.disabilitarBtnStatus = true
+    this.desabilitarBtnStatus = true
     var v = this.dataCheck.filter((titulo) => titulo.sel == true)
 
     console.log(v)
     v.map(
       (row) => {
+        if(st == 'Entregue') {
+         row.data_entregue = this.getToday()
+        }
         row.status = st
         row.sel = false
         this.valorStr = 'R$ 0,00'
@@ -212,6 +251,8 @@ export class ListaTitulosComponent implements OnInit {
       (data:any) => {
         if(data.sucesso) {
           this._services.exibirMsgSucesso(`${v.length} Titulo(s) ${st} !!`)
+          this.getTitulos(st)
+          this.stt = st
         } else {
           this._services.exibirMsgErro(data.error)
         }
@@ -220,10 +261,41 @@ export class ListaTitulosComponent implements OnInit {
 
   }
 
+  getToday() {
+    var today = new Date()
 
+    let ano: any = today.getFullYear()
+    let mes: any = (today.getMonth()) + 1
+    let dia: any = today.getDate()
 
-  filterStatus() {
+    if(mes <= 9) {
+      mes = `0${mes}`
+    }
 
+    if(dia <= 9) {
+      dia = `0${dia}`
+    }
+
+    return `${ano}-${mes}-${dia}`
+  }
+
+  deletarTiutlo(titulo:PeriodicElement) {
+    console.log(titulo)
+    this._services.detelarTiutlo(JSON.stringify(titulo)).subscribe(
+      (data:any) => {
+        this._services.exibirMsgSucesso(data.sucesso)
+        this.getTitulos(titulo.status) 
+      }
+    )
+  }
+
+  filterStatus(event:MatSelectChange) {
+    
+    if(!event.value) {
+      this.getTitulos('Cadastrado')
+    } else {
+      this.getTitulos(event.value)
+    }
   }
 
   applyFilter(event: Event) {

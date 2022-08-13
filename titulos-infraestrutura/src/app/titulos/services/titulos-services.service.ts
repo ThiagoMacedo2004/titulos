@@ -84,10 +84,19 @@ export class TitulosServicesService {
     })
   }
 
-  public getTitulos() {
+  public getTitulos(status = '') {
     return this.http.get(this.URL, {
       params: {
-        acao: 'getTitulos'
+        acao  : 'getTitulos',
+        status: status
+      }
+    })
+  }
+
+  public getTitulosAll() {
+    return this.http.get(this.URL, {
+      params: {
+        acao: 'getTitulosAll'
       }
     })
   }
@@ -136,6 +145,14 @@ export class TitulosServicesService {
     return this.http.post(this.URL, obj, {
       params: {
         acao: 'alterarStatus'
+      }
+    })
+  }
+
+  public detelarTiutlo(id_titulo) {
+    return this.http.post(this.URL, id_titulo, {
+      params: {
+        acao: 'detelarTitulo'
       }
     })
   }

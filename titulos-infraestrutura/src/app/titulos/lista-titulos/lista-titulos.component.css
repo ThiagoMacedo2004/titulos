@@ -10,7 +10,7 @@
 }
 
 table tr {
-  height: 36px;
+  height: 24px;
 }
 
 .selected-row {
@@ -19,7 +19,7 @@ table tr {
 }
 
 table tr td {
-  font-size: 12px;
+  font-size: 11px;
   vertical-align: middle;
 }
 
@@ -27,7 +27,7 @@ tr td:last-child {
   text-align: end;
   padding: 0;
   display: flex;
-  width: 100px;
+  width: 70px;
   align-items: center;
   justify-content: space-around;
 }
@@ -52,12 +52,16 @@ tr th:nth-child(8) {
   text-align: center;
 }
 
-.container-filtros {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+mat-card-content {
+  margin-top: 15px;
 }
 
+.container-filtros {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
 
 
 .btns {
@@ -68,13 +72,14 @@ tr th:nth-child(8) {
 }
 
 .mat-form-field {
-  font-size: 14px;
-  width: 100%;
+  font-size: 12px;
+  width: 49%;
 }
 
 .container-table {
   overflow-y: auto;
-  max-height: 65vh;
+  overflow-x: hidden;
+  max-height: 55vh;
 }
 
 mat-card {

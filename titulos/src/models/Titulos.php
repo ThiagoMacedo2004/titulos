@@ -9,7 +9,7 @@ class Titulos extends Sql {
         $this->sql = new Sql();
     }
 
-    public function getTitulos()
+    public function getTitulos($status = 'Cadastrado')
     {
         $result = $this->sql->select("
             SELECT t.id_titulo, 
@@ -28,7 +28,9 @@ class Titulos extends Sql {
                 INNER JOIN datasul ds     ON (ds.id = t.id_ds_tit)
                 INNER JOIN fornecedores f ON (f.id_fornecedor = t.id_forn_tit)
                 INNER JOIN itens i        ON (i.id_item = t.id_item_tit)
-         ");
+            WHERE t.status = :status", [
+                ':status' => $status
+            ]);
 
          return $result;
     }
@@ -114,11 +116,56 @@ class Titulos extends Sql {
     {
         foreach($data as $key => $value)
         {
-            $result = $this->sql->query("UPDATE titulos SET status = :status WHERE id_titulo = :id_titulo", [
-                ':status'    => $value->status,
-                ':id_titulo' => $value->id_titulo
+            $result = $this->sql->query("UPDATE titulos SET status = :status, data_entregue = :data_entregue WHERE id_titulo = :id_titulo", [
+                ':status'        => $value->status,
+                ':id_titulo'     => $value->id_titulo,
+                ':data_entregue' => $value->data_entregue
             ]);
         }
+
+        return $result;
+    }
+
+    public function detelarTitulo($data)
+    {
+        $result = $this->sql->query("DELETE FROM itens_pg WHERE id_titulo_item_pg = :id_titulo_item_pg", [
+            ':id_titulo_item_pg' => intval($data->id_titulo)
+        ]);
+
+        if($result['sucesso']){
+            $result_t = $this->sql->query("DELETE FROM titulos WHERE id_titulo = :id_titulo", [
+                ':id_titulo' => intval($data->id_titulo)
+            ]);
+
+            return[
+                'sucesso' => "Título: {$data->nf_tit} - {$data->nome_fornecedor} - R$ {$data->valor_tit} Deletado com sucesso!"
+            ];
+        }
+
+        return array(
+            'error' => 'Erro ao deletar Título.'
+        );
+    }
+
+    public function getTitulosAll()
+    {
+        $result = $this->sql->select("
+        SELECT t.id_titulo, 
+                t.data_emissao_tit, 
+                t.data_venc_tit, 
+                t.data_entregue, 
+                t.nf_tit, 
+                t.valor_tit, 
+                t.status, 
+                t.sel,
+                ds.nome_interface,
+                f.cod_fornecedor, 
+                f.nome_fornecedor,
+                i.nome_item
+        FROM titulos t
+            INNER JOIN datasul ds     ON (ds.id = t.id_ds_tit)
+            INNER JOIN fornecedores f ON (f.id_fornecedor = t.id_forn_tit)
+            INNER JOIN itens i        ON (i.id_item = t.id_item_tit)");
 
         return $result;
     }

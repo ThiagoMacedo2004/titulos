@@ -18,15 +18,13 @@ switch($_GET['acao'])
         echo json_encode($result);
         break;
 
-        
-
+    
     case 'getDatasul':
         $result = $formulario->getDatasul();
         echo json_encode($result);
         break;
 
         
-
     case 'getContasFluxo':
         $result = $formulario->getContasFluxo($_GET['id_ds']);
         echo json_encode($result);
@@ -38,6 +36,7 @@ switch($_GET['acao'])
         echo json_encode($result);
         break;
 
+
     case 'getItens':
         $result = $formulario->getItens($data);
         echo json_encode($result);
@@ -46,11 +45,16 @@ switch($_GET['acao'])
         
 
     case 'getTitulos':
-        $result = $titulos->getTitulos();
+        $result = $titulos->getTitulos($_GET['status']);
         echo json_encode($result);
         break;
 
-        
+
+
+    case 'getTitulosAll':
+        $result = $titulos->getTitulosAll();
+        echo json_encode($result);
+        break;
 
     case 'setFornecedor':
         $result = $formulario->setFornecedor($data);
@@ -91,6 +95,12 @@ switch($_GET['acao'])
 
     case 'alterarStatus':
         $result = $titulos->alterarStatus($data);
+        echo json_encode($result);
+        break;
+
+    
+    case 'detelarTitulo':
+        $result = $titulos->detelarTitulo($data);
         echo json_encode($result);
         break;
 }   
