@@ -30,27 +30,34 @@
           <button type="button" [disabled]="desabilitarBtnStatus" class="btn btn-primary btn-sm" (click)="alterarStatus('Aprovado')">Aprovado</button>
           <button type="button" [disabled]="desabilitarBtnStatus" class="btn btn-success btn-sm" (click)="alterarStatus('Entregue')">Entregue</button>
         </div>
-        
-        <button mat-raised-button color="primary" routerLink="/cadastrar-titulo"><mat-icon>add</mat-icon></button>     
-
+        <button mat-raised-button color="primary" routerLink="/cadastrar-titulo"><mat-icon>add</mat-icon></button>
       </div>
 
-    </div>
-
-    <mat-card-content>
-
       <div class="container-filtros">
-        <mat-form-field appearance="outline">
-          <mat-label>Filtro</mat-label>
-          <input matInput (keyup)="applyFilter($event)" placeholder="Ex: Num_NF" #input>
-        </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Status</mat-label>
           <mat-select (selectionChange)="filterStatus($event)" [(ngModel)]="stt">
               <mat-option *ngFor="let status of status" [value]="status.status">{{ status.status }}</mat-option>
           </mat-select>
         </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Filtro</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Ex: Num_NF" #input>
+        </mat-form-field>
       </div>
+    </div>
+  </mat-card>
+
+  <mat-card>
+    <div class="titulos-header">
+      <mat-card-title>
+        <span class="material-symbols-outlined"> list</span>
+        Lista de Títulos
+      </mat-card-title>
+      <mat-card-subtitle *ngIf="result.length == 0">Nenhum título cadastrado com o Status: {{stt}} </mat-card-subtitle>
+    </div>
+    <mat-card-content [hidden]="result.length == 0">
       <div class="container-table">
         <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
           class="mat-elevation-z8 tabela"
@@ -69,7 +76,7 @@
               [checked]="row.sel"
               [value]="row.id_titulo"
               (change)="onChangeTitulo($event)"
-            
+
               >
               </mat-checkbox>
             </td>
@@ -157,7 +164,7 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by status"></th>
             <td mat-cell *matCellDef="let titulo">
               <button mat-icon-button color="primary" (click)="detalheTitulo(titulo)" ><mat-icon class="material-symbols-outlined">search</mat-icon></button>
-              <button mat-icon-button color="warn" (click)="deletarTiutlo(titulo)" >
+              <button mat-icon-button color="warn" (click)="deletarTiutlo(titulo)" *ngIf="titulo.status != 'Entregue'" >
                 <mat-icon class="material-symbols-outlined">delete</mat-icon>
               </button>
             </td>

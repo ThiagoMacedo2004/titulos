@@ -7,8 +7,8 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 
-import { MatCheckboxChange, MatCheckboxClickAction } from '@angular/material/checkbox';
-import { MatDialog, throwMatDialogContentAlreadyAttachedError } from '@angular/material/dialog';
+import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 
 
@@ -67,32 +67,35 @@ export class ListaTitulosComponent implements OnInit {
   ngOnInit() {
     this.getTitulos('Cadastrado')
     this.status = [
-      {status : 'Cadastrado'}, 
+      {status : 'Cadastrado'},
       {status : 'Lançado'},
       {status : 'Aprovado'},
-      {status : 'Entregue'}   
+      {status : 'Entregue'}
     ]
-
     this.getToday()
+  }
+
+  ngAfterViewInit() {
+
+    this.dataSource.sort = this.sort;
   }
 
   getTitulos(event = '') {
     this._services.getTitulos(event).subscribe(
       (data:PeriodicElement[]) => {
-        console.log(data)
         this.setData(data)
       }
     )
   }
 
-  getTitulosAll() {
-    this._services.getTitulosAll().subscribe(
-      (data:any) => {
-        console.log(data)
-        this.setDataAll(data)
-      }
-    )
-  }
+  // getTitulosAll() {
+  //   this._services.getTitulosAll().subscribe(
+  //     (data:any) => {
+  //       console.log(data)
+  //       this.setDataAll(data)
+  //     }
+  //   )
+  // }
 
   detalheTitulo(row) {
     console.log(row)
@@ -108,37 +111,30 @@ export class ListaTitulosComponent implements OnInit {
   setData(data:PeriodicElement[]) {
     this.result               = data
     this.dataSource           = new MatTableDataSource(this.result)
-
-    this.dataCheck            = this.result
     this.dataSource.sort      = this.sort;
-  
+    this.dataCheck            = this.result
+
     this.valorTotal = this.result.reduce((inicial, valor:any) => inicial + parseFloat(valor.valor_tit), 0)
     this.valorTotal = this.valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
-  }
 
-  setDataAll(data:PeriodicElement[]) {
-    this.result = data
-    this.getDataAll(this.result)
-  }
-
-  getDataAll(data) {
-    this.dataSourceAll =  new MatTableDataSource<PeriodicElement>(data)
-  }
-
-  ngAfterViewInit() {
-
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
 
   }
 
-  
+  // setDataAll(data:PeriodicElement[]) {
+  //   this.result = data
+  //   this.getDataAll(this.result)
+  // }
+
+  // getDataAll(data) {
+  //   this.dataSourceAll =  new MatTableDataSource<PeriodicElement>(data)
+  // }
+
+
+
+
   onChangeTitulo(event: MatCheckboxChange) {
     const id: any = event.source.value
     const select = event.checked
-
-    // var btns = this.dataCheck.filter((item:PeriodicElement) => item.sel == true)
-    // console.log(btns.length)
 
     if (this.dataCheckD.length != 0) {
       this.filterChange(id, select)
@@ -157,16 +153,16 @@ export class ListaTitulosComponent implements OnInit {
           if(fullSelected.length == this.dataCheck.length && fullSelected.length > 0) {
             console.log(fullSelected)
             this.parentSelect = true
-            
+
           } else {
             this.parentSelect = false
-            
+
           }
 
           var v = this.dataCheck.filter((item) => {
             if(item.sel == true) {
               return item
-            } 
+            }
           })
 
           var result =  v.reduce((a, value:any) => a + parseFloat(value.valor_tit), 0)
@@ -188,9 +184,9 @@ export class ListaTitulosComponent implements OnInit {
             this.desabilitarBtnStatus = true
           }
           this.valorStr = val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
-          
+
           return data
-        } 
+        }
       return data
       })
     }
@@ -284,13 +280,13 @@ export class ListaTitulosComponent implements OnInit {
     this._services.detelarTiutlo(JSON.stringify(titulo)).subscribe(
       (data:any) => {
         this._services.exibirMsgSucesso(data.sucesso)
-        this.getTitulos(titulo.status) 
+        this.getTitulos(titulo.status)
       }
     )
   }
 
   filterStatus(event:MatSelectChange) {
-    
+
     if(!event.value) {
       this.getTitulos('Cadastrado')
     } else {
@@ -307,6 +303,7 @@ export class ListaTitulosComponent implements OnInit {
   }
   /** Announce the change in sort state for assistive technology. */
   announceSortChange(sortState: Sort) {
+    console.log('teste')
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
     } else {
