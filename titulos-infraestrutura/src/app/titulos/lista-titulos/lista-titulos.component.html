@@ -37,13 +37,13 @@
         <mat-form-field appearance="outline">
           <mat-label>Status</mat-label>
           <mat-select (selectionChange)="filterStatus($event)" [(ngModel)]="stt">
-              <mat-option *ngFor="let status of status" [value]="status.status">{{ status.status }}</mat-option>
+              <mat-option *ngFor="let row of status" [value]="row.status">{{ row.status }}</mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Filtro</mat-label>
-          <input matInput (keyup)="applyFilter($event)" placeholder="Ex: Num_NF" #input>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Ex: Num_NF" [(ngModel)]="filtro">
         </mat-form-field>
       </div>
     </div>

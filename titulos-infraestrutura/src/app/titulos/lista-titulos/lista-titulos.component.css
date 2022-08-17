@@ -80,7 +80,7 @@ mat-card-content {
 .container-table {
   overflow-y: auto;
   overflow-x: hidden;
-  max-height: 55vh;
+  max-height: 44vh;
 }
 
 mat-card {
@@ -115,7 +115,7 @@ mat-card-title {
   display: flex;
   justify-content: space-between;
 
-  margin-bottom: 20px;
+  margin-bottom: 0px;
 }
 
 .header .linha-2 {

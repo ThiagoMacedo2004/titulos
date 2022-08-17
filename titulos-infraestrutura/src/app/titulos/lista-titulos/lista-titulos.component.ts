@@ -1,3 +1,4 @@
+import { DialogDeletarTituloComponent } from './../dialogs/dialog-deletar-titulo/dialog-deletar-titulo.component';
 import { DialogDetalheTituloComponent } from './../dialogs/dialog-detalhe-titulo/dialog-detalhe-titulo.component';
 import { TitulosServicesService } from './../services/titulos-services.service';
 import { Component, EventEmitter, Input, OnInit } from '@angular/core';
@@ -52,6 +53,7 @@ export class ListaTitulosComponent implements OnInit {
   stt: string = 'Cadastrado'
   btns:boolean = false
   rowDetalhe: any = []
+  filtro = ''
 
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
@@ -67,6 +69,7 @@ export class ListaTitulosComponent implements OnInit {
   ngOnInit() {
     this.getTitulos('Cadastrado')
     this.status = [
+      {status : 'Todos'},
       {status : 'Cadastrado'},
       {status : 'Lançado'},
       {status : 'Aprovado'},
@@ -88,14 +91,14 @@ export class ListaTitulosComponent implements OnInit {
     )
   }
 
-  // getTitulosAll() {
-  //   this._services.getTitulosAll().subscribe(
-  //     (data:any) => {
-  //       console.log(data)
-  //       this.setDataAll(data)
-  //     }
-  //   )
-  // }
+  getTitulosAll() {
+    this._services.getTitulosAll().subscribe(
+      (data:any) => {
+        console.log(data)
+        this.setData(data)
+      }
+    )
+  }
 
   detalheTitulo(row) {
     console.log(row)
@@ -135,8 +138,8 @@ export class ListaTitulosComponent implements OnInit {
   onChangeTitulo(event: MatCheckboxChange) {
     const id: any = event.source.value
     const select = event.checked
-
-    if (this.dataCheckD.length != 0) {
+    console.log(this.dataCheckD)
+    if (this.dataCheckD.length > 0) {
       this.filterChange(id, select)
     } else {
       this.dataCheck = this.dataCheck.map((data:PeriodicElement) => {
@@ -194,18 +197,37 @@ export class ListaTitulosComponent implements OnInit {
 
   filterChange(id, select) {
     var x
+    console.log(id, select)
     this.dataCheckD = this.dataCheckD.map((data) => {
       if (data.id_titulo == id) {
         data.sel = select
-        this.parentSelect = false
+        var fullSelected = this.dataCheck.filter((item) => item.sel  == true)
+
+        if(fullSelected.length > 0) {
+          this.desabilitarBtnStatus = false
+        } else {
+          this.desabilitarBtnStatus = true
+        }
+
+        if(fullSelected.length == this.dataCheck.length && fullSelected.length > 0) {
+          console.log(fullSelected)
+          this.parentSelect = true
+
+        } else {
+          this.parentSelect = false
+
+        }
+
         var v = this.dataCheck.filter((item) => {
           if(item.sel == true) {
             return item
           }
         })
+
         var result =  v.reduce((a, value:any) => a + parseFloat(value.valor_tit), 0)
         this.valorStr = result.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
         return data
+
       }
 
       if (id == '-1') {
@@ -214,11 +236,14 @@ export class ListaTitulosComponent implements OnInit {
           var val
           val = this.dataCheck.reduce((a, p:any) => a + parseFloat(p.valor_tit), 0)
           console.log(val)
+          this.desabilitarBtnStatus = false
         } else {
           val = 0
           console.log(val)
+          this.desabilitarBtnStatus = true
         }
         this.valorStr = val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+
         return data
       }
       return data
@@ -229,7 +254,7 @@ export class ListaTitulosComponent implements OnInit {
 
     this.desabilitarBtnStatus = true
     var v = this.dataCheck.filter((titulo) => titulo.sel == true)
-
+   
     console.log(v)
     v.map(
       (row) => {
@@ -277,18 +302,29 @@ export class ListaTitulosComponent implements OnInit {
 
   deletarTiutlo(titulo:PeriodicElement) {
     console.log(titulo)
-    this._services.detelarTiutlo(JSON.stringify(titulo)).subscribe(
-      (data:any) => {
-        this._services.exibirMsgSucesso(data.sucesso)
+    this._dialog.open(DialogDeletarTituloComponent, {
+      data: {
+        titulo
+      },
+      width: '40%'
+    }).afterClosed().subscribe(
+      () => {
         this.getTitulos(titulo.status)
       }
     )
+    // this._services.detelarTiutlo(JSON.stringify(titulo)).subscribe(
+    //   (data:any) => {
+    //     this._services.exibirMsgSucesso(data.sucesso)
+    //     this.getTitulos(titulo.status)
+    //   }
+    // )
   }
 
   filterStatus(event:MatSelectChange) {
-
-    if(!event.value) {
-      this.getTitulos('Cadastrado')
+    this.filtro = ''
+    this.dataCheckD = []
+    if(event.value == 'Todos') {
+      this.getTitulosAll()
     } else {
       this.getTitulos(event.value)
     }
@@ -296,9 +332,12 @@ export class ListaTitulosComponent implements OnInit {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    console.log(filterValue)
     this.dataSource.filter = filterValue.trim().toLowerCase();
     this.dataCheck = this.dataSource.filteredData
+    console.log(filterValue)
+    if(filterValue.length == 0 || filterValue == '' ) {
+      this.dataCheckD = []
+    }
     this.dataCheckD = this.dataCheck
   }
   /** Announce the change in sort state for assistive technology. */

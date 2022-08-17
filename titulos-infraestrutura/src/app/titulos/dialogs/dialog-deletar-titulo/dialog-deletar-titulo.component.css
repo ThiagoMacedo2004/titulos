@@ -1,0 +1,28 @@
+h2, h3, h4{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.info-titulo {
+    display: flex;
+    flex-direction: column;
+}
+
+.subtitle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.linha {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.mat-form-field {
+    width: 49%;
+}

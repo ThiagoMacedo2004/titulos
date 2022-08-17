@@ -22,6 +22,11 @@
     </div>
 
     <div>
+        <h4>Entregue:</h4>
+        <span>{{titulo.data_entregue ? (titulo.data_entregue | date: 'dd/MM/yyyy') : '-' }}</span>
+    </div>
+
+    <div>
         <h4>Total:</h4>
         <h3>{{ titulo.valor_tit | currency : 'BRL' }}</h3>
     </div>

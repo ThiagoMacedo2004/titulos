@@ -46,6 +46,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import { registerLocaleData } from '@angular/common';
 import localePT from '@angular/common/locales/pt';
 import { DialogDetalheTituloComponent } from './titulos/dialogs/dialog-detalhe-titulo/dialog-detalhe-titulo.component';
+import { DialogDeletarTituloComponent } from './titulos/dialogs/dialog-deletar-titulo/dialog-deletar-titulo.component';
 
 registerLocaleData(localePT);
 
@@ -67,7 +68,8 @@ registerLocaleData(localePT);
     DialogFornecedorComponent,
     DialogItemComponent,
     DialogContaFluxoComponent,
-    DialogDetalheTituloComponent
+    DialogDetalheTituloComponent,
+    DialogDeletarTituloComponent
   ],
   imports: [
     BrowserModule,
