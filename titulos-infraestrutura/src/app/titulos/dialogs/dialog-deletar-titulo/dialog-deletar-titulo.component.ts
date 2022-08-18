@@ -1,3 +1,4 @@
+import { PeriodicElement } from './../../lista-titulos/lista-titulos.component';
 import { Router } from '@angular/router';
 import { TitulosServicesService } from './../../services/titulos-services.service';
 import { Component, Inject, OnInit } from '@angular/core';
@@ -10,6 +11,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class DialogDeletarTituloComponent implements OnInit {
 
+  row: any[] = []
+
   constructor(
     private dialogRef : MatDialogRef<DialogDeletarTituloComponent>,
     private _services : TitulosServicesService,
@@ -18,6 +21,8 @@ export class DialogDeletarTituloComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+    this.row.push(this.data.titulo)
+    console.log(this.row)
   }
 
   delTitulo() {

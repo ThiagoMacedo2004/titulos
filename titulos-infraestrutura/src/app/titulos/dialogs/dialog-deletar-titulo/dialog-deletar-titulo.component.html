@@ -1,42 +1,31 @@
-<h2 mat-dialog-title>Deseja excluir o Título:</h2>
+<h2 mat-dialog-title>{{data.titulo.nome_fornecedor}}</h2>
+<h3>{{data.titulo.nome_item}}</h3>
 <div mat-matDialogContent>
-    <div class="subtitle">
-        <h3 mat-dialog-title>{{data.titulo.nome_fornecedor}}</h3>
-    </div>
-    <div class="info-titulo">
-        <div class="linha">
-            <mat-form-field appearance="outline">
-                <mat-label>Item</mat-label>
-                <input matInput [value]="data.titulo.nome_item">
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>NF</mat-label>
-                <input matInput [value]="data.titulo.nf_tit">
-            </mat-form-field>
-        </div>
-        <div class="linha">
-            <mat-form-field appearance="outline">
-                <mat-label>Emissão</mat-label>
-                <input matInput [value]="data.titulo.data_emissao_tit | date: 'dd/MM/yyyy'">
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Vencimento</mat-label>
-                <input matInput [value]="data.titulo.data_venc_tit | date: 'dd/MM/yyyy'">
-            </mat-form-field>
-        </div>
-        <mat-form-field appearance="outline">
-            <mat-label>Valor</mat-label>
-            <input matInput [value]="data.titulo.valor_tit | currency : 'BRL'">
-        </mat-form-field>
-        
-        
-        <!-- <span>NF     : {{data.titulo.nf_tit}}</span>
-        <span>Emissão: {{data.titulo.data_emissao_tit | date: 'dd/MM/yyyy'}}</span>
-        <span>Venc   : {{data.titulo.data_venc_tit | date: 'dd/MM/yyyy'}}</span>
-        <span>Valor  : {{data.titulo.valor_tit | currency : 'BRL'}}</span> -->
-        <div mat-dialog-actions align="end">
-            <button mat-button (click)="delTitulo()" color="primary" >Sim</button>
-            <button mat-button (click)="fechar()" color="warn" cdkFocusInitial>Não</button>
-        </div>
-    </div>
+  <table class="table">
+    <thead class="table-light">
+      <th>DATASUL</th>
+      <th>NF</th>
+      <th>EMISSÃO</th>
+      <th>VENCIMENTO</th>
+      <th>VALOR</th>
+      <th></th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of row">
+          <td>{{ row.nome_interface }}</td>
+          <td>{{ row.nf_tit }}</td>
+          <td>{{ row.data_emissao_tit | date: 'dd/MM/yyyy'}}</td>
+          <td>{{ row.data_venc_tit | date: 'dd/MM/yyyy'}}</td>
+          <td>{{ row.valor_tit | currency: 'BRL' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div mat-dialog-actions class="rodape">
+      <h3>Excluir Título?</h3>
+      <div>
+        <button mat-button (click)="delTitulo()" color="primary" >Sim</button>
+        <button mat-button (click)="fechar()" color="warn" cdkFocusInitial>Não</button>
+      </div>
+  </div>
 </div>
