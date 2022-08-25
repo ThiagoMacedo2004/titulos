@@ -155,6 +155,15 @@ export class TitulosServicesService {
         acao: 'detelarTitulo'
       }
     })
+
+  }
+
+  public gerarRelatorio(obj) {
+    return this.http.post(this.URL, obj, {
+      params: {
+        acao: 'gerarRelatorio'
+      }
+    })
   }
 
 

@@ -52,6 +52,7 @@ export class ListaTitulosComponent implements OnInit {
   status:object
   stt: string = 'Cadastrado'
   btns:boolean = false
+  btnRelatorio: boolean = true
   rowDetalhe: any = []
   filtro = ''
 
@@ -123,22 +124,11 @@ export class ListaTitulosComponent implements OnInit {
 
   }
 
-  // setDataAll(data:PeriodicElement[]) {
-  //   this.result = data
-  //   this.getDataAll(this.result)
-  // }
-
-  // getDataAll(data) {
-  //   this.dataSourceAll =  new MatTableDataSource<PeriodicElement>(data)
-  // }
-
-
-
 
   onChangeTitulo(event: MatCheckboxChange) {
     const id: any = event.source.value
     const select = event.checked
-    console.log(this.dataCheckD)
+    
     if (this.dataCheckD.length > 0) {
       this.filterChange(id, select)
     } else {
@@ -149,12 +139,14 @@ export class ListaTitulosComponent implements OnInit {
 
           if(fullSelected.length > 0) {
             this.desabilitarBtnStatus = false
+            this.btnRelatorio = false
           } else {
             this.desabilitarBtnStatus = true
+            this.btnRelatorio = true
           }
 
           if(fullSelected.length == this.dataCheck.length && fullSelected.length > 0) {
-            console.log(fullSelected)
+            
             this.parentSelect = true
 
           } else {
@@ -179,11 +171,11 @@ export class ListaTitulosComponent implements OnInit {
           if (select) {
             var val
             val = this.dataCheck.reduce((a, p:any) => a + parseFloat(p.valor_tit), 0)
-            console.log(val)
+            this.btnRelatorio = false
             this.desabilitarBtnStatus = false
           } else {
             val = 0
-            console.log(val)
+            this.btnRelatorio = true
             this.desabilitarBtnStatus = true
           }
           this.valorStr = val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
@@ -282,6 +274,16 @@ export class ListaTitulosComponent implements OnInit {
 
   }
 
+  gerarProtocolo() {
+    var v = this.dataCheck.filter((titulo) => titulo.sel == true)
+    console.log(v)
+    this._services.gerarRelatorio(JSON.stringify(v)).subscribe(
+      (data) => {
+        console.log(data)
+      }
+    )
+  }
+
   getToday() {
     var today = new Date()
 
@@ -334,7 +336,7 @@ export class ListaTitulosComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
     this.dataCheck = this.dataSource.filteredData
-    console.log(filterValue)
+
     if(filterValue.length == 0 || filterValue == '' ) {
       this.dataCheckD = []
     }

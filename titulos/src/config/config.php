@@ -23,4 +23,5 @@ error_reporting(E_ALL ^ E_NOTICE);
 require_once(realpath(dirname(__FILE__) . '/Database.php'));
 require_once(realpath(dirname(__FILE__) . '/../models/Formulario.php'));
 require_once(realpath(dirname(__FILE__) . '/../models/Titulos.php'));
+require_once(realpath(dirname(__FILE__) . '/../classes/PDF.php'));
 

@@ -30,7 +30,12 @@
           <button type="button" [disabled]="desabilitarBtnStatus" class="btn btn-primary btn-sm" (click)="alterarStatus('Aprovado')">Aprovado</button>
           <button type="button" [disabled]="desabilitarBtnStatus" class="btn btn-success btn-sm" (click)="alterarStatus('Entregue')">Entregue</button>
         </div>
-        <button mat-raised-button color="primary" routerLink="/cadastrar-titulo"><mat-icon>add</mat-icon></button>
+        <div>
+          <button mat-raised-button color="primary" routerLink="/cadastrar-titulo"><mat-icon>add</mat-icon></button>
+          <button mat-icon-button [disabled]="btnRelatorio" (click)="gerarProtocolo()">
+            <span class="material-symbols-outlined">file_open</span>
+          </button>
+        </div>
       </div>
 
       <div class="container-filtros">

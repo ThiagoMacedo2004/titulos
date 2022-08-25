@@ -5,5 +5,8 @@
             "00217314\\Titulos\\": "src/"
         }
     },
-    "require": {}
+    "require": {
+        "mpdf/mpdf": "^8.1",
+        "twbs/bootstrap": "5.2.0"
+    }
 }

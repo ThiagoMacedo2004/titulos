@@ -1,14 +1,15 @@
 <h2 mat-dialog-title>{{data.titulo.nome_fornecedor}}</h2>
-<h3>{{data.titulo.nome_item}}</h3>
+<h4>{{data.titulo.nome_item}}</h4>
 <div mat-matDialogContent>
-  <table class="table">
+  <table class="table table-bordered">
     <thead class="table-light">
-      <th>DATASUL</th>
-      <th>NF</th>
-      <th>EMISSÃO</th>
-      <th>VENCIMENTO</th>
-      <th>VALOR</th>
-      <th></th>
+        <tr>
+            <th scope="col">DATASUL</th>
+            <th>NF</th>
+            <th>EMISSÃO</th>
+            <th>VENCIMENTO</th>
+            <th>VALOR</th>
+        </tr>
     </thead>
     <tbody>
       <tr *ngFor="let row of row">

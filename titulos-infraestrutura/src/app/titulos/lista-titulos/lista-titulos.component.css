@@ -164,3 +164,7 @@ mat-card-title {
   line-height: 30px;
   font-size: 12px;
 }
+
+.linha-hover:hover {
+  background-color: #155724;
+}

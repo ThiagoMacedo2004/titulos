@@ -103,6 +103,15 @@ switch($_GET['acao'])
         $result = $titulos->detelarTitulo($data);
         echo json_encode($result);
         break;
+
+    case 'gerarRelatorio':
+        ob_start();
+        $titulos = $data;
+        require_once 'src/views/relatorio.php';
+        $pdf = new PDF(ob_get_clean());
+        $pdf->exibir_pdf();
+        break;
+
 }   
 
 
