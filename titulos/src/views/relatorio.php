@@ -12,19 +12,22 @@
 
   .tabela {
     border-collapse: collapse;
+    width: 100%;
   }
 
   .tabela tr td {
     border: solid 1px black;
     border-collapse: collapse;
     font-size: 0.8rem;
+    text-align: center;
   }
 
   .tabela thead tr th {
     border: 1px solid black;
-    border-collapse: collapse;
+    font-size: 0.9rem;
   }
 </style>
+
   <body>
     <table class="tabela">
       <thead>
@@ -41,16 +44,16 @@
       </thead>
       <tbody>
         <?php foreach($titulos as $key => $value): ?>
-            <tr>
-                <td><?=$value->nome_interface ?></td>
-                <td><?=$value->nome_fornecedor ?></td>
-                <td><?=$value->nome_item ?></td>
-                <td><?=$value->cod_fornecedor ?></td>
-                <td><?=$value->nf_tit ?></td>
-                <td><?=$value->data_emissao_tit ?></td>
-                <td><?=$value->data_venc_tit ?></td>
-                <td><?=$value->valor_tit ?></td>
-            </tr>
+          <tr>
+            <td><?=$value->nome_interface ?></td>
+            <td><?=$value->nome_fornecedor ?></td>
+            <td><?=$value->nome_item ?></td>
+            <td><?=$value->cod_fornecedor ?></td>
+            <td><?=$value->nf_tit ?></td>
+            <td><?= date('d/m/Y', strtotime("{$value->data_emissao_tit}")) ?></td>
+            <td><?= date('d/m/Y', strtotime("{$value->data_venc_tit}")) ?></td>
+            <td><?='R$ ' . number_format($value->valor_tit, 2, ',', '.')?></td>
+          </tr>
         <?php endforeach ?>
       </tbody>
     </table>

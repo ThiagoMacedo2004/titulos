@@ -12,6 +12,11 @@
 
         <div class="totais">
           <div>
+            Status:
+            <h2>{{stt}}</h2>
+          </div>
+
+          <div>
             Qtd:
             <h2>{{result.length}}</h2>
           </div>
@@ -20,6 +25,7 @@
             Total:
             <h2>{{valorTotal}}</h2>
           </div>
+          
         </div>
       </div>
 
@@ -55,14 +61,20 @@
   </mat-card>
 
   <mat-card>
-    <div class="titulos-header">
-      <mat-card-title>
-        <span class="material-symbols-outlined"> list</span>
-        Lista de Títulos
-      </mat-card-title>
-      <mat-card-subtitle *ngIf="result.length == 0">Nenhum título cadastrado com o Status: {{stt}} </mat-card-subtitle>
+    <div class="linha-1">
+      <div class="titulos-header">
+        <mat-card-title>
+          <span class="material-symbols-outlined"> list</span>
+          Lista de Títulos
+        </mat-card-title>
+        <mat-card-subtitle *ngIf="result.length == 0">Nenhum título cadastrado com o Status: {{stt}} </mat-card-subtitle>
+      </div>
+      <div style="width: 14%; text-align: end;">
+        Total Selecionado:
+        <h2>{{ valorStr }}</h2>
+      </div>
     </div>
-    <mat-card-content [hidden]="result.length == 0">
+    <mat-card-content class="content-card-2" [hidden]="result.length == 0">
       <div class="container-table">
         <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
           class="mat-elevation-z8 tabela"

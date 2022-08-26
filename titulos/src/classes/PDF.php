@@ -31,8 +31,15 @@ class PDF {
     public function exibir_pdf(){
 
         $this->pdf->WriteHTML($this->html);
-        $this->pdf->Output("C:\\Users\\00217314\\Desktop\\TI_ADM\\Protocolo Contas\\protocolos\\protocolo_contas.pdf");
-        exit();
+        try {
+            $this->pdf->Output("C:\\Users\\00217314\\Desktop\\TI_ADM\\Protocolo Contas\\protocolos\\protocolo_contas.pdf");
+            popen("C:\\Users\\00217314\\Desktop\\TI_ADM\\Protocolo Contas\\protocolos\\protocolo_contas.pdf", 'r');
+            echo json_encode('Relatório Gerado com Sucesso!');
+            
+        }catch(Exception $e) {
+            echo json_encode($e);
+        }
+        
     }
 }
 

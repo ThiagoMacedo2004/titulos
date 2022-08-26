@@ -11,6 +11,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -163,7 +164,6 @@ export class ListaTitulosComponent implements OnInit {
           var result =  v.reduce((a, value:any) => a + parseFloat(value.valor_tit), 0)
           this.valorStr = result.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
           return data
-
         }
 
         if (id == '-1') {
@@ -197,8 +197,10 @@ export class ListaTitulosComponent implements OnInit {
 
         if(fullSelected.length > 0) {
           this.desabilitarBtnStatus = false
+          this.btnRelatorio = false
         } else {
           this.desabilitarBtnStatus = true
+          this.btnRelatorio = true
         }
 
         if(fullSelected.length == this.dataCheck.length && fullSelected.length > 0) {
@@ -229,10 +231,12 @@ export class ListaTitulosComponent implements OnInit {
           val = this.dataCheck.reduce((a, p:any) => a + parseFloat(p.valor_tit), 0)
           console.log(val)
           this.desabilitarBtnStatus = false
+          this.btnRelatorio = false
         } else {
           val = 0
           console.log(val)
           this.desabilitarBtnStatus = true
+          this.btnRelatorio = true
         }
         this.valorStr = val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
@@ -275,13 +279,33 @@ export class ListaTitulosComponent implements OnInit {
   }
 
   gerarProtocolo() {
-    var v = this.dataCheck.filter((titulo) => titulo.sel == true)
-    console.log(v)
-    this._services.gerarRelatorio(JSON.stringify(v)).subscribe(
-      (data) => {
-        console.log(data)
-      }
-    )
+    if(this.dataCheckD.length > 0) {
+      var v = this.dataCheckD.filter((titulo:any) => titulo.sel == true)
+      console.log(v)
+      this._services.gerarRelatorio(JSON.stringify(v)).subscribe(
+        (data) => {
+          console.log(data)
+          this._services.exibirMsgSucesso(data)
+        },
+        (error:HttpErrorResponse) => {
+          console.log(error)
+          this._services.exibirMsgErro(error.message)
+        }
+      )
+    } else {
+      var v = this.dataCheck.filter((titulo:any) => titulo.sel == true)
+      console.log(v)
+      this._services.gerarRelatorio(JSON.stringify(v)).subscribe(
+        (data) => {
+          console.log(data)
+          this._services.exibirMsgSucesso(data)
+        },
+        (error:HttpErrorResponse) => {
+          console.log(error)
+          this._services.exibirMsgErro(error.message)
+        }
+      )
+    }
   }
 
   getToday() {
@@ -314,16 +338,14 @@ export class ListaTitulosComponent implements OnInit {
         this.getTitulos(titulo.status)
       }
     )
-    // this._services.detelarTiutlo(JSON.stringify(titulo)).subscribe(
-    //   (data:any) => {
-    //     this._services.exibirMsgSucesso(data.sucesso)
-    //     this.getTitulos(titulo.status)
-    //   }
-    // )
+    
   }
 
   filterStatus(event:MatSelectChange) {
     this.filtro = ''
+    this.parentSelect = false
+    this.btnRelatorio = true
+    this.valorStr = 'R$ 0,00'
     this.dataCheckD = []
     if(event.value == 'Todos') {
       this.getTitulosAll()
