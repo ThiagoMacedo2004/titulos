@@ -10,6 +10,10 @@
 
 <style>
 
+  body, h1, h2, h3, * {
+    margin: 0;
+  }
+
   .tabela {
     border-collapse: collapse;
     width: 100%;
@@ -26,9 +30,85 @@
     border: 1px solid black;
     font-size: 0.9rem;
   }
+
+  .tabela-titulo {
+    margin-bottom: 20px;
+    width: 100%;
+  }
+
+  .tabela-titulo tr td {
+    text-align: center;
+  }
+
+  .tabela-titulo tr td:nth-child(4) {
+    text-align: right;
+  }
+
+  .tabela-titulo tr td:nth-child(1) {
+    text-align: left;
+  }
+
+  .container-ass {
+    margin-top: 100px;
+  }
+
+  .tabela-ass {
+    width: 100%;
+    
+  }
+
+  .tabela-ass tr td {
+    
+  }
+
+  .tabela-ass tr td:nth-child(2) {
+    text-align: right;
+  }
+
+  .tabela-ass tr:nth-child(2) td{
+    height: 80px;
+    border: none;
+  }
+
+  .tabela-ass tr .linha-ass{
+    border-top: 1px solid black;
+    
+  }
+
+  .tabela-ass tr:nth-child(1) td,
+  .tabela-ass tr:nth-child(2) td{
+    width: 30%;
+  }
+
+  
 </style>
 
   <body>
+    <table class="tabela-titulo">
+      <tbody>
+        <tr>
+          <td>
+            <h2>PROTOCOLO INFRAESTRUTURA</h2>
+            <h3>Contas a Pagar</h3>
+          </td>
+          <td>
+            <h4>Data:</h4>
+            <h4>
+              <?=date('d/m/Y'); ?>
+            </h4>
+          </td>
+          <td>
+            <h4>Qtd de Títulos:</h4>
+            <h4><?php print(count($titulos)) ; ?></h4>
+          </td>
+          <td>
+            <h4>Total em Títulos:</h4>
+            <h4><?= $total ?></h4>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
     <table class="tabela">
       <thead>
         <tr>
@@ -57,6 +137,51 @@
         <?php endforeach ?>
       </tbody>
     </table>
+<!-- 
+    <table class="assinaturas">
+      <tr>
+        <td></td>
+        <td>Assinatura Infraestrutura</td>
+        <td></td>
+        <td>Assinatura Contas a Pagar</td>
+      </tr>
+      <tr class="espaco">
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Data Infraestrutura</td>
+        <td></td>
+        <td>Data Contas a Pagar</td>
+      </tr>
+    </table> -->
+
+    <div class="container-ass">
+      <table class="tabela-ass">
+        <tr>
+          <td class="linha-ass">Assinatura Infraestrutura</td>
+          <td></td>
+          <td class="linha-ass">Assinatura Contas a Pagar</td>
+        </tr>
+        <tr>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="linha-ass">Data Infraestrutura</td>
+          <td></td>
+          <td class="linha-ass">Data Contas a Pagar</td>
+        </tr>
+          
+      </table>
+      <!-- <div class="ass-infra"></div>
+      Assinatura Infraestrutura
+  
+      <div class="data-infra"></div>
+      Data Infraestrutura
+    </div> -->
       
   </body>
 </html>

@@ -158,10 +158,11 @@ export class TitulosServicesService {
 
   }
 
-  public gerarRelatorio(obj) {
+  public gerarRelatorio(obj, total) {
     return this.http.post(this.URL, obj, {
       params: {
-        acao: 'gerarRelatorio'
+        acao : 'gerarRelatorio',
+        total: total
       }
     })
   }

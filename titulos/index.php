@@ -107,6 +107,7 @@ switch($_GET['acao'])
     case 'gerarRelatorio':
         ob_start();
         $titulos = $data;
+        $total   = $_GET['total'];
         require_once 'src/views/relatorio.php';
         $pdf = new PDF(ob_get_clean());
         $pdf->exibir_pdf();

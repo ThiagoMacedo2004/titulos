@@ -282,7 +282,7 @@ export class ListaTitulosComponent implements OnInit {
     if(this.dataCheckD.length > 0) {
       var v = this.dataCheckD.filter((titulo:any) => titulo.sel == true)
       console.log(v)
-      this._services.gerarRelatorio(JSON.stringify(v)).subscribe(
+      this._services.gerarRelatorio(JSON.stringify(v), this.valorStr).subscribe(
         (data) => {
           console.log(data)
           this._services.exibirMsgSucesso(data)
@@ -295,7 +295,7 @@ export class ListaTitulosComponent implements OnInit {
     } else {
       var v = this.dataCheck.filter((titulo:any) => titulo.sel == true)
       console.log(v)
-      this._services.gerarRelatorio(JSON.stringify(v)).subscribe(
+      this._services.gerarRelatorio(JSON.stringify(v), this.valorStr).subscribe(
         (data) => {
           console.log(data)
           this._services.exibirMsgSucesso(data)

@@ -28,7 +28,10 @@ class Titulos extends Sql {
                 INNER JOIN datasul ds     ON (ds.id = t.id_ds_tit)
                 INNER JOIN fornecedores f ON (f.id_fornecedor = t.id_forn_tit)
                 INNER JOIN itens i        ON (i.id_item = t.id_item_tit)
-            WHERE t.status = :status", [
+            WHERE t.status = :status
+            ORDER BY
+                ds.nome_interface DESC,
+                f.nome_fornecedor", [
                 ':status' => $status
             ]);
 
@@ -151,21 +154,24 @@ class Titulos extends Sql {
     {
         $result = $this->sql->select("
         SELECT t.id_titulo, 
-                t.data_emissao_tit, 
-                t.data_venc_tit, 
-                t.data_entregue, 
-                t.nf_tit, 
-                t.valor_tit, 
-                t.status, 
-                t.sel,
-                ds.nome_interface,
-                f.cod_fornecedor, 
-                f.nome_fornecedor,
-                i.nome_item
+            t.data_emissao_tit, 
+            t.data_venc_tit, 
+            t.data_entregue, 
+            t.nf_tit, 
+            t.valor_tit, 
+            t.status, 
+            t.sel,
+            ds.nome_interface,
+            f.cod_fornecedor, 
+            f.nome_fornecedor,
+            i.nome_item
         FROM titulos t
             INNER JOIN datasul ds     ON (ds.id = t.id_ds_tit)
             INNER JOIN fornecedores f ON (f.id_fornecedor = t.id_forn_tit)
-            INNER JOIN itens i        ON (i.id_item = t.id_item_tit)");
+            INNER JOIN itens i        ON (i.id_item = t.id_item_tit)
+        ORDER BY
+            ds.nome_interface DESC,
+            f.nome_fornecedor");
 
         return $result;
     }

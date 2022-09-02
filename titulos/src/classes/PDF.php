@@ -32,12 +32,13 @@ class PDF {
 
         $this->pdf->WriteHTML($this->html);
         try {
-            $this->pdf->Output("C:\\Users\\00217314\\Desktop\\TI_ADM\\Protocolo Contas\\protocolos\\protocolo_contas.pdf");
-            popen("C:\\Users\\00217314\\Desktop\\TI_ADM\\Protocolo Contas\\protocolos\\protocolo_contas.pdf", 'r');
             echo json_encode('Relatório Gerado com Sucesso!');
+            $this->pdf->Output("C:\\Users\\00217314\\Desktop\\TI_ADM\\Protocolo Contas\\protocolos\\protocolo_contas.pdf");            
+            pclose(popen("C:\\Users\\00217314\\Desktop\\TI_ADM\\Protocolo Contas\\protocolos\\protocolo_contas.pdf", 'r')) ;
+            
             
         }catch(Exception $e) {
-            echo json_encode($e);
+            return json_encode($e);
         }
         
     }
