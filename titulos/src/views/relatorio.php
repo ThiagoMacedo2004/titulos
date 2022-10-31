@@ -22,7 +22,7 @@
   .tabela tr td {
     border: solid 1px black;
     border-collapse: collapse;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     text-align: center;
   }
 
@@ -49,7 +49,7 @@
   }
 
   .container-ass {
-    margin-top: 100px;
+    margin-top: 40px;
   }
 
   .tabela-ass {
@@ -57,22 +57,20 @@
     
   }
 
-  .tabela-ass tr td {
-    
-  }
+
 
   .tabela-ass tr td:nth-child(2) {
     text-align: right;
   }
 
   .tabela-ass tr:nth-child(2) td{
-    height: 80px;
+    height: 40px;
     border: none;
   }
 
   .tabela-ass tr .linha-ass{
     border-top: 1px solid black;
-    
+    font-size: 0.7rem;
   }
 
   .tabela-ass tr:nth-child(1) td,

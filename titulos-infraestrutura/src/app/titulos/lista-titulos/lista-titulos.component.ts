@@ -110,7 +110,7 @@ export class ListaTitulosComponent implements OnInit {
         row: this.rowDetalhe
       },
       width: '50%'
-    })
+    }).afterClosed().subscribe(() => this.getTitulos(row.status))
   }
 
   setData(data:PeriodicElement[]) {
@@ -247,7 +247,7 @@ export class ListaTitulosComponent implements OnInit {
   }
 
   alterarStatus(st) {
-
+    
     this.desabilitarBtnStatus = true
     var v = this.dataCheck.filter((titulo) => titulo.sel == true)
    
@@ -268,8 +268,8 @@ export class ListaTitulosComponent implements OnInit {
       (data:any) => {
         if(data.sucesso) {
           this._services.exibirMsgSucesso(`${v.length} Titulo(s) ${st} !!`)
-          this.getTitulos(st)
-          this.stt = st
+          this.getTitulos(this.stt)
+          // this.stt = st
         } else {
           this._services.exibirMsgErro(data.error)
         }
@@ -296,6 +296,36 @@ export class ListaTitulosComponent implements OnInit {
       var v = this.dataCheck.filter((titulo:any) => titulo.sel == true)
       console.log(v)
       this._services.gerarRelatorio(JSON.stringify(v), this.valorStr).subscribe(
+        (data) => {
+          console.log(data)
+          this._services.exibirMsgSucesso(data)
+        },
+        (error:HttpErrorResponse) => {
+          console.log(error)
+          this._services.exibirMsgErro(error.message)
+        }
+      )
+    }
+  }
+
+  gerarExcel() {
+    if(this.dataCheckD.length > 0) {
+      var v = this.dataCheckD.filter((titulo:any) => titulo.sel == true)
+      console.log(v)
+      this._services.gerarExcel(JSON.stringify(v)).subscribe(
+        (data) => {
+          console.log(data)
+          this._services.exibirMsgSucesso(data)
+        },
+        (error:HttpErrorResponse) => {
+          console.log(error)
+          this._services.exibirMsgErro(error.message)
+        }
+      )
+    } else {
+      var v = this.dataCheck.filter((titulo:any) => titulo.sel == true)
+      console.log(v)
+      this._services.gerarExcel(JSON.stringify(v)).subscribe(
         (data) => {
           console.log(data)
           this._services.exibirMsgSucesso(data)
@@ -347,9 +377,12 @@ export class ListaTitulosComponent implements OnInit {
     this.btnRelatorio = true
     this.valorStr = 'R$ 0,00'
     this.dataCheckD = []
+    this.desabilitarBtnStatus = true
     if(event.value == 'Todos') {
+      this.stt = 'Todos'
       this.getTitulosAll()
     } else {
+      this.stt = event.value
       this.getTitulos(event.value)
     }
   }

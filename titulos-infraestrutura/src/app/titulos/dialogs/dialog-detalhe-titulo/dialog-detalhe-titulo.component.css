@@ -15,17 +15,34 @@ h4, h3 {
 }
 
 .linha-2 {
+    width: 100%;
+    display: flex;
+   
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+form {
+    width: 60%;
+    display: flex;
+    align-items: center;
+    gap: 0 22px;
+}
+
+mat-form-field {
+    width: 30%;
+}
+
+mat-form-field div {
+    margin: 0;
+    padding: 0;
+}
+
+.estatico {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 15px;
-    margin-bottom: 20px;
-}
-
-.linha-2 div {
-    display: flex;
-    flex-direction: column;
-    
+    width: 35%;
 }
 
 .content {

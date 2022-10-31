@@ -7,7 +7,8 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 })
 export class TitulosServicesService {
 
-  URL =  'http://localhost/projetos/titulos/index.php';
+  private URL       =  'http://localhost/projetos/titulos/index.php';
+  private URL_EXCEL =  "http://localhost/projetos/titulos/src/views/excel.php"
 
   confgMsgError: MatSnackBarConfig = {
     panelClass         : ['error'],
@@ -149,6 +150,14 @@ export class TitulosServicesService {
     })
   }
 
+  public editarTitulo(obj) {
+    return this.http.post(this.URL, obj, {
+      params: {
+        acao: 'editarTitulo'
+      }
+    })
+  }
+
   public detelarTiutlo(id_titulo) {
     return this.http.post(this.URL, id_titulo, {
       params: {
@@ -163,6 +172,14 @@ export class TitulosServicesService {
       params: {
         acao : 'gerarRelatorio',
         total: total
+      }
+    })
+  }
+
+  public gerarExcel(obj) {
+    return this.http.post(this.URL, obj, {
+      params: {
+        acao: 'gerarExcel'
       }
     })
   }

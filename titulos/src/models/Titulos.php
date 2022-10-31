@@ -11,8 +11,8 @@ class Titulos extends Sql {
 
     public function getTitulos($status = 'Cadastrado')
     {
-        $result = $this->sql->select("
-            SELECT t.id_titulo, 
+        $result = $this->sql->select(
+            "SELECT t.id_titulo, 
                     t.data_emissao_tit, 
                     t.data_venc_tit, 
                     t.data_entregue, 
@@ -31,7 +31,9 @@ class Titulos extends Sql {
             WHERE t.status = :status
             ORDER BY
                 ds.nome_interface DESC,
-                f.nome_fornecedor", [
+                f.nome_fornecedor,
+                i.nome_item ASC,
+                t.nf_tit ASC", [
                 ':status' => $status
             ]);
 
@@ -94,7 +96,7 @@ class Titulos extends Sql {
                 ':sel'              => 0
             ]);
 
-            return $result;
+        return $result;
     }
 
     public function setItensTitulo($data)
@@ -119,12 +121,35 @@ class Titulos extends Sql {
     {
         foreach($data as $key => $value)
         {
-            $result = $this->sql->query("UPDATE titulos SET status = :status, data_entregue = :data_entregue WHERE id_titulo = :id_titulo", [
+            $result = $this->sql->query(
+                "UPDATE titulos SET status = :status, data_entregue = :data_entregue WHERE id_titulo = :id_titulo", [
                 ':status'        => $value->status,
                 ':id_titulo'     => $value->id_titulo,
                 ':data_entregue' => $value->data_entregue
             ]);
         }
+
+        return $result;
+    }
+
+    public function editarTitulo($data)
+    {
+        $result = $this->sql->query(
+            "UPDATE titulos
+            SET 
+                data_emissao_tit = :data_emissao_tit,
+                data_venc_tit    = :data_venc_tit,
+                data_entregue    = :data_entregue,
+                nf_tit           = :nf_tit
+            WHERE
+                id_titulo = :id_titulo", [
+                    ':data_emissao_tit' => $data->dt_emissao,
+                    ':data_venc_tit'    => $data->dt_vencimento,
+                    ':data_entregue'    => $data->dt_entregue,
+                    ':nf_tit'           => $data->nf,
+                    ':id_titulo'        => $data->id 
+                ]
+        );
 
         return $result;
     }
@@ -152,8 +177,8 @@ class Titulos extends Sql {
 
     public function getTitulosAll()
     {
-        $result = $this->sql->select("
-        SELECT t.id_titulo, 
+        $result = $this->sql->select(
+        "SELECT t.id_titulo, 
             t.data_emissao_tit, 
             t.data_venc_tit, 
             t.data_entregue, 
@@ -171,7 +196,9 @@ class Titulos extends Sql {
             INNER JOIN itens i        ON (i.id_item = t.id_item_tit)
         ORDER BY
             ds.nome_interface DESC,
-            f.nome_fornecedor");
+            f.nome_fornecedor,
+            i.nome_item ASC,
+            t.nf_tit ASC");
 
         return $result;
     }

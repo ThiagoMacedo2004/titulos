@@ -13,6 +13,7 @@ header('Expires: ' . gmdate('D, d M Y H:i:s') . ' GMT');
 header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
 header('Content-Type: application/json; charset=utf-8');
 
+
 date_default_timezone_set('America/Sao_Paulo');
 setlocale(LC_TIME, 'pt-BR', 'pt-BR.utf-8', 'portuguese');
 

@@ -11,6 +11,10 @@ $titulos    = new Titulos;
 // echo json_encode($result);
 
 
+
+
+
+
 switch($_GET['acao'])
 {
     case 'getFornecedores':
@@ -98,6 +102,12 @@ switch($_GET['acao'])
         echo json_encode($result);
         break;
 
+
+    case 'editarTitulo':
+        $result = $titulos->editarTitulo($data);
+        echo json_encode($result);
+        break;
+
     
     case 'detelarTitulo':
         $result = $titulos->detelarTitulo($data);
@@ -113,6 +123,21 @@ switch($_GET['acao'])
         $pdf->exibir_pdf();
         break;
 
+    case 'gerarExcel':
+        
+        $titulos = $data;
+        $arquivo = fopen('titulos.csv', 'w');
+
+        foreach($titulos as $key => $value) {
+            $arr = get_object_vars($value);
+            print_r($arr);
+            fputcsv($arquivo, $arr, ";");
+
+        }
+
+        fclose($arquivo);
+
+        break;
 }   
 
 

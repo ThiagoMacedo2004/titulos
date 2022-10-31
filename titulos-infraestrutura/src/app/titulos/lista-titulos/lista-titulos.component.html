@@ -5,9 +5,9 @@
         <div class="titulos-header">
           <mat-card-title>
             <span class="material-symbols-outlined"> payments</span>
-            Títulos
+            <span>Títulos</span>
           </mat-card-title>
-          <mat-card-subtitle>Lista de Títulos</mat-card-subtitle>
+          <mat-card-subtitle>Filtros</mat-card-subtitle>
         </div>
 
         <div class="totais">
@@ -41,14 +41,16 @@
           <button mat-icon-button [disabled]="btnRelatorio" (click)="gerarProtocolo()">
             <span class="material-symbols-outlined">file_open</span>
           </button>
+
+          <a (click)="gerarExcel()"  mat-button>Link</a>
         </div>
       </div>
 
       <div class="container-filtros">
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" color="primary">
           <mat-label>Status</mat-label>
-          <mat-select (selectionChange)="filterStatus($event)" [(ngModel)]="stt">
-              <mat-option *ngFor="let row of status" [value]="row.status">{{ row.status }}</mat-option>
+          <mat-select  (selectionChange)="filterStatus($event)" [(ngModel)]="stt">
+              <mat-option  *ngFor="let row of status" [value]="row.status">{{ row.status }}</mat-option>
           </mat-select>
         </mat-form-field>
 
@@ -69,7 +71,7 @@
         </mat-card-title>
         <mat-card-subtitle *ngIf="result.length == 0">Nenhum título cadastrado com o Status: {{stt}} </mat-card-subtitle>
       </div>
-      <div style="width: 14%; text-align: end;">
+      <div style="width: 14%; text-align: end; color: #3f51b5;">
         Total Selecionado:
         <h2>{{ valorStr }}</h2>
       </div>

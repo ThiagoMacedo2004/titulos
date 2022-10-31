@@ -285,7 +285,8 @@ export class CadastrarTituloComponent implements OnInit {
         console.log(result)
         this.result = result
         if(this.result.error) {
-          this._services.exibirMsgErro(this.result.error)
+          this.formGroup.get('nf').reset({value:this.formularioSend.nf, disabled: false})
+          return this._services.exibirMsgErro(this.result.error)
         } else {
           this._services.setItensTitulo(JSON.stringify(this.objEnviado)).subscribe(
             (result) => {

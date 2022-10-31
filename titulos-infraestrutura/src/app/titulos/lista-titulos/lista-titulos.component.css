@@ -12,6 +12,8 @@ table tr {
   height: 24px;
 }
 
+
+
 .selected-row {
   background-color: #c2dbff;;
   font-weight: bold;
@@ -47,9 +49,11 @@ tr th:nth-child(2) {
   padding-left: 5px;
 }
 
-tr th:nth-child(8) {
+tr th:nth-child(3) {
   text-align: center;
 }
+
+
 
 mat-card-content {
   margin-top: 15px;
@@ -92,11 +96,12 @@ mat-card {
 mat-card-title {
   display: flex;
   align-items: center;
+  color: #3f51b5;;
 }
 
 .titulos-header span {
-  font-size: 30px;
-
+  font-size: 26px;
+  color: #3f51b5;
   margin-right: 10px;
 }
 
@@ -128,6 +133,7 @@ mat-card-title {
   align-items: center;
   justify-content: inherit;
   min-width: 300px;
+  color: #3f51b5;;
 }
 
 .header-card2 {
@@ -178,3 +184,5 @@ mat-card-title {
 .linha-hover:hover {
   background-color: #155724;
 }
+
+
