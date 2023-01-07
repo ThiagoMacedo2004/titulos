@@ -87,22 +87,28 @@ class Formulario extends Sql {
     public function getItens($data)
     {
         if(!$data->id_datasul) {
-            $result = $this->sql->select("SELECT i.*, dt.nome_interface, f.cod_fornecedor, f.nome_fornecedor FROM itens i
+            $result = $this->sql->select("SELECT i.*, dt.nome_interface, f.cod_fornecedor, f.nome_fornecedor, f.cnpj_fornecedor FROM itens i
                 INNER JOIN datasul dt     on (dt.id = i.id_ds)
                 INNER JOIN fornecedores f on (f.id_fornecedor = i.id_fn)
                 WHERE i.id_ds = dt.id AND i.id_fn = f.id_fornecedor
-                ORDER BY(nome_item) ASC",
+                ORDER BY 
+                    nome_interface DESC, 
+                    f.nome_fornecedor ASC,
+                    i.nome_item ASC",
             );
 
             return $result;
 
         }
 
-        $result = $this->sql->select("SELECT i.*, dt.nome_interface, f.cod_fornecedor, f.nome_fornecedor FROM itens i
+        $result = $this->sql->select("SELECT i.*, dt.nome_interface, f.cod_fornecedor, f.nome_fornecedor, f.cnpj_fornecedor FROM itens i
                 INNER JOIN datasul dt     on (dt.id = :id_datasul)
                 INNER JOIN fornecedores f on (f.id_fornecedor = :id_fornecedor)
                 WHERE i.id_ds = :id_datasul AND i.id_fn = :id_fornecedor
-                ORDER BY(nome_item) ASC",[
+                ORDER BY
+                    nome_interface DESC, 
+                    f.nome_fornecedor ASC,
+                    i.nome_item ASC",[
                     ':id_datasul'    => intval($data->id_datasul),
                     ':id_fornecedor' => intval($data->id_fornecedor)
                 ]

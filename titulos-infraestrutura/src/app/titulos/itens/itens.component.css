@@ -50,8 +50,12 @@ mat-card-subtitle {
 
 table {
     width: 100%;
-    
 }
+
+table td {
+    font-size: 12px;
+}
+
 
 .tabela {
     max-height: 47vh;

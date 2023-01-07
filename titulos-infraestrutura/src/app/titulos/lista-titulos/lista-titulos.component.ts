@@ -56,6 +56,7 @@ export class ListaTitulosComponent implements OnInit {
   btnRelatorio: boolean = true
   rowDetalhe: any = []
   filtro = ''
+  qtdSelecionada:number = 0
 
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
@@ -110,7 +111,14 @@ export class ListaTitulosComponent implements OnInit {
         row: this.rowDetalhe
       },
       width: '50%'
-    }).afterClosed().subscribe(() => this.getTitulos(row.status))
+    }).afterClosed().subscribe(
+      () => {
+        if(this.filtro) {
+          return
+        } else
+          this.getTitulos(row.status)
+      }
+    )
   }
 
   setData(data:PeriodicElement[]) {
@@ -163,6 +171,9 @@ export class ListaTitulosComponent implements OnInit {
 
           var result =  v.reduce((a, value:any) => a + parseFloat(value.valor_tit), 0)
           this.valorStr = result.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+
+          
+          this.qtdSelecionada = fullSelected.length
           return data
         }
 
@@ -173,13 +184,14 @@ export class ListaTitulosComponent implements OnInit {
             val = this.dataCheck.reduce((a, p:any) => a + parseFloat(p.valor_tit), 0)
             this.btnRelatorio = false
             this.desabilitarBtnStatus = false
+            this.qtdSelecionada = this.dataCheck.length
           } else {
             val = 0
             this.btnRelatorio = true
             this.desabilitarBtnStatus = true
+            this.qtdSelecionada = 0
           }
           this.valorStr = val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
-
           return data
         }
       return data
@@ -220,6 +232,7 @@ export class ListaTitulosComponent implements OnInit {
 
         var result =  v.reduce((a, value:any) => a + parseFloat(value.valor_tit), 0)
         this.valorStr = result.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+        this.qtdSelecionada = fullSelected.length
         return data
 
       }
@@ -232,11 +245,12 @@ export class ListaTitulosComponent implements OnInit {
           console.log(val)
           this.desabilitarBtnStatus = false
           this.btnRelatorio = false
+          this.qtdSelecionada = this.dataCheck.length
         } else {
           val = 0
-          console.log(val)
           this.desabilitarBtnStatus = true
           this.btnRelatorio = true
+          this.qtdSelecionada = 0
         }
         this.valorStr = val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 

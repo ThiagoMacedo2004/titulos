@@ -24,13 +24,28 @@ table tr td {
   vertical-align: middle;
 }
 
-tr td:last-child {
+/* tr td:last-child {
   text-align: end;
   padding: 0;
   display: flex;
   width: 70px;
   align-items: center;
   justify-content: space-around;
+} */
+
+.status-icons {
+  text-align: end;
+  padding: 0;
+  display: flex;
+  width: 70px;
+  align-items: center;
+  justify-content: space-around;
+}
+
+
+
+td.mat-cell:last-of-type {
+  padding-right: 0;
 }
 
 tr > th:last-child {
@@ -84,7 +99,7 @@ mat-card-content {
 .container-table {
   overflow-y: auto;
   overflow-x: hidden;
-  max-height: 44vh;
+  max-height: 41vh;
 }
 
 mat-card {
@@ -184,5 +199,20 @@ mat-card-title {
 .linha-hover:hover {
   background-color: #155724;
 }
+
+.info-sel {
+  width: 22%;
+  text-align: center;
+  color: #3f51b5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.info-sel div {
+  width: 50%;
+}
+
+
 
 

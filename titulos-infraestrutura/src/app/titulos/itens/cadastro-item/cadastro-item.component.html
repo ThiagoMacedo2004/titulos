@@ -13,7 +13,7 @@
             <mat-form-field appearance="outline">
                 <mat-label>Fornecedor</mat-label>
                 <mat-select formControlName="id_fn">
-                    <mat-option *ngFor="let item of fornecedores" [value]="item.id_fornecedor">{{ item.nome_fornecedor }}</mat-option>
+                    <mat-option *ngFor="let item of fornecedores" [value]="item.id_fornecedor">{{ item.nome_fornecedor }} - ({{ item.cnpj_fornecedor }})</mat-option>
                 </mat-select>
             </mat-form-field>
 

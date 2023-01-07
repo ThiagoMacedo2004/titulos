@@ -12,7 +12,7 @@ import { MatSort, Sort } from '@angular/material/sort';
 })
 export class ItensComponent implements OnInit, AfterViewInit{
 
-  displayedColumns: string[] = ['id_item', 'nome_item', 'nome_fornecedor', 'nome_interface', 'acao']
+  displayedColumns: string[] = ['id_item', 'nome_fornecedor', 'cnpj', 'cod_fornecedor', 'nome_item', 'nome_interface', 'acao']
   formGroup       : FormGroup
   id_fornecedor   = new FormControl({value: ''}, Validators.required) 
   dataSource      = new MatTableDataSource<Itens>()

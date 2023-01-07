@@ -32,7 +32,7 @@
   }
 
   .tabela-titulo {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     width: 100%;
   }
 
@@ -49,7 +49,7 @@
   }
 
   .container-ass {
-    margin-top: 40px;
+    margin-top: 30px;
   }
 
   .tabela-ass {
@@ -86,7 +86,7 @@
       <tbody>
         <tr>
           <td>
-            <h2>PROTOCOLO INFRAESTRUTURA</h2>
+            <h3>PROTOCOLO INFRAESTRUTURA</h3>
             <h3>Contas a Pagar</h3>
           </td>
           <td>
@@ -178,8 +178,8 @@
       Assinatura Infraestrutura
   
       <div class="data-infra"></div>
-      Data Infraestrutura
-    </div> -->
+      Data Infraestrutura -->
+    </div>
       
   </body>
 </html>
