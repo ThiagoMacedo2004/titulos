@@ -273,6 +273,7 @@ export class ListaTitulosComponent implements OnInit {
         }
         row.status = st
         row.sel = false
+        this.qtdSelecionada = 0
         this.valorStr = 'R$ 0,00'
         this.parentSelect = false
       }
@@ -392,6 +393,7 @@ export class ListaTitulosComponent implements OnInit {
     this.valorStr = 'R$ 0,00'
     this.dataCheckD = []
     this.desabilitarBtnStatus = true
+    this.qtdSelecionada = 0
     if(event.value == 'Todos') {
       this.stt = 'Todos'
       this.getTitulosAll()

@@ -1,6 +1,59 @@
 <h1 mat-dialog-title>Selecione o Fornecedor</h1>
-<h3>{{ datasul }}</h3>
-<div mat-dialog-content>
+<div mat-dialog-content>Datasul: {{ datasul }}</div>
+<!-- <h3>{{ datasul }}</h3> -->
+<div mat-dialog-content>  
+    <mat-form-field appearance="standard">
+        <mat-label>Filtro</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Filtro" #input>
+    </mat-form-field>
+    <div class="tabela">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z6">
+            
+          <ng-container matColumnDef="cod_fornecedor">
+            <th mat-header-cell *matHeaderCellDef> COD FORNECEDOR </th>
+            <td mat-cell *matCellDef="let fornecedor"> {{fornecedor.cod_fornecedor}} </td>
+          </ng-container>
+        
+          
+          <ng-container matColumnDef="fornecedor">
+            <th mat-header-cell *matHeaderCellDef> FORNECEDOR </th>
+            <td mat-cell *matCellDef="let fornecedor"> {{fornecedor.nome_fornecedor}} </td>
+          </ng-container>
+        
+          
+          <ng-container matColumnDef="cnpj">
+            <th mat-header-cell *matHeaderCellDef> DATASUL </th>
+            <td mat-cell *matCellDef="let fornecedor"> {{fornecedor.cnpj_fornecedor}} </td>
+          </ng-container>
+        
+          
+          <ng-container matColumnDef="acao">
+            <th mat-header-cell *matHeaderCellDef> SELECIONE </th>
+            <td mat-cell *matCellDef="let fornecedor">
+              <button [mat-dialog-close]="fornecedor" mat-button color="primary">
+                  <mat-icon>check</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+        
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        
+          <!-- Row shown when there is no matching data. -->
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">Nenhum registro encontrato para: "{{input.value}}"</td>
+          </tr>
+        </table>
+    </div>
+</div>
+<div mat-dialog-actions align="end">
+    <button mat-button (click)="fechar()" cdkFocusInitial>Fechar</button>
+</div>
+  
+
+
+
+<!--<div mat-dialog-content>
     <table class="table table-sm table-striped">
         <thead class="thead-dark">
             <th>COD FORNECEDOR</th>
@@ -25,5 +78,5 @@
 </div>
 <div mat-dialog-actions align="end">
     <button mat-button (click)="fechar()" cdkFocusInitial>Fechar</button>
-</div>
+</div>-->
 

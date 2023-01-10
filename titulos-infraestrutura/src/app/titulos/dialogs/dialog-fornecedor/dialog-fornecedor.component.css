@@ -2,7 +2,25 @@ table {
     width: 100%;
 }
 
-table thead {
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+
+tr td:last-child {
+    text-align: end;
+}
+
+th:last-child {
+    text-align: end;
+}
+
+.tabela {
+    overflow-y: auto;
+    max-height: 55vh;
+}
+
+/* table thead {
   text-align: left;
 }
 
@@ -21,4 +39,4 @@ tr td:last-child {
 
 thead th:last-child {
     text-align: end;
-}
+} */

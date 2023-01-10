@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-dialog-fornecedor',
@@ -8,7 +9,44 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class DialogFornecedorComponent implements OnInit {
 
-  fornecedores : any = []
+  displayedColumns: string[] = ['cod_fornecedor', 'fornecedor', 'cnpj', 'acao']
+  dataSource  = new MatTableDataSource()
+  datasul:string = ''
+  //contas: any = []
+
+  constructor(
+    private dialogRef : MatDialogRef<DialogFornecedorComponent>,
+    @Inject(MAT_DIALOG_DATA) public data
+  ) { }
+
+  ngOnInit(): void {
+    this.getFornecedores()
+  }
+
+
+  
+  getFornecedores() {
+    //this.contas = this.data.obj
+    this.dataSource = new MatTableDataSource(this.data.obj)
+    this.datasul      = this.data.datasul
+    
+  }
+
+  fechar() {
+    this.dialogRef.close();
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+
+
+
+
+
+  /*fornecedores : any = []
   datasul      : string
 
   constructor(
@@ -28,6 +66,10 @@ export class DialogFornecedorComponent implements OnInit {
 
   fechar() {
     this.dialogRef.close();
-  }
+  }*/
+
+
+
+  
 
 }

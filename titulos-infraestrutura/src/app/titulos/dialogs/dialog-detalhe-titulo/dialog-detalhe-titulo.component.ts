@@ -26,6 +26,7 @@ export class DialogDetalheTituloComponent implements OnInit {
     this.titulo = this.data.row
     this.formulario()
     this.getContasFluxo()
+    console.log(this.titulo)
   }
 
   formulario() {
@@ -74,7 +75,9 @@ export class DialogDetalheTituloComponent implements OnInit {
     let mes: any = (data.getUTCMonth()) + 1
     let dia: any = data.getUTCDate()
 
-
+    if(dia === 1 && mes === 1) {
+      ano = ano + 1
+    }
 
     if(mes <= 9) {
       mes = `0${mes}`
