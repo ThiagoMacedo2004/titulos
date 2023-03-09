@@ -8,11 +8,23 @@
   width: 100%;
 }
 
+
 table tr {
-  height: 24px;
+  height: 22px;
 }
 
+table tr td {
+  text-align: center;
+}
 
+table th:nth-child(1), table tr td:nth-child(1) {
+  text-align: left;
+}
+
+table th:nth-child(2),
+table th:nth-child(3) {
+  width: 20% ;
+}
 
 .selected-row {
   background-color: #c2dbff;;
@@ -68,7 +80,18 @@ tr th:nth-child(3) {
   text-align: center;
 }
 
+tr.hover-linha:hover {
+  font-weight: 600;
+  cursor: pointer;
+}
 
+.cancel-click {
+  pointer-events: none;
+}
+
+.click {
+  pointer-events: fill;
+}
 
 mat-card-content {
   margin-top: 15px;
@@ -79,7 +102,7 @@ mat-card-content {
   width: 100%;
   justify-content: space-between;
   align-items: center;
-
+  
   margin-top: 20px;
 }
 
@@ -91,6 +114,18 @@ mat-card-content {
   justify-content: space-between;
 }
 
+.index {
+  z-index: 10000;
+}
+
+button.protocolo:hover {
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+a.add:hover {
+  background-color: rgba(0, 0, 255, 0.15);
+}
+
 .mat-form-field {
   font-size: 12px;
   width: 49%;
@@ -99,24 +134,43 @@ mat-card-content {
 .container-table {
   overflow-y: auto;
   overflow-x: hidden;
-  max-height: 41vh;
+  max-height: 42vh;
+}
+
+.container-table::-webkit-scrollbar {
+  border-radius: 50px;
+  background-color: #d8d6d6;
+  width: 10px;
+}
+
+.container-table::-webkit-scrollbar-track {
+  background: #d8d6d6;
+  border-radius: 12px;
+ 
+}
+
+.container-table::-webkit-scrollbar-thumb {
+  background-color: #aca8a8;    /* color of the scroll thumb */
+  border-radius: 20px;       /* roundness of the scroll thumb */
+ 
 }
 
 mat-card {
   max-height: 87vh;
   border-top: 3px solid #3f51b5;
   margin-bottom: 10px;
+  /* background-color: #f6f8fc; */
 }
 
 mat-card-title {
   display: flex;
   align-items: center;
-  color: #3f51b5;;
+  /* color: #3f51b5; */
 }
 
 .titulos-header span {
   font-size: 26px;
-  color: #3f51b5;
+  /* color: #3f51b5; */
   margin-right: 10px;
 }
 
@@ -148,7 +202,7 @@ mat-card-title {
   align-items: center;
   justify-content: inherit;
   min-width: 300px;
-  color: #3f51b5;;
+  /* color: #3f51b5;; */
 }
 
 .header-card2 {
@@ -165,24 +219,28 @@ mat-card-title {
   color: #842029;
   background-color: #f8d7da;
   border-color: #f5c2c7;
+  font-size: 12px;
 }
 
 .btn-lancar {
   color: #856404;
   background-color: #fff3cd;
   border-color: #ffeeba;
+  font-size: 12px;
 }
 
 .btn-aprovar {
   color: #004085;
   background-color: #cce5ff;
   border-color: #b8daff;
+  font-size: 12px;
 }
 
 .btn-entregar {
   color: #155724;
   background-color: #d4edda;
   border-color: #c3e6cb;
+  font-size: 12px;
 }
 
 .btn-actions {
@@ -203,7 +261,7 @@ mat-card-title {
 .info-sel {
   width: 22%;
   text-align: center;
-  color: #3f51b5;
+  /* color: #3f51b5; */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -211,6 +269,15 @@ mat-card-title {
 
 .info-sel div {
   width: 50%;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  align-items: center;
+  letter-spacing: normal;
+  outline: 0;
 }
 
 

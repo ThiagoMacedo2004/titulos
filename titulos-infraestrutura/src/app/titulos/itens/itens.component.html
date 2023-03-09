@@ -1,4 +1,4 @@
-<mat-card>
+<!-- <mat-card>
     <mat-card-title>
         <span class="material-symbols-outlined">
             search
@@ -27,14 +27,8 @@
             <mat-icon class="icon-business">add_circle</mat-icon>
         </button>
     </mat-card-content>
-    <!-- <mat-card-actions align="end">
-        <button mat-button color="primary"(click)="getItens()" [disabled]="!formGroup.valid">Buscar</button>
-        <button mat-button color="warn" (click)="limparFiltro()">Limpar</button>
-        <button mat-icon-button color="primary" class="btn-business" routerLink="/cadastrar-item" >
-            <mat-icon class="icon-business">add_circle</mat-icon>
-        </button>
-    </mat-card-actions> -->
-</mat-card>
+    
+</mat-card> -->
 
 <mat-card *ngIf="mostrarCard" >
     <div class="header-card">
@@ -50,10 +44,43 @@
       </div>
     </div>
     <mat-card-content *ngIf="result.length != 0" >
-        <mat-form-field class="filter" appearance="standard">
+        <div class="filtros">
+            <form [formGroup]="formGroup">
+                <mat-form-field appearance="outline">
+                    <mat-label>Datasul</mat-label>
+                    <mat-select formControlName="id_datasul" (selectionChange)="changeInterface($event)">
+                        <mat-option *ngFor="let item of datasul" [value]="item.id">{{ item.nome_interface }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+    
+                <mat-form-field appearance="outline">
+                    <mat-label>Fornecedor</mat-label>
+                    <mat-select formControlName="id_fornecedor">
+                        <mat-option *ngFor="let item of fornecedores" [value]="item.id_fornecedor">{{ item.nome_fornecedor }} - ({{ item.cnpj_fornecedor }})</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button mat-button color="primary"(click)="getItens()" [disabled]="!formGroup.valid">Buscar</button>
+                <button mat-button color="warn" (click)="limparFiltro()">Limpar</button>
+                <button mat-icon-button color="primary" class="btn-business" routerLink="/cadastrar-item" >
+                    <mat-icon class="icon-business">add_circle</mat-icon>
+                </button>
+            </form>
+
+            <!-- <button mat-button color="primary"(click)="getItens()" [disabled]="!formGroup.valid">Buscar</button>
+            <button mat-button color="warn" (click)="limparFiltro()">Limpar</button>
+            <button mat-icon-button color="primary" class="btn-business" routerLink="/cadastrar-item" >
+                <mat-icon class="icon-business">add_circle</mat-icon>
+            </button> -->
+
+            <mat-form-field class="filter" appearance="standard">
+                <mat-label>Filtro</mat-label>
+                <input matInput  (keyup)="applyFilter($event)" placeholder="Ex. Telefonia Móvel" #input>
+            </mat-form-field>
+        </div>
+        <!-- <mat-form-field class="filter" appearance="standard">
             <mat-label>Filtro</mat-label>
             <input matInput  (keyup)="applyFilter($event)" placeholder="Ex. Telefonia Móvel" #input>
-        </mat-form-field>
+        </mat-form-field> -->
         <div class="tabela">
             <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
                 class="mat-elevation-z8">

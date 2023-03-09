@@ -8,11 +8,12 @@ form {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 70%;
+    width: 100%;
+    margin-top: 10px;
 }
 
 form mat-form-field:nth-child(2) {
-    width: 70%;
+    width: 50%;
 }
 
 
@@ -20,6 +21,11 @@ form mat-form-field:nth-child(2) {
     width: 100%;
 }
 
+.filtros {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 
 .icon-business {
     font-size: 35px;
@@ -58,6 +64,6 @@ table td {
 
 
 .tabela {
-    max-height: 47vh;
+    max-height: 57vh;
     overflow-y: auto;
 }

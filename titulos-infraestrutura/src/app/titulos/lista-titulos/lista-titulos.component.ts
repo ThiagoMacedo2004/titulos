@@ -36,6 +36,7 @@ export class ListaTitulosComponent implements OnInit {
     'acao'
   ];
 
+  
 
   statusChange = new EventEmitter()
 
@@ -46,6 +47,7 @@ export class ListaTitulosComponent implements OnInit {
   dataCheckD: PeriodicElement[] = []
   dataSource = new MatTableDataSource<PeriodicElement>();
   dataSourceAll = new MatTableDataSource<PeriodicElement>();
+  qtdTitulos:any = ''
   valor: number
   valorStr: string = 'R$ 0,00'
   valorTotal: any
@@ -57,6 +59,7 @@ export class ListaTitulosComponent implements OnInit {
   rowDetalhe: any = []
   filtro = ''
   qtdSelecionada:number = 0
+  carregando = false
 
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
@@ -90,6 +93,7 @@ export class ListaTitulosComponent implements OnInit {
     this._services.getTitulos(event).subscribe(
       (data:PeriodicElement[]) => {
         this.setData(data)
+        this.carregando = false
       }
     )
   }
@@ -99,6 +103,7 @@ export class ListaTitulosComponent implements OnInit {
       (data:any) => {
         console.log(data)
         this.setData(data)
+        this.carregando = false
       }
     )
   }
@@ -110,13 +115,20 @@ export class ListaTitulosComponent implements OnInit {
       data: {
         row: this.rowDetalhe
       },
-      width: '50%'
+      width: '50%',
+      position: {
+        top: '14%',
+        left: '29%'
+      }
     }).afterClosed().subscribe(
       () => {
         if(this.filtro) {
           return
         } else
           this.getTitulos(row.status)
+          this.qtdSelecionada = 0
+          this.valorStr = "R$ 0,00"
+          this.desabilitarBtnStatus = true
       }
     )
   }
@@ -124,8 +136,9 @@ export class ListaTitulosComponent implements OnInit {
   setData(data:PeriodicElement[]) {
     this.result               = data
     this.dataSource           = new MatTableDataSource(this.result)
-    this.dataSource.sort      = this.sort;
+    this.dataSource.sort      = this.sort
     this.dataCheck            = this.result
+    this.qtdTitulos           = this.result.length
 
     this.valorTotal = this.result.reduce((inicial, valor:any) => inicial + parseFloat(valor.valor_tit), 0)
     this.valorTotal = this.valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
@@ -327,7 +340,7 @@ export class ListaTitulosComponent implements OnInit {
     if(this.dataCheckD.length > 0) {
       var v = this.dataCheckD.filter((titulo:any) => titulo.sel == true)
       console.log(v)
-      this._services.gerarExcel(JSON.stringify(v)).subscribe(
+      this._services.gerarExcel(v).subscribe(
         (data) => {
           console.log(data)
           this._services.exibirMsgSucesso(data)
@@ -340,7 +353,7 @@ export class ListaTitulosComponent implements OnInit {
     } else {
       var v = this.dataCheck.filter((titulo:any) => titulo.sel == true)
       console.log(v)
-      this._services.gerarExcel(JSON.stringify(v)).subscribe(
+      this._services.gerarExcel(v).subscribe(
         (data) => {
           console.log(data)
           this._services.exibirMsgSucesso(data)
@@ -387,6 +400,8 @@ export class ListaTitulosComponent implements OnInit {
   }
 
   filterStatus(event:MatSelectChange) {
+    this.carregando = true
+    this.result = []
     this.filtro = ''
     this.parentSelect = false
     this.btnRelatorio = true
@@ -397,9 +412,11 @@ export class ListaTitulosComponent implements OnInit {
     if(event.value == 'Todos') {
       this.stt = 'Todos'
       this.getTitulosAll()
+      
     } else {
       this.stt = event.value
       this.getTitulos(event.value)
+      
     }
   }
 
@@ -408,8 +425,14 @@ export class ListaTitulosComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
     this.dataCheck = this.dataSource.filteredData
 
+    this.valorTotal = this.dataCheck.reduce((inicial, valor:any) => inicial + parseFloat(valor.valor_tit), 0)
+    this.valorTotal = this.valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+    this.qtdTitulos = this.dataCheck.length
+
     if(filterValue.length == 0 || filterValue == '' ) {
       this.dataCheckD = []
+      
+      
     }
     this.dataCheckD = this.dataCheck
   }

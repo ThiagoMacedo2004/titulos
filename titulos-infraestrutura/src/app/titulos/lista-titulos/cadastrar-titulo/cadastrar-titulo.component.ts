@@ -152,7 +152,7 @@ export class CadastrarTituloComponent implements OnInit {
       data: {
         obj: this.itens
       },
-      width: '65%'
+      width: '60%'
     }).afterClosed().subscribe(
       (result) => {
         console.log(result)

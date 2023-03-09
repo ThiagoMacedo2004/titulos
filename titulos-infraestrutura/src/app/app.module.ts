@@ -23,6 +23,8 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { LOCALE_ID } from '@angular/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -97,7 +99,8 @@ registerLocaleData(localePT);
     MatDialogModule,
     MatDatepickerModule,
     MatSnackBarModule,
-    MatDividerModule
+    MatDividerModule,
+    MatProgressBarModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-br'},
@@ -105,13 +108,13 @@ registerLocaleData(localePT);
       provide: MAT_DATE_FORMATS,
       useValue: {
         parse: {
-          dateInput: ['l', 'LL'],
+          dateInput: ['l', 'L'],
         },
         display: {
           dateInput: 'L',
-          monthYearLabel: 'MMM YYYY',
-          dateA11yLabel: 'LL',
-          monthYearA11yLabel: 'MMMM YYYY',
+          monthYearLabel: 'MM YYYY',
+          dateA11yLabel: 'L',
+          monthYearA11yLabel: 'MM YYYY',
         },
       },
     }

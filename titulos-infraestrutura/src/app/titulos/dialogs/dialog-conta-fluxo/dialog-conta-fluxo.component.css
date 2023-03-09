@@ -14,3 +14,12 @@ tr td:last-child {
 th:last-child {
     text-align: end;
 }
+
+th.mat-header-cell {
+    text-align: center;
+}
+
+.tabela {
+    overflow-y: auto;
+    max-height: 55vh;
+}

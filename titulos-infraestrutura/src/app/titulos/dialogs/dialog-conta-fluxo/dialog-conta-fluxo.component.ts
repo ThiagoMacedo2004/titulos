@@ -10,8 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
 export class DialogContaFluxoComponent implements OnInit {
 
   displayedColumns: string[] = ['num_cf', 'nome_cf', 'nome_interface', 'acao']
-  dataSource  = new MatTableDataSource()
-
+  dataSource                 = new MatTableDataSource()
   contas: any = []
 
   constructor(
@@ -30,6 +29,7 @@ export class DialogContaFluxoComponent implements OnInit {
   fechar() {
     this.dialogRef.close();
   }
+
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

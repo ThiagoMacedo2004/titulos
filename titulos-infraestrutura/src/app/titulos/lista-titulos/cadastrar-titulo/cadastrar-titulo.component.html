@@ -93,7 +93,7 @@
     </mat-card-actions>
 </mat-card>
 
-<mat-card>
+<mat-card *ngIf="listaItensPgView.length != 0">
     <mat-card-title>Valores</mat-card-title>
     <mat-card-subtitle *ngIf="listaItensPgView.length == 0">Não há valores registrados para o título</mat-card-subtitle>
     <mat-card-subtitle *ngIf="listaItensPgView.length != 0">Lista de valores do Título</mat-card-subtitle>
@@ -108,7 +108,7 @@
             <tbody>
                 <tr *ngFor="let row of listaItensPgView">
                     <td>{{ row.item_contaFluxo }}</td>
-                    <td>{{ row.item_valor }}</td>
+                    <td>{{ row.item_valor | currency: 'BRL' }}</td>
                     <td>
                         <button mat-button color="warn" (click)="removerValorPg(row)">
                             <mat-icon>delete</mat-icon>
