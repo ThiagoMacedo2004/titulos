@@ -12,6 +12,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { HttpErrorResponse } from '@angular/common/http';
+import { DialogPesquisaTitulosComponent } from '../dialogs/dialog-pesquisa-titulos/dialog-pesquisa-titulos.component';
 
 
 @Component({
@@ -36,7 +37,7 @@ export class ListaTitulosComponent implements OnInit {
     'acao'
   ];
 
-  
+
 
   statusChange = new EventEmitter()
 
@@ -101,7 +102,6 @@ export class ListaTitulosComponent implements OnInit {
   getTitulosAll() {
     this._services.getTitulosAll().subscribe(
       (data:any) => {
-        console.log(data)
         this.setData(data)
         this.carregando = false
       }
@@ -122,7 +122,7 @@ export class ListaTitulosComponent implements OnInit {
       }
     }).afterClosed().subscribe(
       () => {
-        if(this.filtro) {
+        if(this.filtro || this.stt == 'Pesquisa') {
           return
         } else
           this.getTitulos(row.status)
@@ -150,7 +150,7 @@ export class ListaTitulosComponent implements OnInit {
   onChangeTitulo(event: MatCheckboxChange) {
     const id: any = event.source.value
     const select = event.checked
-    
+
     if (this.dataCheckD.length > 0) {
       this.filterChange(id, select)
     } else {
@@ -168,7 +168,7 @@ export class ListaTitulosComponent implements OnInit {
           }
 
           if(fullSelected.length == this.dataCheck.length && fullSelected.length > 0) {
-            
+
             this.parentSelect = true
 
           } else {
@@ -185,7 +185,7 @@ export class ListaTitulosComponent implements OnInit {
           var result =  v.reduce((a, value:any) => a + parseFloat(value.valor_tit), 0)
           this.valorStr = result.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
-          
+
           this.qtdSelecionada = fullSelected.length
           return data
         }
@@ -274,10 +274,10 @@ export class ListaTitulosComponent implements OnInit {
   }
 
   alterarStatus(st) {
-    
+
     this.desabilitarBtnStatus = true
     var v = this.dataCheck.filter((titulo) => titulo.sel == true)
-   
+
     console.log(v)
     v.map(
       (row) => {
@@ -396,7 +396,7 @@ export class ListaTitulosComponent implements OnInit {
         this.getTitulos(titulo.status)
       }
     )
-    
+
   }
 
   filterStatus(event:MatSelectChange) {
@@ -412,13 +412,68 @@ export class ListaTitulosComponent implements OnInit {
     if(event.value == 'Todos') {
       this.stt = 'Todos'
       this.getTitulosAll()
-      
-    } else {
+
+    }
+     else {
       this.stt = event.value
       this.getTitulos(event.value)
-      
+
     }
   }
+
+  relatorio() {
+    this._services.relatorio().subscribe(
+      (data) => {
+        console.log(data)
+        this._services.exibirMsgSucesso('Relatório gerado com sucesso!!')
+      },
+      (e:any) => this._services.exibirMsgErro('Erro ao gerar Relatório. Verifique se o Arquivo encontra-se aberto.')
+    )
+  }
+
+  pesquisar() {
+    this.result = []
+    this.filtro = ''
+    this.parentSelect = false
+    this.btnRelatorio = true
+    this.valorStr = 'R$ 0,00'
+    this.dataCheckD = []
+    this.desabilitarBtnStatus = true
+    this.qtdSelecionada = 0
+    this.stt = 'Pesquisa'
+    this.qtdTitulos = 0
+    this.valorTotal = 'R$ 0,00'
+    this._dialog.open(DialogPesquisaTitulosComponent).afterClosed().subscribe(
+      (data) => {
+        this.carregando = true
+        if(!data) {
+          return this.carregando = false
+        }
+        const obj = {
+          idDatasul: data.id_datasul,
+          idFornecedor: data.id_fornecedor
+        }
+
+        this._services.pesquisaTitulos(JSON.stringify(obj)).subscribe(
+          (data:any) => {
+            if(!data) {
+              this.carregando = false
+            } else {
+              this.setData(data)
+              this.carregando = false
+            }
+          }
+        )
+      }
+    )
+  }
+
+  abrirPastas() {
+    this._services.abrirPastas().subscribe(
+      (data) => console.log(data)
+    )
+  }
+
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -431,8 +486,8 @@ export class ListaTitulosComponent implements OnInit {
 
     if(filterValue.length == 0 || filterValue == '' ) {
       this.dataCheckD = []
-      
-      
+
+
     }
     this.dataCheckD = this.dataCheck
   }

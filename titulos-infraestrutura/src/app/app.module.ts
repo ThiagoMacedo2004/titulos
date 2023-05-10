@@ -49,6 +49,8 @@ import { registerLocaleData } from '@angular/common';
 import localePT from '@angular/common/locales/pt';
 import { DialogDetalheTituloComponent } from './titulos/dialogs/dialog-detalhe-titulo/dialog-detalhe-titulo.component';
 import { DialogDeletarTituloComponent } from './titulos/dialogs/dialog-deletar-titulo/dialog-deletar-titulo.component';
+import { RelatorioComponent } from './titulos/relatorio/relatorio.component';
+import { DialogPesquisaTitulosComponent } from './titulos/dialogs/dialog-pesquisa-titulos/dialog-pesquisa-titulos.component';
 
 registerLocaleData(localePT);
 
@@ -71,7 +73,9 @@ registerLocaleData(localePT);
     DialogItemComponent,
     DialogContaFluxoComponent,
     DialogDetalheTituloComponent,
-    DialogDeletarTituloComponent
+    DialogDeletarTituloComponent,
+    RelatorioComponent,
+    DialogPesquisaTitulosComponent
   ],
   imports: [
     BrowserModule,

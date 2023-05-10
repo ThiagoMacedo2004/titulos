@@ -1,3 +1,4 @@
+import { RelatorioComponent } from './titulos/relatorio/relatorio.component';
 import { CadastrarTituloComponent } from './titulos/lista-titulos/cadastrar-titulo/cadastrar-titulo.component';
 import { CadastroItemComponent } from './titulos/itens/cadastro-item/cadastro-item.component';
 import { ItensComponent } from './titulos/itens/itens.component';
@@ -45,6 +46,10 @@ const routes: Routes = [
 
   {
     path: 'cadastrar-item', component: CadastroItemComponent
+  },
+
+  {
+    path: 'relatorio', component: RelatorioComponent
   }
 
 ];

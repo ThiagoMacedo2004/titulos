@@ -184,6 +184,30 @@ export class TitulosServicesService {
     })
   }
 
+  public relatorio() {
+    return this.http.get(this.URL, {
+      params: {
+        acao: 'relatorio'
+      }
+    })
+  }
+
+  public pesquisaTitulos(obj:any) {
+    return this.http.post(this.URL, obj, {
+      params: {
+        acao: 'pesquisaTitulos'
+      }
+    })
+  }
+
+  public abrirPastas() {
+    return this.http.get(this.URL, {
+      params: {
+        acao: 'abrirPastas'
+      }
+    })
+  }
+
 
 
 }

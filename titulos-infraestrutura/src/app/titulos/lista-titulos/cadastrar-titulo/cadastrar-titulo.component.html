@@ -1,92 +1,90 @@
 <mat-card>
-    <mat-card-title>Cadastrar novo Título</mat-card-title>
-    <mat-card-subtitle>informe os dados do Título</mat-card-subtitle>
-    <mat-card-content style="margin-top: 30px">
-        <form [formGroup]="formGroup">
-            <div class="row">
-                <mat-form-field class="datasul" appearance="outline">
-                    <mat-label>Datasul</mat-label>
-                    <mat-select formControlName="id_ds" (selectionChange)="changeInterface($event)"
-                        [(ngModel)]="dados.id_datasul">
-                        <mat-option *ngFor="let item of datasul" value="{{item.id}}">{{ item.nome_interface }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
+  <mat-card-title>Cadastrar novo Título</mat-card-title>
+  <mat-card-subtitle>informe os dados do Título</mat-card-subtitle>
+  <mat-card-content style="margin-top: 30px">
+    <form [formGroup]="formGroup">
+      <div class="row">
+        <mat-form-field class="datasul" appearance="outline">
+            <mat-label>Datasul</mat-label>
+            <mat-select formControlName="id_ds" (selectionChange)="changeInterface($event)"
+                [(ngModel)]="dados.id_datasul">
+                <mat-option *ngFor="let item of datasul" value="{{item.id}}">{{ item.nome_interface }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
 
 
-                <mat-form-field class="fornecedor" appearance="outline">
-                    <mat-label>Fornecedor</mat-label>
-                    <button *ngIf="dados.cod_fornecedor"
-                        (click)="[dados.nome_fornecedor = '', dados.cod_fornecedor = '',dados.nome_item = '']"
-                        matSuffix mat-icon-button color="warn" >
-                        <mat-icon >close</mat-icon>
-                    </button>
-                    <button *ngIf="dados.id_datasul && !dados.cod_fornecedor " (click)="selecionarFornecedor()" matSuffix
-                        mat-icon-button color="primary" >
-                        <mat-icon  *ngIf="dados.id_datasul && !dados.cod_fornecedor" color="primary" class="icon-search">search
-                        </mat-icon>
-                    </button>
-                    <input matInput formControlName="id_fn" type="text" [(ngModel)]="dados.nome_fornecedor"  readonly>
-                </mat-form-field>
+        <mat-form-field class="fornecedor" appearance="outline">
+            <mat-label>Fornecedor</mat-label>
+            <button *ngIf="dados.cod_fornecedor"
+                (click)="[dados.nome_fornecedor = '', dados.cod_fornecedor = '',dados.nome_item = '']"
+                matSuffix mat-icon-button color="warn" >
+                <mat-icon >close</mat-icon>
+            </button>
+            <button *ngIf="dados.id_datasul && !dados.cod_fornecedor " (click)="selecionarFornecedor()" matSuffix
+                mat-icon-button color="primary" >
+                <mat-icon  *ngIf="dados.id_datasul && !dados.cod_fornecedor" color="primary" class="icon-search">search
+                </mat-icon>
+            </button>
+            <input matInput formControlName="id_fn" type="text" [(ngModel)]="dados.nome_fornecedor"  readonly>
+        </mat-form-field>
 
-                <mat-form-field class="cod_fornecedor" appearance="outline">
-                    <mat-label>Código do Fornecedor</mat-label>
-                    <input matInput type="text" formControlName="cod_forn" [(ngModel)]="dados.cod_fornecedor" readonly>
-                </mat-form-field>
+        <mat-form-field class="cod_fornecedor" appearance="outline">
+            <mat-label>Código do Fornecedor</mat-label>
+            <input matInput type="text" formControlName="cod_forn" [(ngModel)]="dados.cod_fornecedor" readonly>
+        </mat-form-field>
 
-                <mat-form-field class="item" appearance="outline">
-                    <mat-label>Item</mat-label>
-                    <input matInput formControlName="id_item" type="text" [(ngModel)]="dados.nome_item" readonly>
-                    <button *ngIf="dados.nome_fornecedor" (click)="getItens()" mat-icon-button
-                        matSuffix color="primary">
-                        <mat-icon mat-icon-button matSuffix>search</mat-icon>
-                    </button>
-                </mat-form-field>
+        <mat-form-field class="item" appearance="outline">
+            <mat-label>Item</mat-label>
+            <input matInput formControlName="id_item" type="text" [(ngModel)]="dados.nome_item" readonly>
+            <button *ngIf="dados.nome_fornecedor" (click)="getItens()" mat-icon-button
+                matSuffix color="primary">
+                <mat-icon mat-icon-button matSuffix>search</mat-icon>
+            </button>
+        </mat-form-field>
+      </div>
 
-            </div>
+      <div class="row">
 
-            <div class="row">
-                
+        <mat-form-field appearance="outline" class="data">
+          <mat-label>Emissão</mat-label>
+          <input matInput [matDatepicker]="dp3" formControlName="dt_emissao" [(ngModel)]="formularioSend.data_emissao" disabled>
 
-                <mat-form-field appearance="outline" class="data">
-                    <mat-label>Emissão</mat-label>
-                    <input matInput [matDatepicker]="dp3" formControlName="dt_emissao" [(ngModel)]="formularioSend.data_emissao" disabled>
-                    
-                    <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
-                    <mat-datepicker #dp3 disabled="false"></mat-datepicker>
-                </mat-form-field>
+          <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+          <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+        </mat-form-field>
 
-                <mat-form-field appearance="outline" class="data">
-                    <mat-label>Vencimento</mat-label>
-                    <input matInput [matDatepicker]="dp2" formControlName="dt_venc" [(ngModel)]="formularioSend.data_venc" disabled>
-                    <mat-hint>{{ formGroup.value.dt_venc | date: 'EEEE' : 'pt-BR' }}</mat-hint>
-                    <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
-                    <mat-datepicker #dp2 disabled="false"></mat-datepicker>
-                </mat-form-field>
+        <mat-form-field appearance="outline" class="data">
+          <mat-label>Vencimento</mat-label>
+          <input matInput [matDatepicker]="dp2" formControlName="dt_venc" [(ngModel)]="formularioSend.data_venc" disabled>
+          <mat-hint>{{ formGroup.value.dt_venc | date: 'EEEE' : 'pt-BR' }}</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
+          <mat-datepicker #dp2 disabled="false"></mat-datepicker>
+        </mat-form-field>
 
-                <mat-form-field class="nf" appearance="outline">
-                    <mat-label>NF</mat-label>
-                    <input matInput formControlName="nf" [(ngModel)]="formularioSend.nf">
-                </mat-form-field>
+        <mat-form-field class="nf" appearance="outline">
+          <mat-label>NF</mat-label>
+          <input matInput formControlName="nf" [(ngModel)]="formularioSend.nf">
+        </mat-form-field>
 
-                <mat-form-field class="conta-fluxo" appearance="outline">
-                    <mat-label>Conta Fluxo</mat-label>
-                    <input matInput formControlName="id_cf" type="text" [(ngModel)]="dados.contaFluxo" readonly>
-                    <button *ngIf="dados.id_datasul" (click)="getContasFluxo()" mat-icon-button
-                        matSuffix color="primary">
-                        <mat-icon mat-icon-button matSuffix>search</mat-icon>
-                    </button>
-                </mat-form-field>
+        <mat-form-field class="conta-fluxo" appearance="outline">
+          <mat-label>Conta Fluxo</mat-label>
+          <input matInput formControlName="id_cf" type="text" [(ngModel)]="dados.contaFluxo" readonly>
+          <button *ngIf="dados.id_datasul" (click)="getContasFluxo()" mat-icon-button
+              matSuffix color="primary">
+              <mat-icon mat-icon-button matSuffix>search</mat-icon>
+          </button>
+        </mat-form-field>
 
-                <mat-form-field class="valor" appearance="outline">
-                    <mat-label>Valor</mat-label>
-                    <input matInput formControlName="valor" [(ngModel)]="myModel" (keyup)="mascaraMoeda()"
-                        #input>
-                </mat-form-field>
-            </div>
+        <mat-form-field class="valor" appearance="outline">
+          <mat-label>Valor</mat-label>
+          <input matInput formControlName="valor" [(ngModel)]="myModel" (keyup)="mascaraMoeda()"
+              #input>
+        </mat-form-field>
+      </div>
 
-        </form>
-    </mat-card-content>
+    </form>
+  </mat-card-content>
     <mat-card-actions align="end" style="padding:0 ;">
         <button mat-button color="primary" [disabled]="!formGroup.valid" (click)="salvarItemPagamento()">Salvar</button>
         <button mat-button color="warn" (click)="dadosObj()">Limpar</button>

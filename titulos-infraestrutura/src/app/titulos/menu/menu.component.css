@@ -1,12 +1,12 @@
 .example-container {
     width: 100%;
-    height: 92vh;
+    height: 100vh;
     margin: 0;
     background-color:#f6f8fc;
 }
 
 mat-sidenav-content {
-    margin-left: 160px;
+    margin-left: 200px;
     /* height: 98%; */
 
     padding: 14px;
@@ -14,7 +14,7 @@ mat-sidenav-content {
 }
 
 mat-sidenav {
-    width: 160px;
+    width: 200px;
     background-color:#3f51b5;
 }
 
@@ -31,11 +31,11 @@ mat-nav-list {
 a span {
     color: #fafafa;
     font-weight: 500;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
 }
 
 i {
-    margin-right: 15px;
+    margin-right: 20px;
     color: #fafafa;
     font-weight: 400;
 }

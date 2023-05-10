@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>Pesquisar</h2>
+<mat-dialog-content>
+  <mat-form-field class="datasul" appearance="outline">
+      <mat-label>Datasul</mat-label>
+      <mat-select (selectionChange)="changeInterface($event)" [(ngModel)]="dados.idDatasul">
+          <mat-option *ngFor="let item of datasul" value="{{item.id}}">{{ item.nome_interface }}
+          </mat-option>
+      </mat-select>
+  </mat-form-field>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" *ngIf="result.length > 0">
+
+    <ng-container matColumnDef="nome_fornecedor">
+      <th mat-header-cell *matHeaderCellDef> FORNECEDOR </th>
+      <td mat-cell *matCellDef="let item"> {{item.nome_fornecedor}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="cod_fornecedor">
+      <th mat-header-cell *matHeaderCellDef> CÓDIGO FORNECEDOR </th>
+      <td mat-cell *matCellDef="let item"> {{item.cod_fornecedor}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="cnpj_fornecedor">
+      <th mat-header-cell *matHeaderCellDef> CNPJ </th>
+      <td mat-cell *matCellDef="let item"> {{item.cnpj_fornecedor}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-stroked-button color="warn" (click)="limpar()">Limpar</button>
+  <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+  <button mat-stroked-button color="primary" [disabled]="result.length == 0" [mat-dialog-close]="this.dados.fornecedor">Pesquisar</button>
+</mat-dialog-actions>
+

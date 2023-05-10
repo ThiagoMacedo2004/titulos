@@ -82,7 +82,15 @@ tr th:nth-child(3) {
 
 tr.hover-linha:hover {
   font-weight: 600;
-  cursor: pointer;
+
+}
+
+.td-acao {
+  display: none;
+}
+
+tr.hover-linha:hover .td-acao {
+  display: flex;
 }
 
 .cancel-click {
@@ -102,7 +110,7 @@ mat-card-content {
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  
+
   margin-top: 20px;
 }
 
@@ -119,11 +127,36 @@ mat-card-content {
 }
 
 button.protocolo:hover {
-  background-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(240, 57, 57, 0.089);
 }
 
+button.protocolo {
+  color: #b60b19;
+}
+
+
+button.excel:hover {
+  background-color: rgba(17, 201, 11, 0.05);
+}
+
+button.excel {
+ color: rgb(35, 163, 31);
+}
+
+button.relatorio:hover {
+  background-color: rgba(0, 0, 255, 0.05);
+}
+
+button.relatorio {
+ color: rgb(0, 0, 255);
+}
+
+/* button.protocolo {
+  color: rgba(0,0,0,.54);
+} */
+
 a.add:hover {
-  background-color: rgba(0, 0, 255, 0.15);
+  background-color: rgba(0, 0, 255, 0.05);
 }
 
 .mat-form-field {
@@ -134,7 +167,7 @@ a.add:hover {
 .container-table {
   overflow-y: auto;
   overflow-x: hidden;
-  max-height: 42vh;
+  max-height: 53vh;
 }
 
 .container-table::-webkit-scrollbar {
@@ -146,13 +179,13 @@ a.add:hover {
 .container-table::-webkit-scrollbar-track {
   background: #d8d6d6;
   border-radius: 12px;
- 
+
 }
 
 .container-table::-webkit-scrollbar-thumb {
   background-color: #aca8a8;    /* color of the scroll thumb */
   border-radius: 20px;       /* roundness of the scroll thumb */
- 
+
 }
 
 mat-card {
@@ -278,6 +311,10 @@ mat-card-title {
   align-items: center;
   letter-spacing: normal;
   outline: 0;
+}
+
+.teste {
+  pointer-events: none;
 }
 
 
