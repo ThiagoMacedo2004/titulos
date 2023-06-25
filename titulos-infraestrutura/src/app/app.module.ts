@@ -24,6 +24,7 @@ import { LOCALE_ID } from '@angular/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import * as moment from 'moment'
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -80,7 +81,7 @@ registerLocaleData(localePT);
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MatToolbarModule,
+    // MatToolbarModule,
     MatButtonModule,
     MatIconModule,
     MatListModule,
@@ -104,7 +105,9 @@ registerLocaleData(localePT);
     MatDatepickerModule,
     MatSnackBarModule,
     MatDividerModule,
+    MatProgressBarModule,
     MatProgressBarModule
+
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-br'},
@@ -125,7 +128,7 @@ registerLocaleData(localePT);
 
   ],
   bootstrap: [AppComponent]
-  
+
 })
 
 

@@ -1,5 +1,5 @@
 <mat-sidenav-container class="example-container mat-elevation-z8">
-    <mat-sidenav mode="side" opened>
+    <mat-sidenav mode="side" opened disableClose="true">
         <mat-nav-list class="nav-list" *ngFor="let menu of menus" [fixedInViewport]="true">
             <a mat-list-item  routerLink="{{menu.link}}" routerLinkActive="active">
                 <i class="material-icons">{{menu.icon}}</i>

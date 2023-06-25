@@ -45,13 +45,29 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     align-items: center;
     letter-spacing: normal;
     outline: 0;
+    /* height: 40px; */
 }
 
 table th.mat-header-cell {
   text-align: center;
+  /* background-color:#626d7d; */
+  height: 52px;
+  /* color: whitesmoke; */
+
 }
 
 
 .mat-cell {
     text-align: center;
 }
+
+.mat-checkbox-frame {
+  border: #a7a7a7;
+}
+
+.mat-sort-header-arrow {
+  /* color: white; */
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

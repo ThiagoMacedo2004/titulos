@@ -1,17 +1,17 @@
 table {
     width: 100%;
-    
+
 }
 
 .tabela {
     overflow-y: auto;
-    max-height: 69vh;
+    max-height: 77vh;
 }
-  
+
 mat-card {
     max-height: 100vh;
     border-top: 3px solid #3f51b5;
-    
+
 }
 
 mat-card-title {

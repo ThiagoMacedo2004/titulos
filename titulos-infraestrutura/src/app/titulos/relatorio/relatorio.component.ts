@@ -39,8 +39,7 @@ export class RelatorioComponent implements OnInit {
     data.forEach((data) => {
       meses.push(data.mes_emissao)
     })
-    this.displayedColumns = [...new Set(meses)]
-
+    this.displayedColumns = [...new Set(meses)].sort((a:any, b:any) => a - b)
 
     this.dataSource = new MatTableDataSource(this.result)
     // this.dataSource.sort      = this.sort

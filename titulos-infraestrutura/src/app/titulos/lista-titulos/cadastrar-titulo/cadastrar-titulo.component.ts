@@ -2,7 +2,7 @@ import { DialogContaFluxoComponent } from './../../dialogs/dialog-conta-fluxo/di
 import { DialogItemComponent } from './../../dialogs/dialog-item/dialog-item.component';
 import { DialogFornecedorComponent } from './../../dialogs/dialog-fornecedor/dialog-fornecedor.component';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, NgForm, NgModel, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
@@ -35,7 +35,17 @@ export class CadastrarTituloComponent implements OnInit {
   objEnviado      : any[] = []
   valoresitens    : any
   valorPgFinal    : number
+  qtdParcelas     = [1]
+  totalParcelas: any = 'R$ 0,00';
+  arrayParcelasObj: any[] = []
+  formParcelas: NgForm
+  qtdParc = {
+    num: 1
+  }
 
+  vlParcelaInicial = {
+    valor: 0
+  }
 
   constructor(
     private _services: TitulosServicesService,
@@ -198,7 +208,64 @@ export class CadastrarTituloComponent implements OnInit {
     this.formularioSend.valor_item = this.myModel
   }
 
+  mascaraMoedaParcela(form:NgForm) {
+    let vlTotalParcelas
+    console.log(this.qtdParc.num)
 
+    for(let i = 1; i <= this.qtdParc.num; i++) {
+      var vlParcela = form.control.get(`valorParcela-${i}`).value
+      console.log(form.control.get(`valorParcela-${i}`).value)
+
+      if(vlParcela == undefined || vlParcela == '0' || vlParcela == 0) {
+        vlParcela = 0
+        form.control.get(`valorParcela-${i}`).setValue(vlParcela)
+      } else {
+
+        var x = vlParcela.replace('.', '')
+        var y = parseFloat(x) / 100
+        x = y.toFixed(2).toString()
+        form.control.get(`valorParcela-${i}`).setValue(x)
+      }
+    }
+
+    this.arrayParcelasPagamentos(form)
+
+
+
+  }
+
+  arrayParcelasPagamentos(form:NgForm) {
+    this.arrayParcelasObj = []
+    var par = 1
+
+    Object.keys(form.value).forEach(key => {
+      var valorPar = `valorParcela-${par}`
+      console.log(valorPar, key)
+      if( valorPar == key) {
+        this.arrayParcelasObj.push({
+          parcela     : par,
+          dataParcela : this.dataParcela(form.controls[`dataParcela-${par}`].value),
+          valorParcela: form.controls[key].value
+        })
+        par = par + 1
+      }
+    })
+    console.log(this.arrayParcelasObj)
+    this.ValorTotalParcelasFormatado()
+  }
+
+  ValorTotalParcelasFormatado() {
+    var vlTotalParcelas = this.arrayParcelasObj.map(
+      (obj) =>{
+        var t = parseFloat(obj.valorParcela).toFixed(2)
+        var n = parseFloat(t)
+        return n
+      }
+    ).reduce((ant, atu) => ant + atu, 0).toFixed(2)
+    var num = parseFloat(vlTotalParcelas)
+
+    this.totalParcelas = num.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL'})
+  }
 
   dadosObj() {
     this.dados.id_datasul             = ''
@@ -224,6 +291,7 @@ export class CadastrarTituloComponent implements OnInit {
 
   salvarItemPagamento() {
     this.formGroup.get('nf').reset({value:this.formularioSend.nf, disabled: true})
+
 
     const objView = {
       item_contaFluxo    : this.dados.contaFluxo,
@@ -294,9 +362,17 @@ export class CadastrarTituloComponent implements OnInit {
               if(this.result.error) {
                 this._services.exibirMsgErro(this.result.error)
               } else {
-                this._router.navigate(['/titulos'])
-                this._services.exibirMsgSucesso('Titulo cadastrado com Sucesso!!')
-                this.dadosObj()
+                this._services.setparcelas(JSON.stringify(this.arrayParcelasObj)).subscribe(
+                  (result) => {
+                    console.log(result)
+                    this._router.navigate(['/titulos'])
+                    this._services.exibirMsgSucesso('Titulo cadastrado com Sucesso!!')
+                    this.dadosObj()
+                  }
+                )
+                // this._router.navigate(['/titulos'])
+                // this._services.exibirMsgSucesso('Titulo cadastrado com Sucesso!!')
+                // this.dadosObj()
               }
             }
           )
@@ -341,6 +417,24 @@ export class CadastrarTituloComponent implements OnInit {
     return `${ano}-${mes}-${dia}`
   }
 
+  dataParcela(dataParcela) {
+    let data = new Date(dataParcela)
+
+    let ano: any = data.getFullYear()
+    let mes: any = (data.getMonth()) + 1
+    let dia: any = data.getDate()
+
+    if(mes <= 9) {
+      mes = `0${mes}`
+    }
+
+    if(dia <= 9) {
+      dia = `0${dia}`
+    }
+
+    return `${ano}-${mes}-${dia}`
+  }
+
   removerValorPg(index) {
     console.log(index)
     var i = this.listaItensPgView.indexOf(index)
@@ -357,6 +451,28 @@ export class CadastrarTituloComponent implements OnInit {
     var num = parseFloat(text)
     this.valorPgFinal = num
     this.valoresitens = num.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL'})
+  }
+
+  parcelas(inputNumParc, form:NgForm) {
+
+    form.reset()
+
+    if(inputNumParc == 0 || !inputNumParc || inputNumParc == '') {
+      this.qtdParc.num = 1
+      return this.qtdParcelas = [1]
+    }
+
+    this.qtdParcelas = []
+    for(let i = 1; i <= inputNumParc; i++) {
+      this.qtdParcelas.push(i)
+    }
+
+    // this.mascaraMoedaParcela(form)
+    this.totalParcelas = 'R$ 0,00'
+  }
+
+  parcelasObj(form) {
+   console.log(form)
   }
 
 }

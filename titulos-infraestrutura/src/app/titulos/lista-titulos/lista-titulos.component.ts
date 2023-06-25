@@ -13,12 +13,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DialogPesquisaTitulosComponent } from '../dialogs/dialog-pesquisa-titulos/dialog-pesquisa-titulos.component';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE }    from '@angular/material/core';
+
+
 
 
 @Component({
   selector: 'app-lista-titulos',
   templateUrl: './lista-titulos.component.html',
-  styleUrls: ['./lista-titulos.component.css']
+  styleUrls: ['./lista-titulos.component.css'],
 })
 export class ListaTitulosComponent implements OnInit {
 
@@ -117,7 +120,7 @@ export class ListaTitulosComponent implements OnInit {
       },
       width: '50%',
       position: {
-        top: '14%',
+        top: '4%',
         left: '29%'
       }
     }).afterClosed().subscribe(

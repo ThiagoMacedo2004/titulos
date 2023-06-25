@@ -10,12 +10,13 @@ mat-sidenav-content {
     /* height: 98%; */
 
     padding: 14px;
-    background-color: rgb(231, 231, 231);
+    background-color: #f1f1f1;
 }
 
 mat-sidenav {
-    width: 200px;
-    background-color:#3f51b5;
+    width: 180px;
+    background-color:rgb(13, 71, 158);
+
 }
 
 
@@ -31,7 +32,7 @@ mat-nav-list {
 a span {
     color: #fafafa;
     font-weight: 500;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
 }
 
 i {

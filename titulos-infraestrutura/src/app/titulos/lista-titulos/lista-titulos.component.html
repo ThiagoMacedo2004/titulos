@@ -1,5 +1,5 @@
 <div class="cont">
-  <mat-card>
+  <mat-card class="mat-elevation-z2">
     <div class="header">
       <div class="linha-1">
         <div class="titulos-header">
@@ -13,37 +13,40 @@
         <div class="totais">
           <div>
             Status:
-            <h2>{{stt}}</h2>
+            <h3>{{stt}}</h3>
           </div>
 
           <div>
             Qtd:
-            <h2>{{qtdTitulos}}</h2>
+            <h3>{{qtdTitulos}}</h3>
           </div>
 
           <div>
             Total:
-            <h2>{{valorTotal}}</h2>
+            <h3>{{valorTotal}}</h3>
           </div>
 
         </div>
       </div>
 
       <div class="linha-2">
-        <div class="btns" >
-          <button type="button" [disabled]="desabilitarBtnStatus" class="btn btn-danger btn-sm" (click)="alterarStatus('Cadastrado')">Cadastrado</button>
-          <button type="button" [disabled]="desabilitarBtnStatus" class="btn btn-warning btn-sm" (click)="alterarStatus('Lançado')">Lançado</button>
-          <button type="button" [disabled]="desabilitarBtnStatus" class="btn btn-primary btn-sm" (click)="alterarStatus('Aprovado')">Aprovado</button>
-          <button type="button" [disabled]="desabilitarBtnStatus" class="btn btn-success btn-sm" (click)="alterarStatus('Entregue')">Entregue</button>
+        <div class="btns"  >
+          <div [ngClass]="{'hidden':desabilitarBtnStatus,'btn-visiveis':!desabilitarBtnStatus}">
+            <button type="button" [disabled]="desabilitarBtnStatus" class="btn btn-danger btn-sm" (click)="alterarStatus('Cadastrado')">Cadastrado</button>
+            <button type="button" [disabled]="desabilitarBtnStatus" class="btn btn-warning btn-sm" (click)="alterarStatus('Lançado')">Lançado</button>
+            <button type="button" [disabled]="desabilitarBtnStatus" class="btn btn-primary btn-sm" (click)="alterarStatus('Aprovado')">Aprovado</button>
+            <button type="button" [disabled]="desabilitarBtnStatus" class="btn btn-success btn-sm" (click)="alterarStatus('Entregue')">Entregue</button>
+          </div>
         </div>
-        <div>
+        <div class="btns-2">
           <a mat-button class="add" color="primary" routerLink="/cadastrar-titulo"><mat-icon>add</mat-icon></a>
-          <a href=""></a>
-          <a mat-button  color="primary" (click)="abrirPastas()" ><mat-icon>create_new_folder</mat-icon></a>
-          <button class="relatorio" mat-button (click)="pesquisar()">Pesquisar</button>
-          <button class="protocolo" mat-button [disabled]="desabilitarBtnStatus" [ngClass]="{teste: desabilitarBtnStatus == true}" (click)="gerarProtocolo()"> Protocolo</button>
-          <button class="excel" mat-button [disabled]="desabilitarBtnStatus" [ngClass]="{teste: desabilitarBtnStatus == true}" (click)="gerarExcel()">Excel</button>
-          <button class="relatorio" mat-button (click)="relatorio()">Relatório Geral</button>
+          <button mat-icon-button color="primary" (click)="abrirPastas()" >
+            <mat-icon>create_new_folder</mat-icon>
+          </button>
+          <button class="relatorio" mat-stroked-button (click)="pesquisar()">Pesquisar</button>
+          <button class="protocolo" mat-stroked-button [disabled]="desabilitarBtnStatus" [ngClass]="{teste: desabilitarBtnStatus == true}" (click)="gerarProtocolo()"> Protocolo</button>
+          <button class="excel" mat-stroked-button [disabled]="desabilitarBtnStatus" [ngClass]="{teste: desabilitarBtnStatus == true}" (click)="gerarExcel()">Excel</button>
+          <button class="relatorio" mat-stroked-button (click)="relatorio()">Relatório Geral</button>
         </div>
       </div>
 
@@ -63,7 +66,7 @@
     </div>
   </mat-card>
 
-  <mat-card>
+  <mat-card class="mat-elevation-z2">
     <div class="linha-1">
       <div class="titulos-header">
         <mat-card-title>
@@ -75,11 +78,11 @@
       <div class="info-sel">
         <div>
           Qtd Selecionada:
-          <h2>{{ qtdSelecionada }}</h2>
+          <h3>{{ qtdSelecionada }}</h3>
         </div>
         <div>
           Total Selecionado:
-          <h2>{{ valorStr }}</h2>
+          <h3>{{ valorStr }}</h3>
         </div>
 
       </div>
@@ -200,7 +203,7 @@
               <div class="status-icons">
                 <button mat-icon-button color="primary" (click)="detalheTitulo(titulo)" ><mat-icon class="material-symbols-outlined">search</mat-icon></button>
                 <button mat-icon-button color="warn" (click)="deletarTiutlo(titulo)" *ngIf="titulo.status != 'Entregue'" >
-                  <mat-icon class="material-symbols-outlined">delete</mat-icon>
+                  <mat-icon>delete</mat-icon>
                 </button>
               </div>
             </td>
@@ -213,7 +216,7 @@
               [ngClass]="{
                 'selected-row': row.sel == true,
                 'not-selected': !row.sel}">
-          </tr>
+
           <tr class="mat-row" *matNoDataRow>
             <td class="mat-cell" style="text-align: center; font-size: 20px;" colspan="11">
               Nenhum registro encontrato para: <span style="font-weight: bold;">"{{input.value}}"</span>

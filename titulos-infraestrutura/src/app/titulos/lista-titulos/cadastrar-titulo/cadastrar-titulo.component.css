@@ -39,11 +39,16 @@ form {
 }
 
 .valor {
-    width: 15%;
+    width: 14%;
 }
 
 .data {
-    width: 15%;
+    width: 12%;
+}
+
+.parcelas {
+  width: 100%;
+
 }
 
 mat-card {
@@ -76,4 +81,47 @@ thead th:last-child {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.card-itens-parcelas {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.titulo-parcelas {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.container-parcelas  {
+  max-height: 233px;
+  overflow-y: auto;
+
+}
+
+
+
+.card-itens-parcelas mat-card {
+  width: 49%;
+  height: 390px;
+}
+
+.row-parcela {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2px;
+  width: 100%;
+}
+
+.input-parcela {
+  width: 33%;
+}
+
+.btn-salvar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

@@ -12,6 +12,7 @@ export class DialogDetalheTituloComponent implements OnInit {
 
   titulo      : any = []
   contasFluxo : any = []
+  parcelas    : any = []
   objForm     : any = {}
   formGroup   : FormGroup
 
@@ -26,6 +27,7 @@ export class DialogDetalheTituloComponent implements OnInit {
     this.titulo = this.data.row
     this.formulario()
     this.getContasFluxo()
+    this.getParcelas()
     console.log(this.titulo)
   }
 
@@ -39,7 +41,7 @@ export class DialogDetalheTituloComponent implements OnInit {
   }
 
   editar(venc) {
-    
+
     let emissao    = this.setData(this.formGroup.value.dt_emissao)
     let vencimento = this.setData(this.formGroup.value.dt_vencimento)
     let entregue   = this.setData(this.formGroup.value.dt_entregue)
@@ -116,7 +118,7 @@ export class DialogDetalheTituloComponent implements OnInit {
 
 
 
- 
+
   fechar() {
     this.dialogRef.close();
   }
@@ -126,6 +128,15 @@ export class DialogDetalheTituloComponent implements OnInit {
       (data) => {
         console.log(data)
         this.contasFluxo = data
+      }
+    )
+  }
+
+  getParcelas() {
+    this._services.getParcelas(JSON.stringify(this.titulo)).subscribe(
+      (result) => {
+        console.log(result)
+        this.parcelas = result
       }
     )
   }

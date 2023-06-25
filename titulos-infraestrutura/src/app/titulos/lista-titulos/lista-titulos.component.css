@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   height: 99%;
+  gap: 20px;
 }
 
 .tabela {
@@ -116,10 +117,37 @@ mat-card-content {
 
 
 .btns {
-  width: 25%;
+  width: 28%;
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.hidden {
+  width: 100%;
+  visibility: hidden;
+  transition: 500ms ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  opacity: 0;
+}
+
+.btn-visiveis {
+  width: 100%;
+  visibility: visible;
+  transition: 500ms ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
+.btns-2 {
+  width: 39%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .index {
@@ -167,7 +195,7 @@ a.add:hover {
 .container-table {
   overflow-y: auto;
   overflow-x: hidden;
-  max-height: 53vh;
+  max-height: 51vh;
 }
 
 .container-table::-webkit-scrollbar {
@@ -190,8 +218,8 @@ a.add:hover {
 
 mat-card {
   max-height: 87vh;
-  border-top: 3px solid #3f51b5;
-  margin-bottom: 10px;
+  /* border-top: 3px solid rgb(13, 110, 253); */
+  /* margin-bottom: 10px; */
   /* background-color: #f6f8fc; */
 }
 
@@ -202,7 +230,7 @@ mat-card-title {
 }
 
 .titulos-header span {
-  font-size: 26px;
+  /* font-size: 26px; */
   /* color: #3f51b5; */
   margin-right: 10px;
 }

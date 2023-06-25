@@ -6,58 +6,95 @@
 
 <div mat-matDialogContent>
     <div class="linha-2">
-        <form [formGroup]="formGroup">
-            <mat-form-field  appearance="outline">
-                <mat-label>NF</mat-label>
-                <input matInput type="text" formControlName="nf">
-            </mat-form-field>
-    
-            <mat-form-field appearance="outline">
-                <mat-label>Emissão</mat-label>
-                <input matInput [matDatepicker]="dp3" formControlName="dt_emissao" disabled>
-                
-                <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
-                <mat-datepicker #dp3 disabled="false"></mat-datepicker>
-            </mat-form-field>
-    
-            <mat-form-field appearance="outline">
-                <mat-label>Vencimento</mat-label>
-                <input matInput [matDatepicker]="dp2" formControlName="dt_vencimento"  disabled>
-                
-                <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
-                <mat-datepicker #dp2 disabled="false"></mat-datepicker>
-            </mat-form-field>
+      <form [formGroup]="formGroup">
+        <mat-form-field  appearance="outline">
+          <mat-label>NF</mat-label>
+          <input matInput type="text" formControlName="nf">
+        </mat-form-field>
 
-            <mat-form-field appearance="outline">
-                <mat-label>Entregue</mat-label>
-                <input matInput [matDatepicker]="dp1" formControlName="dt_entregue">
-                <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
-                <mat-datepicker #dp1 disabled="false"></mat-datepicker>
-            </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Emissão</mat-label>
+          <input matInput [matDatepicker]="dp3" formControlName="dt_emissao" disabled>
 
-            <mat-form-field  appearance="outline">
-                <mat-label>Total</mat-label>
-                <input matInput type="text" value="{{titulo.valor_tit | currency : 'BRL'}}" readonly>
-            </mat-form-field>
+          <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+          <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Vencimento</mat-label>
+          <input matInput [matDatepicker]="dp2" formControlName="dt_vencimento" disabled>
+
+          <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
+          <mat-datepicker #dp2 disabled="false"></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Entregue</mat-label>
+          <input matInput [matDatepicker]="dp1" formControlName="dt_entregue">
+          <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+          <mat-datepicker #dp1 disabled="false"></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Total</mat-label>
+          <input matInput type="text" value="{{titulo.valor_tit | currency : 'BRL'}}" readonly>
+        </mat-form-field>
         </form>
-    
     </div>
-        
+
+    <div class="divisoria"></div>
+
     <div mat-dialog-content class="content">
-        <table class="table table-sm table-striped">
-            <thead class="thead-dark">
-                <th>CONTA FLUXO</th>
-                <th>NOME CONTA</th>
-                <th>VALOR</th>
-            </thead>
-            <tbody>
-                <tr *ngFor="let row of contasFluxo">
-                    <td>{{ row.num_cf }}</td>
-                    <td>{{ row.nome_cf }}</td>
-                    <td>{{ row.valor_item_pg | currency: 'BRL' }}</td>
-                </tr>
-            </tbody>
-        </table>
+      <table class="table table-sm table-striped">
+        <thead class="thead-dark">
+          <th>CONTA FLUXO</th>
+          <th>NOME CONTA</th>
+          <th>VALOR</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of contasFluxo">
+            <td>{{ row.num_cf }}</td>
+            <td>{{ row.nome_cf }}</td>
+            <td>{{ row.valor_item_pg | currency: 'BRL' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="divisoria"></div>
+
+    <div mat-dialog-content class="content" *ngIf="parcelas.length > 0">
+      <table class="table table-sm table-striped">
+        <thead class="thead-dark">
+          <th>PARCELA</th>
+          <th>DATA</th>
+          <th>VALOR</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of parcelas">
+            <td>{{ row.parcela }}º</td>
+            <td>{{ row.data_parcela | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ row.valor_parcela | currency: 'BRL' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div mat-dialog-content class="content" *ngIf="parcelas.length == 0">
+      <table class="table table-sm table-striped">
+        <thead class="thead-dark">
+          <th>PARCELA</th>
+          <th>DATA</th>
+          <th>VALOR</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1º</td>
+            <td>{{ titulo.data_venc_tit | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ titulo.valor_tit | currency: 'BRL' }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 </div>
 

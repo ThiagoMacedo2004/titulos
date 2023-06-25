@@ -7,7 +7,7 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 })
 export class TitulosServicesService {
 
-  private URL       =  'http://localhost/projetos/titulos/index.php';
+  private URL       =  'http://localhost/titulos/index.php';
   private URL_EXCEL =  "http://localhost/projetos/titulos/src/views/excel.php"
 
   confgMsgError: MatSnackBarConfig = {
@@ -138,6 +138,22 @@ export class TitulosServicesService {
     return this.http.post(this.URL, obj, {
       params: {
         acao: 'setItensTitulo'
+      }
+    })
+  }
+
+  public setparcelas(obj) {
+    return this.http.post(this.URL, obj, {
+      params: {
+        acao: 'setparcelas'
+      }
+    })
+  }
+
+  public getParcelas(obj) {
+    return this.http.post(this.URL, obj, {
+      params: {
+        acao: 'getParcelas'
       }
     })
   }

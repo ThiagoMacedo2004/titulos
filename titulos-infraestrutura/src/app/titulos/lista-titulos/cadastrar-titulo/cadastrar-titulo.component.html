@@ -91,33 +91,90 @@
     </mat-card-actions>
 </mat-card>
 
-<mat-card *ngIf="listaItensPgView.length != 0">
-    <mat-card-title>Valores</mat-card-title>
-    <mat-card-subtitle *ngIf="listaItensPgView.length == 0">Não há valores registrados para o título</mat-card-subtitle>
-    <mat-card-subtitle *ngIf="listaItensPgView.length != 0">Lista de valores do Título</mat-card-subtitle>
+<div class="card-itens-parcelas" *ngIf="listaItensPgView.length != 0">
 
-    <mat-card-content class="content-table">
+  <mat-card  >
+      <mat-card-title>Valores</mat-card-title>
+      <mat-card-subtitle *ngIf="listaItensPgView.length == 0">Não há valores registrados para o título</mat-card-subtitle>
+      <mat-card-subtitle *ngIf="listaItensPgView.length != 0">Lista de valores do Título</mat-card-subtitle>
+
+      <mat-card-content class="content-table">
         <table class="table table-sm table-striped" *ngIf="listaItensPgView.length != 0">
-            <thead class="thead-light">
-                <th>CONTA FLUXO</th>
-                <th>VALOR</th>
-                <th>AÇÃO</th>
-            </thead>
-            <tbody>
-                <tr *ngFor="let row of listaItensPgView">
-                    <td>{{ row.item_contaFluxo }}</td>
-                    <td>{{ row.item_valor | currency: 'BRL' }}</td>
-                    <td>
-                        <button mat-button color="warn" (click)="removerValorPg(row)">
-                            <mat-icon>delete</mat-icon>
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
+          <thead class="thead-light">
+            <th>CONTA FLUXO</th>
+            <th>VALOR</th>
+            <th>AÇÃO</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of listaItensPgView">
+              <td>{{ row.item_contaFluxo }}</td>
+              <td>{{ row.item_valor | currency: 'BRL' }}</td>
+              <td>
+                <button mat-button color="warn" (click)="removerValorPg(row)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
         </table>
-    </mat-card-content>
-    <div class="footer">
-        <h2>{{ valoresitens }}</h2>
-        <button mat-button (click)="salvarPagamento()" color="primary"[disabled]='listaItensPgView.length == 0 ' cdkFocusInitial>Salvar</button>
+      </mat-card-content>
+      <div class="footer">
+        <h2>Total: {{ valoresitens }}</h2>
+        <!-- <button mat-button (click)="salvarPagamento()" color="primary"[disabled]='listaItensPgView.length == 0 ' cdkFocusInitial>Salvar</button> -->
+      </div>
+  </mat-card>
+
+  <mat-card>
+    <div class="titulo-parcelas">
+      <div>
+        <mat-card-title>Parcelas</mat-card-title>
+        <mat-card-subtitle>Informe a data e valor da parcela.</mat-card-subtitle>
+      </div>
+      <div>
+        <mat-form-field class="parcelas" appearance="outline" >
+          <mat-label>Parcelas</mat-label>
+          <input matInput type="number" [(ngModel)]="qtdParc.num"
+           (keyup)="parcelas(qtdParc.num, form)" (keypress)="parcelas(qtdParc.num, form)" (click)="parcelas(qtdParc.num, form)" min="1">
+        </mat-form-field>
+      </div>
     </div>
-</mat-card>
+    <mat-card-content >
+      <form #form="ngForm" (ngSubmit)="parcelasObj(form)">
+        <div class="container-parcelas">
+          <div *ngFor="let item of qtdParcelas">
+            <div class="row-parcela">
+              <span>{{item}}º Parcela</span>
+              <mat-form-field appearance="outline" class="input-parcela">
+                <mat-label>Vencimento</mat-label>
+                <input matInput [matDatepicker]="dp3" name="dataParcela-{{item}}" ngModel required>
+                <!-- <mat-hint>{{ formGroup.value.dt_venc | date: 'EEEE' : 'pt-BR' }}</mat-hint> -->
+                <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+              </mat-form-field>
+
+              <mat-form-field class="input-parcela" appearance="outline">
+                <mat-label>Valor</mat-label>
+                <input matInput name="valorParcela-{{item}}" #valorParcela="ngModel" [ngModel]="vlParcelaInicial.valor"
+                 required (keyup)="mascaraMoedaParcela(form)">
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="btn-salvar">
+          <!-- <button mat-button color="primary" type="submit" [disabled]="!form.valid || (valoresitens != totalParcelas)">Action</button> -->
+          <h2>Total Parcelas: {{totalParcelas}}</h2>
+          <button mat-button (click)="salvarPagamento()"
+            color="primary"
+            [disabled]='listaItensPgView.length == 0 || !form.valid || (valoresitens != totalParcelas)'
+            cdkFocusInitial>Salvar</button
+          >
+        </div>
+      </form>
+    </mat-card-content>
+
+    <mat-card-footer>
+
+    </mat-card-footer>
+  </mat-card>
+</div>
