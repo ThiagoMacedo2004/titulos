@@ -105,9 +105,7 @@ registerLocaleData(localePT);
     MatDatepickerModule,
     MatSnackBarModule,
     MatDividerModule,
-    MatProgressBarModule,
     MatProgressBarModule
-
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-br'},
